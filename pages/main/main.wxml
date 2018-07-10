@@ -1,0 +1,51 @@
+<!--index.wxml-->
+<view class="control">
+  <view class="score">
+    <view class="group0">
+      <image class="userimg" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <view class="nametitle">{{userInfo.nickName}}</view>
+    </view>
+  </view>
+
+<view class="ranking"  mode="widthFix" style="background: url('http://static3-cdn.scloud.lfengmobile.com/800000026-mokao/rank-item-bg.png?v=1') no-repeat center" >你打败了全球78%的用户</view>
+
+<view class="score1">
+    <view class="group0">
+      <view class="score0">4</view>
+      <view class="title2">等级</view>
+    </view>
+    <view class="group0">
+      <view class="score0">6789</view>
+      <view class="title2">总排名</view>
+    </view>
+    <view class="group0">
+      <view class="score0">12</view>
+      <view class="title2">好友排名</view>
+    </view>
+  </view>
+  <view class="item0">
+    <view class="item" bindtap="onClickSelf"> 个人挑战总题数:</view>
+    <view class="data">100</view>
+  </view>
+  <view class="item0">
+    <view class="item" bindtap="onClickSelf"> 个人挑战连续答对题数:</view>
+    <view class="data">100</view>
+  </view>
+  <view class="item0">
+    <view class="item" bindtap="onClickSelf"> 单场最高得分:</view>
+    <view class="data">100</view>
+  </view>
+  <view class="item0">
+    <view class="item" bindtap="onClickSelf"> 对战总场次:</view>
+    <view class="data">100</view>
+  </view>
+  <view class="item0">
+    <view class="item" bindtap="onClickSelf"> 对战胜利场次:</view>
+    <view class="data">100</view>
+  </view>
+  <view class="item0">
+    <view class="item" bindtap="onClickSelf"> 对战胜率:</view>
+    <view class="data">100</view>
+  </view>
+  <button class="showScore" open-type='share'>炫耀战绩</button>
+</view>

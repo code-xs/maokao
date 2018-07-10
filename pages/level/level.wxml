@@ -1,0 +1,5 @@
+<view class="control">
+    <view class="unlock-grid" wx:for="{{CLASS}}" bindtap="onLevelSelect" wx:key="*this">
+        <text id="{{CLASSID[index]}}" class="class">{{CLASS[index]}}</text>
+    </view>
+</view>

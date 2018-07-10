@@ -1,0 +1,21 @@
+<!--index.wxml-->
+<view class="control">
+  <view class="score1">
+      <view bindtap="onClickFriendRanking" class="{{ rankingType == 1?'rankingitem-active':'rankingitem'}}">好友排名</view>
+      <view bindtap="onClickWorldRanking" class="{{ rankingType == 2?'rankingitem-active':'rankingitem'}}">世界排名</view>
+      <view bindtap="onClickTypeRanking" class="{{ rankingType == 3?'rankingitem-active':'rankingitem'}}">科目排名</view>
+  </view>
+  <view class="list" wx:for="{{datalist}}" wx:for-item="i" wx:key="id">
+    <view class="item">
+      <view class="ranking">{{datalist[index].ranking}}</view>
+      <image class="userimg" src="{{datalist[index].src}}" background-size="cover"></image>
+      <view class="group0">
+        <view class="name">{{datalist[index].name}}</view>
+        <view class="level">{{datalist[index].level}}</view>
+      </view>
+      <view class="rate">胜率:</view>
+      <view class="rate">{{datalist[index].rate}}</view>
+    </view>
+  </view>
+  <view class="showRanking" bindtap="onClickRanking">炫耀排名</view>
+</view>

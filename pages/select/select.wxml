@@ -1,0 +1,20 @@
+<view class="control" mode="widthFix" style="background-image: url('http://static3-cdn.scloud.lfengmobile.com/800000026-mokao/challenge-bg.png'); background-size:cover">
+    <view class="grid" wx:for="{{categoryTree}}" wx:key="id">
+    <view class="first_item" style="background:{{item.color}}">
+      <view class="group0">
+        <view class="item">
+            <image src="{{item.src}}" class="image" mode="widthFix"> </image>
+            <view class="typetitle">{{item.title}}</view>
+        </view>
+      </view>
+      <view class="group1">
+        <view class="scoredetail1" wx:for="{{item.subLevel}}" wx:for-item="subLevel" wx:key="id">
+          <view class="item1">
+            <view class="text" mode="widthFix" style="background: url('{{subLevel.src}}') no-repeat center" id="{{subLevel.id}}" bindtap="onSelect">{{subLevel.subtitle}}</view>
+            <view class="type">{{subLevel.title}}</view>
+          </view>
+        </view>
+      </view>
+      </view>
+    </view>
+</view>

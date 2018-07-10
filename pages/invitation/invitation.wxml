@@ -1,0 +1,16 @@
+<!--index.wxml-->
+<view class="control">
+  <view class="title" bindtap="onClickSelf"> {{invitationTitle}}</view>
+  <view class="ticker"  wx:if="{{showTicker}}"> 00:10</view>
+  <view class="score">
+    <view class="group0">
+      <image class="userinfo-avatar" src="/images/1.png"></image>
+    </view>
+    <view class="vs" bindtap="onClickVS"> VS </view>
+    <view class="group0">
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    </view>
+  </view>
+  <button class="item0" open-type='share'>邀请好友</button>
+  <view class="item" bindtap="onClickRandom"> 随机匹配</view>
+</view>
