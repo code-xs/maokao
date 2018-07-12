@@ -127,12 +127,6 @@ page{
 .sub_group{  
   flex-direction: row;
 }  
-.progress{
-  flex:5;
-  margin-left: 46rpx;
-  border-radius:200rpx;
-  overflow:hidden;
-}
 
 .title{
     flex:1;
@@ -228,11 +222,19 @@ border:none;
      background-color: rgba(0, 0, 0, 0.3);
     border-radius: 0rpx 50rpx 50rpx 0rpx; 
 }
+
+.progress{
+  flex:5;
+  margin-left: 46rpx;
+  border-radius:200rpx;
+  overflow:hidden;
+}
+
 .empirical{
   flex: 1;
-  padding-left: 14rpx;
-  font-size: 1.3rem;
-  line-height: 40rpx;
+  padding-left: 18rpx;
+  font-size: 1.4rem;
+  line-height: 16rpx;
   color: #f8bb39;
 }
 .subtitle{
@@ -341,5 +343,20 @@ border:none;
     border-radius: 60rpx;
     flex-direction: column;  
     justify-content: center;
-    background: linear-gradient(to bottom right, red , blue);
 }
+
+.buttontest {
+  width: 296rpx;
+  height: 130rpx;
+  margin-top: 10rpx;
+  text-align: center;
+  font-size: 1.1em;
+  color: #FFFFFF;
+  justify-content: center;
+  line-height: 124rpx;
+  background-size: 296rpx 130rpx;
+  background-repeat:no-repeat;
+  background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/btn_invite_friends_bg.png');
+  border:none;
+}
+

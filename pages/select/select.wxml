@@ -1,4 +1,4 @@
-<view class="control" mode="widthFix" style="background-image: url('http://static3-cdn.scloud.lfengmobile.com/800000026-mokao/challenge-bg.png'); background-size:cover">
+<view class="control" mode="widthFix" style="background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge_bg.png'); background-size:cover">
     <view class="grid" wx:for="{{categoryTree}}" wx:key="id">
     <view class="first_item" style="background:{{item.color}}">
       <view class="group0">

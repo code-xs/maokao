@@ -7,7 +7,7 @@
     </view>
   </view>
 
-<view class="ranking"  mode="widthFix" style="background: url('http://static3-cdn.scloud.lfengmobile.com/800000026-mokao/rank-item-bg.png?v=1') no-repeat center" >你打败了全球78%的用户</view>
+<view class="ranking"  mode="widthFix" style="background: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/rank-item-bg.png') no-repeat center" >你打败了全球78%的用户</view>
 
 <view class="score1">
     <view class="group0">

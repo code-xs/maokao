@@ -28,7 +28,7 @@ page{
   background-size: 100% auto;
   margin: 0px;
   background-repeat: no-repeat;
-  background-image: url('http://static3-cdn.scloud.lfengmobile.com/800000026-mokao/main-bg.png');
+  background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/my_top_bg.png');
 }
 .canvas{
     width: 100%;

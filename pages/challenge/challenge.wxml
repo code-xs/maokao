@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="control">
-  <view class="root" style="background-image: url('http://static3-cdn.scloud.lfengmobile.com/800000026-mokao/challenge-bg1.png');">
+  <view class="root" style="background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/chanllenge_top_bg.png');">
       <view class="userimg">
           <view class="group0">
             <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>

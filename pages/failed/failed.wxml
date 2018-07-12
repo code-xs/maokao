@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="control"  mode="widthFix" style="background-image: url('http://static3-cdn.scloud.lfengmobile.com/800000026-mokao/challenge-bg.png'); background-size:cover">
+<view class="control"  mode="widthFix" style="background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge_bg.png'); background-size:cover">
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}">
   </view>
   <view class="modal-dialog" wx:if="{{showModal}}">
