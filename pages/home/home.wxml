@@ -24,7 +24,7 @@
       <view class="empirical">{{empiricalV}}级</view>
     </view>
     <view class="empirical-item">
-      <view class="empirical-text">经验250{{empiricalV}}</view>
+      <view class="empirical-text">积分250{{empiricalV}}</view>
       <view class="empirical-text1">还差50即可升5级别</view>
     </view>
   </view>
@@ -40,6 +40,5 @@
     </button> 
     <button class="buttontest" open-type='share' 
      plain="true">邀请好友</button>
-
 
 </view>
