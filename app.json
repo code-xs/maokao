@@ -15,7 +15,7 @@
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#d0d0d0",
-    "navigationBarTitleText": "知识大师",
+    "navigationBarTitleText": "模考王者",
     "navigationBarTextStyle":"black"
   },
   "openDataContext": {

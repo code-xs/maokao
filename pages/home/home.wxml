@@ -4,8 +4,8 @@
     <view class="head">
       <view class="user-img">
           <view class="group0">
-            <button class="userinfo-avatar" id="0" open-type="getUserInfo"  bindgetuserinfo="getUserInfoFun">
-              <image  class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+            <button class="userinfo-avatar_btn" id="0" open-type="getUserInfo"  bindgetuserinfo="getUserInfoFun">
+              <image  class="userinfo-avatar_cover" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
             </button>
           </view>
       </view>

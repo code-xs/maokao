@@ -6,12 +6,29 @@
 }
 
 .userinfo-avatar {
-  width: 160rpx;
-  height: 160rpx;
+  width: 140rpx;
+  height: 140rpx;
   border-radius: 50%;
-  border:none;
+  border: 4rpx solid #ffffff;
   padding: 0;
   background: none !important;  
+}
+
+.userinfo-avatar_btn {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  border: 4rpx solid #ffffff;
+  padding: 0;
+  margin-top: 10rpx;
+  margin-left: 20rpx;
+  background: none !important;  
+}
+
+.userinfo-avatar_cover {
+   width: 140rpx;
+   height: 140rpx;
+   background: none !important;  
 }
 
 .userinfo-nickname {
@@ -29,7 +46,7 @@ page{
   position: fixed;
   background-size: 100% 100%;
   margin: 0px;
-  background-image: url('http://static3-cdn.scloud.lfengmobile.com/800000026-mokao/challenge-bg.png');
+  background-image: url('http://static3-cdn.scloud.lfengmobile.com/800000026-mokao/homeback.jpg');
 }
 .canvas{
     width: 100%;
@@ -48,7 +65,7 @@ page{
 }
 .rankingitem{
   display: flex;
-  margin-top: 10rpx;
+  margin-top: 18rpx;
 }
 .head {
     display: flex;
@@ -59,6 +76,7 @@ page{
 
 .level {
   display: flex;
+  margin-top: 20rpx;
 }
 .root{
   margin-bottom:20rpx;
@@ -71,15 +89,17 @@ page{
 .empirical-text {
     flex:2;
     margin-right: 30rpx;
+     margin-top: 10rpx;
     font-size: 0.9rem;
-    color: #ffffff;
+    color:rgba(255, 247, 254, 0.6);
 }
 .empirical-text1 {
     flex:3;
     text-align: right;
     margin-left: 20rpx;
+    margin-top: 10rpx;
     font-size: 0.9rem;
-    color: #ffffff;
+    color:rgba(255, 247, 254, 0.6);
 }
 .rule{
   flex:1;
@@ -100,7 +120,7 @@ page{
 }
 .group0{
     flex:1;
-    margin: 10rpx 10rpx 0rpx 10rpx;
+    margin: 0rpx 0rpx 0rpx 0rpx;
     border-radius: 10rpx;
     font-size: 1.4rem;
 }
@@ -182,13 +202,14 @@ border:none;
   padding-left: 20rpx; 
   width:80rpx;
   height:90rpx;
-  background-color: #173645;
+  background-color: rgba(0, 0, 0, 0.3);
   border-radius: 50rpx 0rpx 0rpx 50rpx; 
 }
 .ranking{
-    font-size: 1.1rem;
-    color: #ffffff;
-    background-color: #173645;
+    font-size: 1rem;
+    font-weight:lighter;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(0, 0, 0, 0.3);
     display: flex;
     padding-left: 20rpx;
     padding-right: 20rpx;
@@ -196,24 +217,23 @@ border:none;
     justify-content: center;
 }
 .ranking1{
-    font-size: 1.5rem;
-    color: #ff3429;
+    font-size: 1.6rem;
+    color: #f8bb39;
     width: 100rpx;
     padding-right: 30rpx;
     font-weight: bold;
     display: flex;
     flex-direction: column;  
     justify-content: center;
-    background-color: #173645;
+     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 0rpx 50rpx 50rpx 0rpx; 
 }
 .empirical{
   flex: 1;
-  font-weight: bold;
-  padding-left: 10rpx;
+  padding-left: 14rpx;
   font-size: 1.3rem;
   line-height: 40rpx;
-  color: #00ff00;
+  color: #f8bb39;
 }
 .subtitle{
     padding-top: 10rpx;

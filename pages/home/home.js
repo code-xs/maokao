@@ -114,7 +114,7 @@ Page({
     });
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
-      backgroundColor: '#bf70d6',
+      backgroundColor: '#502488',
     });
   },
 
