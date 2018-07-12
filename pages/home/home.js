@@ -12,8 +12,8 @@ Page({
     motto: 'Hello World',
     userInfo: {},
     userInfo1: {
-      avatarUrl:"http://static3-cdn.scloud.lfengmobile.com/800000026-mokao/education.png",
-      nickName:"知识人"
+      avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/avatar_default.png",
+      nickName:"MKING"
     },
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
