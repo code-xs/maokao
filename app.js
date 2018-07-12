@@ -2,7 +2,7 @@
 
 var qcloud = require('./vendor/wafer2-client-sdk/index');
 var config = require('./config');
-
+    
 App({
   onLaunch: function () {
     // 展示本地存储能力
