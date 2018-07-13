@@ -1,3 +1,4 @@
+var app = getApp()
 Page({
   data: {
     level:[],
@@ -9,15 +10,17 @@ Page({
     TREE:null,
   },
   onLoad: function (option) {
-    console.log('onLoad:'+option.class)
+    console.log('onLoad:')
+    console.log(option.id)
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
       backgroundColor: '#bf70d6',
     });
-    this.initData(option);
+    this.initData(option.id);
   },
-  initData: function (option){
-    var classes = JSON.parse(option.class);
+  initData: function (id){
+    var classes = app.findCategoryItemById(id);
+    //var classes = JSON.parse(option.class);
     console.log('initData classes.length:' + classes.subLevel.length)
     for (var i = 0; i < classes.subLevel.length; i++) {
       var obj = classes.subLevel[i];

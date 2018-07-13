@@ -213,7 +213,6 @@ border:none;
 .ranking1{
     font-size: 1.6rem;
     color: #f8bb39;
-    width: 100rpx;
     padding-right: 30rpx;
     font-weight: bold;
     display: flex;

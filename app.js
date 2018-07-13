@@ -193,5 +193,21 @@ App({
       level =6;
     }
     return level;
+  },
+
+  findCategoryItemById(id){
+    for (var i = 0; i < this.globalData.categoryTree.length - 1; i++) {
+      var twoLevel = this.globalData.categoryTree[i].subLevel;
+      console.log('twoLevel:');
+      console.log(twoLevel);
+      for (var j = 0; j < twoLevel.length; j++) {
+        var _obj = twoLevel[j];
+        console.log('obj:');
+        console.log(_obj);
+        if (_obj.id == id) {
+          return _obj;
+        }
+      }
+    }
   }
 })

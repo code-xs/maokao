@@ -289,22 +289,26 @@ Page({
 
   onSelect:function(e){
     console.log(' onLevelSelect:'+e.target.id);
-    var obj = [];
+    var obj = app.findCategoryItemById(e.target.id);
+    /*
     for (var i = 0; i < this.data.categoryTree.length-1; i++){
       var twoLevel = this.data.categoryTree[i].subLevel;
-      console.log(' _obj.title:' + this.data.categoryTree[i].title + ', _obj.id:' + this.data.categoryTree[i].id);
+      //console.log(' _obj.title:' + this.data.categoryTree[i].title + ', _obj.id:' + this.data.categoryTree[i].id);
       for (var j = 0; j < twoLevel.length; j++) {
         var _obj = twoLevel[j];
-        console.log(' _obj.id:' + _obj.id + ', _obj.title:' + _obj.title);
+        console.log('obj:');
+        console.log(_obj);
         if (_obj.id == e.target.id){
           obj = _obj;
           break;
         }
       }
-    }
+    }*/
+    console.log('find obj:');
+    console.log(JSON.stringify(obj));
     if (obj.subLevel != null){
       wx.navigateTo({
-        url: '../level/level' + '?class=' + JSON.stringify(obj)
+        url: '../level/level' + '?id=' + obj.id
       })
     }else{
       console.log(' select:' + obj.title+' with param id:' + obj.id);
