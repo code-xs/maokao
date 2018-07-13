@@ -102,7 +102,9 @@
       </view>
     </view>
   </view>
-  <view class="{{ showFailed? 'failed':'failedhide'}}">
+  <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{gameOver}}">
+  </view>
+  <view class="failed" wx:if="{{gameOver}}">
     <view class="result">连续答对60题</view>
     <image class="resultImg" mode="top" src="/images/bg.png"></image>
     <view class="centerText">经验+10分</view>

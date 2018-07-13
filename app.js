@@ -2,7 +2,7 @@
 
 var qcloud = require('./vendor/wafer2-client-sdk/index');
 var config = require('./config');
-    
+
 App({
   onLaunch: function () {
     // 展示本地存储能力
@@ -12,9 +12,8 @@ App({
     //*
     qcloud.setLoginUrl(config.service.loginUrl);
     //*/
-    //qcloud.setLoginUrl(config.service.loginUrl);
-    //this.doLogin();
     //this.requestQuestionList(0, 10);
+    this.doLogin();    
     this.getUserInfo();
     this.getCategory();
   },
@@ -25,7 +24,9 @@ App({
       success(result) {//此处的result竟然不包含openid,所以res取缓存中的数据
         console.log('登录成功-----')
         let res = wx.getStorageSync('user_info_F2C224D4-2BCE-4C64-AF9F-A6D872000D1A');
-        console.log('res:'+res)
+        console.log('openId:'+res.openId)
+        that.globalData.openId = res.openId;
+        console.log(res)
       },
       fail(error) {
         console.log('登录失败', error);
@@ -35,7 +36,11 @@ App({
 
   globalData: {
     userInfo: null,
-    categoryTree:[]
+    openId:null,
+    userRanking:9999,
+    totalScore:11000,
+    level:12,
+    categoryTree:[],
   },
   setUserInfo: function (res) {
     this.globalData.userInfo = res.userInfo;
@@ -51,7 +56,7 @@ App({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = res.userInfo
-
+              console.log(res)
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
               // 所以此处加入 callback 以防止这种情况
               if (this.userInfoReadyCallback) {
@@ -102,8 +107,91 @@ App({
         console.log(response.data.data);
       },
       fail: function (err) {
-        console.log('请求失败23', err);
+        conssole.log('请求失败23', err);
       }
     });
   },
+
+  getScoreInfo:function(){
+    var that = this;
+    qcloud.request({
+      url: config.service.getScoreInfo,
+      header: {
+        'Content-Type': 'application/json'
+      },
+      data: {//这里写你要请求的参数
+        openId: that.globalData.openId,
+      },
+      success: (response) => {
+        console.log('请求成功 statusCode:' + response.statusCode);
+        if (response.statusCode == 200) {
+        }
+      },
+      fail: function (err) {
+        console.log('请求失败', err);
+      }
+    });
+  },
+  getLevelRule:function(){
+    var that = this;
+    qcloud.request({
+      url: config.service.getLevelRule,
+      header: {
+        'Content-Type': 'application/json'
+      },
+      data: {//这里写你要请求的参数
+        openId: that.globalData.openId,
+      },
+      success: (response) => {
+        console.log('请求成功 statusCode:' + response.statusCode);
+        if (response.statusCode == 0) {
+          console.log(response);
+        }
+      },
+      fail: function (err) {
+        console.log('请求 LevelRule 失败', err);
+      }
+    });
+  },
+
+  getRankingList:function(id){
+    var that = this;
+    qcloud.request({
+      url: config.service.getRankingList,
+      header: {
+        'Content-Type': 'application/json'
+      },
+      data: {//这里写你要请求的参数
+        openId: that.globalData.openId,
+        typeId: id,
+      },
+      success: (response) => {
+        console.log('请求成功 statusCode:' + response.statusCode);
+        if (response.statusCode == 0) {
+          console.log(response);
+        }
+      },
+      fail: function (err) {
+        console.log('请求 LevelRule 失败', err);
+      }
+    });
+  },
+
+  scoreConvertLevel:function(score){
+    var level = 1;
+    if(score < 1000){
+      level = 1;
+    } if (score < 2000) {
+      level = 2;
+    } if (score < 3000) {
+      level =3;
+    } if (score < 4000) {
+      level =4;
+    } if (score < 5000) {
+      level =5;
+    }else{
+      level =6;
+    }
+    return level;
+  }
 })

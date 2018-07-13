@@ -20,6 +20,10 @@ Page({
     challenge:-1,
     rankingType:1,
     datalist:[],
+    list: [{ title: "题目1", content: "内容1" },
+    { title: "题目2", content: "内容2" },
+    { title: "题目3", content: "内容3" },
+    { title: "题目4", content: "内容4" }],
     friendlist: [{
       ranking: 1,
       name: '张三',
@@ -71,43 +75,43 @@ Page({
     }],
     worlddata: [{
       ranking: 2,
-      name: '李四',
+      name: '李四1',
       src: '/images/5.png',
       level: '等级:4',
       rate: '50%',
     }, {
       ranking: 3,
-      name: '王五',
+      name: '王五1',
       src: '/images/1.png',
       level: '等级:7',
       rate: '50%',
     }, {
       ranking: 4,
-      name: '马六',
+      name: '马六1',
       src: '/images/10.png',
       level: '等级:1',
       rate: '50%',
     }, {
       ranking: 10,
-      name: '张三',
+      name: '张三1',
       src: '/images/8.png',
       level: '等级:2',
       rate: '50%',
     }, {
       ranking: 12,
-      name: '李四',
+      name: '李四2',
       src: '/images/5.png',
       level: '等级:4',
       rate: '50%',
     }, {
       ranking: 31,
-      name: '王五',
+      name: '王五3',
       src: '/images/1.png',
       level: '等级:7',
       rate: '50%',
     }, {
       ranking: 14,
-      name: '马六',
+      name: '马六4',
       src: '/images/10.png',
       level: '等级:1',
       rate: '50%',
@@ -120,32 +124,10 @@ Page({
     })
   },
   onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: '#bf70d6',
+    });    
     var that = this;
     wx.getSystemInfo({
       success: function (res) {
@@ -214,4 +196,18 @@ Page({
       rankingType: 3
     });
   },
+  onScrolltolower:function(e){
+    for(var i=0; i< this.data.worlddata.length; i++){
+      this.data.datalist.push(this.data.worlddata[i]);
+    }
+    console.log(e);
+    //this.data.datalist.concat(this.data.worlddata);
+    this.setData({
+      datalist: this.data.datalist,
+    });
+    console.log(this.data.datalist);
+  },
+  onScrolltoupper: function (e) {
+    console.log(e);
+  }
 })

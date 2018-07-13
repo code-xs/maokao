@@ -11,6 +11,7 @@
   margin: 0 auto;  
   display: flex;
   border-radius: 50%;
+  opacity: 1;
 }
 
 .userinfo-nickname {
@@ -24,7 +25,11 @@
 page{
   display: block;
   min-height: 100%;
-  background: #d0d0d0;
+  overflow: hidden;
+  position: fixed;
+  background-size: 100% 100%;
+  margin: 0px;
+  background-image: url('http://static3-cdn.scloud.lfengmobile.com/800000026-mokao/challenge-bg.png');
 }
 .canvas{
     width: 100%;
@@ -48,16 +53,19 @@ page{
     /*background:#285872;*/
 }
 .name{
+  color: #7cffff;
   text-align: left;
   flex-direction: column;  
   justify-content: center; 
+  font-size: 0.8rem;
 }
 .level{
+  color: #7c7c70;
   text-align: left;
   flex-direction: column;  
   justify-content: center; 
-  font-size: 0.9rem;
-  color: #151515;
+  margin-top: 10rpx;
+  font-size: 0.8rem;
 }
 .score1 {
     display: flex;
@@ -73,9 +81,15 @@ page{
     border-radius: 2rpx;  
 }
 .list{
-  margin-top: 20rpx;
+  margin-top: 2rpx;
 }
 
+.list_bg{
+  margin-left: 60rpx;
+  margin-right: 60rpx;
+  border-radius: 30rpx;
+  height: 1020rpx;
+}
 .group1{
     flex:1;
 }
@@ -88,20 +102,25 @@ page{
 .sub_group{  
   flex-direction: row;
 }  
-.progress{
-  color:"red";
-  stroke-width:"15";
-  background:#6363c7;
-  margin-left: 20rpx;
-}
 
-.rate{
-  flex:1;
+.rate-title{
+  flex:2;
   display: flex;  
   flex-direction: column;  
   justify-content: center; 
+  text-align: right;
+  color: #7c7c70;
+  opacity: 1;
 }
 
+.rate{
+  flex:2;
+  display: flex;  
+  flex-direction: column;  
+  justify-content: center; 
+  text-align: center;
+  opacity: 1;
+}
 .title{
     flex:1;
     height: 120rpx;
@@ -115,19 +134,29 @@ page{
 .data{
   color: #e0a30a;
 }
+scroll-view {
+  height: 720rpx;
+}
+ 
+.item-content {
+    width: 80%;
+    display: inline-block;
+    border: 1rpx solid gray;
+    text-align: center;
+}
 .item{
-    display: flex;  
-    color: #151515;
-    background: #ffffff;
+    display: flex;
+    /*background: #4b4b4b;*/
     font-size: 0.9rem;
-    margin: 10rpx;
-    border-radius: 10rpx;
+    color: #f5ede4;
+    height: 144rpx;
 }
 .showRanking{
   color:aliceblue;
   background: #edab63;
-  margin: 20rpx 30% 20rpx 30%;
+  margin: 20rpx 20% 20rpx 20%;
   padding:20rpx;
+  max-height: 100rpx;
   text-align: center;
   border-radius: 40rpx;
   font-size: 0.9rem;  
@@ -166,8 +195,8 @@ page{
     color: #ffffff;
     flex:1;
     text-align: center;
-    margin: 5rpx;
-    padding: 10rpx 20rpx 10rpx 20rpx;
+    margin: 20rpx;
+    padding: 20rpx;
     background: #285872;
     border-radius: 40rpx;
 }
@@ -177,19 +206,20 @@ page{
     color: #ffffff;
     flex:1;
     text-align: center;
-    margin: 5rpx;
-    padding: 10rpx 20rpx 10rpx 20rpx;
+    margin: 20rpx;
+    padding: 20rpx;
     background: #6363c7;
     border-radius: 40rpx;
 }
 .ranking{
-    flex:1;  
+    flex:2;  
     font-size: 1.5rem;
     text-align: center;
-    color: #000000;
+    color: #f5ede4;
     display: flex;  
     flex-direction: column;  
-    justify-content: center;     
+    justify-content: center;  
+    opacity: 1;   
 }
 
 .empirical{

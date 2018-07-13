@@ -27,6 +27,7 @@ Page({
     windowW:0,
     windowH:0,
     challenge:-1,
+    userRanking:100,
   },
   //事件处理函数
   bindViewTap: function() {
@@ -95,22 +96,15 @@ Page({
   },
 
   initData:function(){
-    var _empirical = wx.getStorageSync('empirical');
-    if (_empirical == null || _empirical < 0)
-      _empirical = 0;
-    var _level = wx.getStorageSync('level');
-    if(_level == null || _level < 0)
-      _level = 0;
-    var _ranking = wx.getStorageSync('ranking');
-    if (_ranking == null || _ranking < 0)
-      _ranking = 0;
-    console.log(' _empirical:' + _empirical + ',_level: ' + _level + ', _ranking:' + _ranking)
+    var level = app.scoreConvertLevel(app.globalData.totalScore);
     this.setData({
       empirical: 0,
       level: 0,
       ranking: 0,
       empiricalV: this.data.empirical,
-      levelV:this.data.level+"级",
+      levelV: level,
+      userRanking: app.globalData.userRanking,
+      empiricalV: app.globalData.totalScore,
     });
     wx.setNavigationBarColor({
       frontColor: '#ffffff',

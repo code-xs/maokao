@@ -20,11 +20,24 @@ var config = {
         // 获取考题列表
         requestQuestionList: `${host}/weapp/get_question_detail`,
       
+        // 获取用户排名列表
+        getRankingList: `${host}/weapp/get_ranking_list`,
+
+        // 获取用户积分,排名接口
+        getScoreInfo: `${host}/weapp/get_scoreinfo`,
+
+        // 上传积分更新接口
+        updateScoreInfo: `${host}/weapp/update_scoreinfo`,
+
+        // 上传积分更新接口
+        getLevelRule: `${host}/weapp/get_level_rule`,
+
         // 测试的信道服务地址
         tunnelUrl: `${host}/weapp/tunnel`,
 
         // 上传图片接口
-        uploadUrl: `${host}/weapp/upload`
+        uploadUrl: `${host}/weapp/upload`,
+
     }
 };
 

@@ -34,12 +34,37 @@ var getWxLoginResult = function getLoginCode(callback) {
                         userInfo: userResult.userInfo,
                     });
                 },
-
                 fail: function (userError) {
+                  //jacksplwxy：用户拒绝授权后，打开设置，让用户进行授权
+                  wx.showModal({
+                    title: '登录失败!',
+                    content: '请选择允许获取您的公开信息',
+                    success: (res) => {
+                      wx.openSetting({
+                        success: (res) => {
+                          if (res.authSetting['scope.userInfo']) {
+                            wx.getUserInfo({
+                              success: function (userResult) {
+                                callback(null, {
+                                  code: loginResult.code,
+                                  encryptedData: userResult.encryptedData,
+                                  iv: userResult.iv,
+                                  userInfo: userResult.userInfo,
+                                });
+                              },
+                            })
+                          }
+                        }
+                      })
+                    }
+                  })
+                },
+                //源码：
+                /*fail: function (userError) {
                     var error = new LoginError(constants.ERR_WX_GET_USER_INFO, '获取微信用户信息失败，请检查网络状态');
                     error.detail = userError;
                     callback(error, null);
-                },
+                },*/
             });
         },
 
@@ -82,7 +107,7 @@ var login = function login(options) {
             options.fail(wxLoginError);
             return;
         }
-        
+
         var userInfo = wxLoginResult.userInfo;
 
         // 构造请求头，包含 code、encryptedData 和 iv
@@ -108,7 +133,8 @@ var login = function login(options) {
                 if (data && data.code === 0 && data.data.skey) {
                     var res = data.data
                     if (res.userinfo) {
-                        Session.set(res.skey);
+                        Session.set(res.skey);  //jacksplwxy:将skey缓存起来
+                        wx.setStorageSync('user_info_'+ constants.WX_SESSION_MAGIC_ID, res.userinfo);//jacksplwxy:将用户信息存储起来
                         options.success(userInfo);
                     } else {
                         var errorMessage = '登录失败(' + data.error + ')：' + (data.message || '未知错误');
@@ -131,21 +157,7 @@ var login = function login(options) {
         });
     });
 
-    var session = Session.get();
-    if (session) {
-        wx.checkSession({
-            success: function () {
-                options.success(session.userinfo);
-            },
-
-            fail: function () {
-                Session.clear();
-                doLogin();
-            },
-        });
-    } else {
-        doLogin();
-    }
+    doLogin();
 };
 
 var setLoginUrl = function (loginUrl) {

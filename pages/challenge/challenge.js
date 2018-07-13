@@ -19,6 +19,7 @@ Page({
     windowW:0,
     windowH:0,
     score:13242,
+    typeScore:0,
     answer:[],
     question:[],
     answerid:[],
@@ -31,12 +32,86 @@ Page({
     showFailed:false,
     showSuccess:false,
     redCnt:5,
+    gameOver:false,
     timer:null,
     answerIndex:-1,
     correct:'√',
     incorrect: 'X',
     characterBgColor:[],
     hearts:[],
+    levelRules: [{
+      'title': '新手',
+      'levels': [{
+        'level': 1,
+        'score': 0,
+      }, {
+        'level': 2,
+        'score': 900,
+      }, {
+          'level': 3,
+          'score': 150,
+      }, {
+        'level': 4,
+        'score': 1900,
+      }, {
+        'level': 5,
+        'score': 2300,
+      }],
+    }, {
+      'title': '熟手',
+      'levels': [{
+        'level': 6,
+        'score': 3900,
+      }, {
+        'level': 7,
+        'score': 4800,
+      }, {
+        'level': 8,
+        'score': 5700,
+      }, {
+        'level': 9,
+        'score': 6600,
+      }, {
+        'level': 10,
+        'score': 7500,
+      }],
+      }, {
+        'title': '黑铁',
+        'levels': [{
+          'level': 11,
+          'score': 830,
+        }, {
+          'level': 12,
+          'score': 9300,
+        }, {
+          'level': 13,
+          'score': 11400,
+        }, {
+          'level': 14,
+          'score': 13800,
+        }, {
+          'level': 15,
+          'score': 16500,
+        }],
+    }, {
+      'title': '青铜',
+      'levels': [{
+        'level': 16,
+        'score': 19500,
+      }, {
+        'level': 17,
+        'score': 22800,
+      }, {
+        'level': 18,
+        'score': 26400,
+      }, {
+        'level': 19,
+        'score': 30300,
+      }, {
+        'level': 20,
+        'score': 34500,
+      }]
+      }],
     tree:[{
         'id': 11,
         'title': '前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
@@ -158,7 +233,18 @@ Page({
     this.data.ID = option.id;
     console.log(' get select id:'+this.data.ID)
     console.log(' get app.globalData.userInfo:' + app.globalData.userInfo)
-
+    var score = wx.getStorageSync('totalScore');
+    if(score == null || score == 0)
+      score = 1;
+    var typeScore = wx.getStorageSync('typeScore-'+this.data.ID);
+    if (typeScore == null)
+      typeScore = 0;
+    typeScore = parseInt(typeScore);
+    console.log(' get typeScore:' + typeScore)
+    this.setData({
+      score: score,
+      typeScore: typeScore,
+    })    
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -209,17 +295,25 @@ Page({
         'Content-Type': 'application/json'
       },
       data: {//这里写你要请求的参数
-        category_id: 10,
+        category_id: id,
         page_index: page
       },
       success: (response) => {
         console.log('请求成功 statusCode:' + response.statusCode);
-        //console.log(response.data.data);
+        console.log(response.data.data);
         that.data.tree = response.data.data;
-        if(that.data.PAGE == 0){
-          that.initData();
+        if (that.data.tree == null || that.data.tree.length == 0){
+          this.setData({
+            gameOver: true,            
+            showFailed:true,
+            showFragment:0,
+          });
         }else{
-          that.initQuestionAndAnswer(that.data.curIndex);
+          if(that.data.PAGE == 0){
+            that.initData();
+          }else{
+            that.initQuestionAndAnswer(that.data.curIndex);
+          }
         }
         console.log(that.data.tree);
       },
@@ -321,6 +415,7 @@ Page({
   showAnswer:function(id){
     var section = this.data.tree[this.data.curIndex];
     var ret = this.checkAnswer(id);
+    console.log(' onClickAnswer:' + id + ' ret is:' + ret);    
     if (ret) {
       this.data.characterBgColor[id] = '#2fff00';
       this.data.character[id] = this.data.correct;
@@ -328,17 +423,25 @@ Page({
       this.data.characterBgColor[section.answer] = '#2fff00';
       this.data.character[section.answer] = this.data.correct;
       if(id > 0){
-        //this.data.characterBgColor[e.target.id] = '#ff3429';
-        //this.data.character[e.target.id] = this.data.incorrect;
+        this.data.characterBgColor[id] = '#ff3429';
+        this.data.character[id] = this.data.incorrect;
       }
     }
-    console.log(' onClickAnswer:' + id + ' ret is:' + ret);
 
     this.data.score += ret ? section.score : 0;
+    this.data.typeScore += ret ? section.score : 0;
     this.setData({
       score: this.data.score,
       characterBgColor: this.data.characterBgColor,
       character: this.data.character,
+    });
+    wx.setStorage({
+      key: 'totalScore',
+      data: this.data.score,
+    });
+    wx.setStorage({
+      key: 'typeScore-'+this.data.ID,
+      data: this.data.typeScore,
     })
   },
   onClickAnswer:function(e){
