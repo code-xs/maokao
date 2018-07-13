@@ -39,6 +39,7 @@ Page({
     incorrect: 'X',
     characterBgColor:[],
     hearts:[],
+    continueRight:0,
     levelRules: [{
       'title': '新手',
       'levels': [{
@@ -382,6 +383,7 @@ Page({
       character: this.data.character,
     })
     this.startCountDown(section.timer*10);
+    app.addChallengeCnt(1);
   },
   onClickContext:function(){
     this.setData({
@@ -419,7 +421,10 @@ Page({
     if (ret) {
       this.data.characterBgColor[id] = '#2fff00';
       this.data.character[id] = this.data.correct;
+      this.data.continueRight ++;
     } else {
+      app.updateWinningStreak(this.data.continueRight);
+      this.data.continueRight = 0;
       this.data.characterBgColor[section.answer] = '#2fff00';
       this.data.character[section.answer] = this.data.correct;
       if(id > 0){
@@ -529,4 +534,25 @@ Page({
   onClickRanking: function () {
 
   },
+
+  saveCacheData:function(){
+    if (this.data.timer != null) {
+      console.log(' clearTimeout at first !!!');
+      clearTimeout(this.data.timer);
+      this.data.timer = null;
+    }
+    app.updateWinningStreak(this.data.continueRight);
+    this.data.continueRight = 0;
+    app.saveDataToStorage();
+  },
+
+  onHide: function () {
+    console.log(' onHide!!!');
+    this.saveCacheData();
+  },
+  onUnload: function () {
+    console.log("==onUnload==");
+    this.saveCacheData();    
+  },
+
 })

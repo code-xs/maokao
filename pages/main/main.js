@@ -4,20 +4,22 @@ const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    empirical:0,
-    level:0,
-    ranking:0,
-    progress:50,
-    Height:150,
-    empiricalV:0,
-    levelV:0,
     windowW:0,
     windowH:0,
-    challenge:-1
+    level:0,
+    worldRanking:0,
+    friendRanking:0,
+    rate:20,
+    // local data
+    totalChallenge:0,
+    winningStreak:0,
+    maxScore:0,
+    totalInvitation:0,
+    invitationWin:0,
+    invitationWinRate:0,
   },
   //事件处理函数
   bindViewTap: function() {
@@ -26,12 +28,21 @@ Page({
     })
   },
   onLoad: function () {
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: '#bf70d6',
+    });
+    this.initUserInfo();
+    this.initData();
+  },
+
+  initUserInfo:function(){
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
-    } else if (this.data.canIUse){
+    } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
@@ -52,22 +63,6 @@ Page({
         }
       })
     }
-    var that = this;
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res);
-        that.setData({
-          windowW: res.windowWidth,
-          windowH: res.windowHeight,
-          screenWidth: res.windowWidth,
-        })
-      }
-    });
-    wx.setNavigationBarColor({
-      frontColor: '#ffffff',
-      backgroundColor: '#bf70d6',
-    });
-    this.initData();
   },
   getUserInfo: function(e) {
     console.log(' getUserInfo')
@@ -79,69 +74,20 @@ Page({
   },
 
   initData:function(){
-    var _empirical = wx.getStorageSync('empirical');
-    if (_empirical == null || _empirical < 0)
-      _empirical = 0;
-    var _level = wx.getStorageSync('level');
-    if(_level == null || _level < 0)
-      _level = 0;
-    var _ranking = wx.getStorageSync('ranking');
-    if (_ranking == null || _ranking < 0)
-      _ranking = 0;
-    console.log(' _empirical:' + _empirical + ',_level: ' + _level + ', _ranking:' + _ranking)
     this.setData({
-      empirical: 0,
-      level: 0,
-      ranking: 0,
-      empiricalV: "经验: " + this.data.empirical,
-      levelV:this.data.level+"级"
+      worldRanking: app.globalData.userRanking,
+      level: app.globalData.level,
+      friendRanking: app.globalData.totalScore,
+      rate: app.globalData.rate,
+      totalChallenge: app.globalData.achievementDetail.totalChallenge,
+      winningStreak: app.globalData.achievementDetail.winningStreak,
+      maxScore: app.globalData.achievementDetail.maxScore,
+      totalInvitation: app.globalData.achievementDetail.totalInvitation,
+      invitationWin: app.globalData.achievementDetail.invitationWin,
+      invitationWinRate: app.globalData.achievementDetail.totalInvitation==0 ? 0: parseInt(app.globalData.achievementDetail.invitationWin * 100 / app.globalData.achievementDetail.totalInvitation),
     });
-    const ctx = wx.createCanvasContext('myCanvas');
-    ctx.setLineWidth(2);
-    this.drawCirque(ctx, 33, 32);
-    this.drawRuleText(ctx, 33, 35, 1);
-    ctx.draw();
-    const ctx1 = wx.createCanvasContext('invite');
-    ctx1.setLineWidth(2);
-    this.drawCircle(ctx1, this.data.windowW/2, 50);
-    this.drawRuleText(ctx1, this.data.windowW / 2, 55, '邀请');
-    ctx1.draw();
   },
 
-  drawRuleText: function (ctx, x, y, cnt) {
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.setFontSize(20);
-    ctx.setFillStyle('#e853b8');
-    ctx.setTextAlign('center');
-    ctx.fillText(cnt, x, y);
-  },
-  
-  drawCirque: function (ctx, x, y) {
-    ctx.beginPath();
-    ctx.setStrokeStyle('#eec700');
-    ctx.arc(x, y, 30, 0, 2 * Math.PI);
-    ctx.stroke()
-  },
-  drawCircle: function (ctx, x, y) {
-    ctx.beginPath();
-    ctx.setFillStyle('#eec700');
-    ctx.arc(x, y, 40, 0, 2 * Math.PI);
-    ctx.fill()
-  },
-  onClickSelf:function(){
-    wx.navigateTo({
-      url: '../select/select' + '?lockLevel=' + (5) + '&maxLevel=' + 5
-    })
-  },
-  onClickFriend: function () {
-    wx.navigateTo({
-      url: '../invitation/invitation'
-    })
-  },
-  onClickRanking: function () {
-
-  },
   onShareAppMessage: function (ops) {
     if (ops.from == 'button') {
       return {

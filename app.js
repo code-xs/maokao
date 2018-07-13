@@ -16,6 +16,8 @@ App({
     this.doLogin();    
     this.getUserInfo();
     this.getCategory();
+    this.getDataFromStorage();
+    //this.saveDataToStorage();
   },
   doLogin() { //登录
     let that = this
@@ -41,6 +43,15 @@ App({
     totalScore:11000,
     level:12,
     categoryTree:[],
+    rate:10,
+    achievementDetail:{
+      totalChallenge: 0,
+      winningStreak: 0,
+      maxScore: 0,
+      totalInvitation: 0,
+      invitationWin: 0,
+      invitationWinRate: 0,
+    },
   },
   setUserInfo: function (res) {
     this.globalData.userInfo = res.userInfo;
@@ -209,5 +220,66 @@ App({
         }
       }
     }
-  }
+  },
+
+  addChallengeCnt:function(num){
+    this.globalData.achievementDetail.totalChallenge += num;
+    console.log('update achievementDetail:' + this.globalData.achievementDetail.totalChallenge);
+  },
+
+  updateWinningStreak: function (num) {
+    if (this.globalData.achievementDetail.winningStreak < num)
+      this.globalData.achievementDetail.winningStreak = num;
+  },
+
+  updateMaxScore: function (score) {
+    if (this.globalData.achievementDetail.maxScore < score)
+      this.globalData.achievementDetail.maxScore = score;
+  },
+
+  addTotalInvitation: function (num) {
+    console.log(this.globalData.achievementDetail.totalInvitation);
+    this.globalData.achievementDetail.totalInvitation += num;
+    console.log(this.globalData.achievementDetail.totalInvitation);
+  },
+
+  addInvitationWin: function (num) {
+    return this.globalData.achievementDetail.invitationWin += num;
+  },
+  updateInvitationWinRate:function(){
+    this.globalData.achievementDetail.invitationWinRate = (this.globalData.achievementDetail.invitationWin * 100 / this.globalData.achievementDetail.totalInvitation)
+  },
+  saveDataToStorage:function(){
+    console.log('save achievementDetail:');
+    console.log(this.globalData.achievementDetail);
+    wx.setStorage({
+      key: 'achievementDetail',
+      data: this.globalData.achievementDetail,
+    });
+  },
+  getDataFromStorage: function () {
+    var that = this;
+    wx.getStorage({
+      key: 'achievementDetail',
+      success: function (res) {
+        console.log("获取 achievementDetail 数据成功:");
+        console.log(res.data);
+        that.globalData.achievementDetail = res.data;
+      },
+      fail: function (res) {
+        console.log("获取 achievementDetail 数据失败");
+      }
+    });
+    /*
+    var data = wx.getStorageSync('achievementDetail');
+    console.log('data:');
+    console.log(data);
+    if(!data){
+      console.log('set achievementDetail');
+      //this.globalData.achievementDetail = data;
+    }
+    console.log('get achievementDetail:');
+    console.log(this.globalData.achievementDetail);
+    */
+  },  
 })
