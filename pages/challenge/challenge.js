@@ -19,6 +19,7 @@ Page({
     windowW:0,
     windowH:0,
     score:13242,
+    score1:0,
     typeScore:0,
     answer:[],
     question:[],
@@ -422,6 +423,9 @@ Page({
       this.data.characterBgColor[id] = '#2fff00';
       this.data.character[id] = this.data.correct;
       this.data.continueRight ++;
+      this.data.score += section.score;
+      this.data.typeScore += section.score;
+      this.data.score1 += section.score;
     } else {
       app.updateWinningStreak(this.data.continueRight);
       this.data.continueRight = 0;
@@ -433,8 +437,6 @@ Page({
       }
     }
 
-    this.data.score += ret ? section.score : 0;
-    this.data.typeScore += ret ? section.score : 0;
     this.setData({
       score: this.data.score,
       characterBgColor: this.data.characterBgColor,
@@ -541,6 +543,8 @@ Page({
       clearTimeout(this.data.timer);
       this.data.timer = null;
     }
+    app.updateMaxScore(this.data.score1);
+    this.data.score1 = 0;
     app.updateWinningStreak(this.data.continueRight);
     this.data.continueRight = 0;
     app.saveDataToStorage();
