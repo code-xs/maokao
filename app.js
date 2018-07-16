@@ -209,6 +209,22 @@ App({
       }
     });
   },
+  getNextLevelScoreGap:function(score, level){
+    if (this.globalData.rule != null && this.globalData.rule.length > 0) {
+      for (var i = 0; i < this.globalData.rule.length; i++) {
+        var levels = this.globalData.rule[i];
+        for (var j = 0; j < levels.levels.length; j++) {
+          console.log(' cur level:' + level)
+          var data = levels.levels[j];
+          console.log(' data level:' + data.level)
+          if (level == data.level){
+            return data.score - score;
+          }
+        }
+      }
+    }
+    return 1;    
+  },
 
   scoreConvertLevel:function(score){
     var level = 1;

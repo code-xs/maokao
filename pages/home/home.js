@@ -28,6 +28,7 @@ Page({
     windowH:0,
     challenge:-1,
     userRanking:100,
+    scoreGap:10,
   },
   //事件处理函数
   bindViewTap: function() {
@@ -98,12 +99,14 @@ Page({
 
   updateScoreInfo:function(data){
     var level = app.scoreConvertLevel(app.globalData.totalScore);
+    var scoreGap = app.getNextLevelScoreGap(app.globalData.totalScore, level+1);
     this.setData({
       empirical: 0,
       level: 0,
       ranking: 0,
       empiricalV: this.data.empirical,
       levelV: level,
+      scoreGap: scoreGap,
       userRanking: app.globalData.userRanking,
       empiricalV: app.globalData.totalScore,
     });    
