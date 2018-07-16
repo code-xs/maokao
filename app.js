@@ -15,7 +15,9 @@ App({
     //this.requestQuestionList(0, 10);
     this.doLogin();    
     this.getUserInfo();
-    this.getCategory();
+    this.getLevelRule();
+    this.getCategory();  
+    //this.getScoreInfo();
     this.getDataFromStorage();
     //this.saveDataToStorage();
   },
@@ -29,6 +31,7 @@ App({
         console.log('openId:'+res.openId)
         that.globalData.openId = res.openId;
         console.log(res)
+        that.getScoreInfo();
       },
       fail(error) {
         console.log('登录失败', error);
@@ -40,10 +43,18 @@ App({
     userInfo: null,
     openId:null,
     userRanking:9999,
-    totalScore:11000,
+    totalScore:21000,
     level:12,
     categoryTree:[],
     rate:10,
+    rule:null,
+    updateScoreInfoCallBack:null,
+    scoreInfo:{
+      totalScore:0,
+      experience:0,
+      worldRanking:0,
+      total:0
+    },
     achievementDetail:{
       totalChallenge: 0,
       winningStreak: 0,
@@ -134,8 +145,17 @@ App({
         openId: that.globalData.openId,
       },
       success: (response) => {
-        console.log('请求成功 statusCode:' + response.statusCode);
+        console.log('请求 getScoreInfo 成功 statusCode:' + response.statusCode);
         if (response.statusCode == 200) {
+          that.globalData.scoreInfo = response.data.data;
+          console.log(response.data.data);
+          that.globalData.totalScore = that.globalData.scoreInfo.totalScore;
+          that.globalData.userRanking = that.globalData.scoreInfo.worldRanking;
+          console.log('updateScoreInfoCallBack:')
+          console.log(that.globalData.updateScoreInfoCallBack)
+          if (that.globalData.updateScoreInfoCallBack != null) {
+            that.globalData.updateScoreInfoCallBack(that.globalData.scoreInfo);
+          }
         }
       },
       fail: function (err) {
@@ -155,8 +175,10 @@ App({
       },
       success: (response) => {
         console.log('请求成功 statusCode:' + response.statusCode);
-        if (response.statusCode == 0) {
-          console.log(response);
+        if (response.statusCode == 200) {
+          console.log(response.data.data);
+          that.globalData.rule = response.data.data;
+          console.log(that.globalData.rule);
         }
       },
       fail: function (err) {
@@ -187,21 +209,37 @@ App({
       }
     });
   },
+  getNextLevelScoreGap:function(score, level){
+    if (this.globalData.rule != null && this.globalData.rule.length > 0) {
+      for (var i = 0; i < this.globalData.rule.length; i++) {
+        var levels = this.globalData.rule[i];
+        for (var j = 0; j < levels.levels.length; j++) {
+          console.log(' cur level:' + level)
+          var data = levels.levels[j];
+          console.log(' data level:' + data.level)
+          if (level == data.level){
+            return data.score - score;
+          }
+        }
+      }
+    }
+    return 1;    
+  },
 
   scoreConvertLevel:function(score){
     var level = 1;
-    if(score < 1000){
-      level = 1;
-    } if (score < 2000) {
-      level = 2;
-    } if (score < 3000) {
-      level =3;
-    } if (score < 4000) {
-      level =4;
-    } if (score < 5000) {
-      level =5;
-    }else{
-      level =6;
+    if (this.globalData.rule != null && this.globalData.rule.length > 0){
+      for (var i = 0; i < this.globalData.rule.length; i++){
+        var levels = this.globalData.rule[i];
+        console.log('levels:')
+        console.log(levels.levels)
+        for (var j = 0; j < levels.levels.length; j++) {
+          var data = levels.levels[i];
+          if (score <= data.score){
+            return data.level;
+          }
+        }
+      }
     }
     return level;
   },
@@ -282,4 +320,12 @@ App({
     console.log(this.globalData.achievementDetail);
     */
   },  
+  
+  setUpdateRankingCallBack: function (cb) {
+    if(typeof cb == "function"){
+      this.globalData.updateScoreInfoCallBack = cb;
+    }else{
+      console.log(' setUpdateRankingCallBack param is unvalid!')
+    }
+  },
 })
