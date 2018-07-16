@@ -1,4 +1,4 @@
-<view class="control" mode="widthFix" style="background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge_bg.png'); background-size:cover">
+<view class="control" mode="widthFix" style="background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/bg_select.jpg'); background-size:cover">
     <view class="grid" wx:for="{{categoryTree}}" wx:key="id">
     <view class="first_item" style="background:{{item.color}}">
       <view class="group0">
@@ -11,10 +11,10 @@
         <view class="scoredetail1" wx:for="{{item.subLevel}}" wx:for-item="subLevel" wx:key="id">
           <view class="item1">
             <view class="text" mode="widthFix" style="background: url('{{subLevel.src}}') no-repeat center" id="{{subLevel.id}}" bindtap="onSelect">{{subLevel.subtitle}}</view>
-            <view class="type">{{subLevel.title}}</view>
+            <view class="type" style="color:{{item.color}}">{{subLevel.title}}</view>
           </view>
         </view>
-      </view>
+       </view>
       </view>
     </view>
 </view>

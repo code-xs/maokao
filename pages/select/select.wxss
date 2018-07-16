@@ -23,8 +23,7 @@ page{
   width: 108rpx;
   height: 110rpx;
   border-radius: 50%;
-  color: #151515;
-  font-weight: bold;
+  color: #ffffff;
   display: flex;  
   align-items: center;
   justify-content: center; 
@@ -53,6 +52,7 @@ page{
   background:#eec700;
   border-radius: 20rpx;
 }
+
 .lock:active {  
   background-color: #eec790;
 }
@@ -143,7 +143,6 @@ page{
 
 .type{
     font-size: 0.9rem;
-    color: #055fff;
     width: 100%;
     text-align: center;
 }
