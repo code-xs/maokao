@@ -83,6 +83,7 @@ Page({
         })
       }
     });
+    app.setUpdateRankingCallBack(this.updateScoreInfo);
     this.initData();
   },
 
@@ -95,7 +96,22 @@ Page({
     })
   },
 
+  updateScoreInfo:function(data){
+    var level = app.scoreConvertLevel(app.globalData.totalScore);
+    this.setData({
+      empirical: 0,
+      level: 0,
+      ranking: 0,
+      empiricalV: this.data.empirical,
+      levelV: level,
+      userRanking: app.globalData.userRanking,
+      empiricalV: app.globalData.totalScore,
+    });    
+  },
+
   initData:function(){
+    console.log('initData:')
+    console.log(app.globalData)
     var level = app.scoreConvertLevel(app.globalData.totalScore);
     this.setData({
       empirical: 0,
