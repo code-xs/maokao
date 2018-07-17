@@ -118,21 +118,8 @@ page{
     text-align: center;
     border-radius: 8rpx;
 }
-.data{
-  color: #e0a30a;
-}
-.item{
-    font-size: 0.9rem;
-}
-.showScore{
-  color:aliceblue;
-  background: #bf70d6;
-  margin: 50rpx 20% 20rpx 20%;
-  padding:0rpx 20rpx 0rpx 20rpx;
-  text-align: center;
-  border-radius: 40rpx;
-  font-size: 0.9rem;  
-}
+
+
 .scoredetail1{
     flex:1;
     color:aliceblue;
@@ -277,11 +264,50 @@ page{
   font-size: 0.8rem; 
   text-decoration:underline; 
 }
+
 .item0 {
+    width: 70%;
+    height: 106rpx;
     display: flex;
-    color: #bf70d6;
-    background: #f5ede4;
-    margin: 20rpx 50rpx 20rpx 50rpx;
-    padding:20rpx;
-    border-radius: 50rpx;    
+    justify-content:center;
+    align-items: center;
+    background-size: 100% 100%;
+    margin-left: 15%;
+    padding:15rpx; 
+    background-repeat: no-repeat;
+    background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/my/btn_me_item.png');
+}
+
+.item{
+    font-size: 1.1rem;
+    color: #A54BE6;
+    font-weight: bold;
+}
+
+.data{
+    color: #A54BE6;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.showScore{
+    width: 70%;
+    height: 106rpx;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    background-size: 100% 100%;
+    margin-left: 17%;
+    margin-top: 10rpx;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background-repeat: no-repeat;
+    background-image: url(' https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/my/btn_me_show.png');
+    background-color: transparent;
+}
+
+button::after{ 
+  border: none; 
+  background-color: transparent;
 }
