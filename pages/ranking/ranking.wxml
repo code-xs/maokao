@@ -21,6 +21,6 @@
         </view>
       </view>
     </scroll-view>
-    <view class="showRanking" bindtap="onClickRanking">炫耀排名</view>
+    <button class="showScore" open-type='share'>炫耀排名</button>
   </view>
 </view>

@@ -170,6 +170,7 @@ Page({
   drawCirque: function (ctx, x, y) {
     ctx.beginPath();
     ctx.setStrokeStyle('#eec700');
+    ctx.setStrokeStyle('');
     ctx.arc(x, y, 30, 0, 2 * Math.PI);
     ctx.stroke()
   },

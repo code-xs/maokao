@@ -70,8 +70,8 @@ page{
 }
 .score1 {
     display: flex;
-    margin-left: 2%;
-    margin-right: 2%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 .rule{
     flex:1;
@@ -193,24 +193,24 @@ scroll-view {
 }
 
 .rankingitem{
-    font-size: 0.8rem;
-    color: #ffffff;
+    font-size: 0.9rem;
+    color: #7f8fa6;
     flex:1;
     text-align: center;
     margin: 20rpx;
     padding: 20rpx;
-    background: #285872;
+    background: #ffffff;
     border-radius: 40rpx;
 }
 
 .rankingitem-active{
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: #ffffff;
     flex:1;
     text-align: center;
     margin: 20rpx;
     padding: 20rpx;
-    background: #6363c7;
+    background: #8755de;
     border-radius: 40rpx;
 }
 .ranking{
@@ -347,4 +347,21 @@ scroll-view {
     color:aliceblue;
     margin: 15rpx 40rpx 15rpx 40rpx;
     text-align: center;
+}
+
+
+.showScore{
+    width: 56%;
+    height: 80rpx;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    background-size: 100% 100%;
+    margin-top: 30rpx;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background-repeat: no-repeat;
+    background-image: url(' https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/my/btn_me_show.png');
+    background-color: transparent;
 }
