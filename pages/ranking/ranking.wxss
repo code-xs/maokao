@@ -15,7 +15,7 @@
 }
 
 .userinfo-nickname {
-  color: #aaa;
+  color: #FFFFFF;
 }
 
 .usermotto {
@@ -54,14 +54,14 @@ page{
     /*background:#285872;*/
 }
 .name{
-  color: #7cffff;
+  color: #FFFFFF;
   text-align: left;
   flex-direction: column;  
   justify-content: center; 
   font-size: 0.8rem;
 }
 .level{
-  color: #7c7c70;
+  color: rgba(246, 249, 252,0.5);
   text-align: left;
   flex-direction: column;  
   justify-content: center; 
@@ -111,12 +111,15 @@ page{
   flex-direction: column;  
   justify-content: center; 
   text-align: right;
-  color: #7c7c70;
+  color: rgba(246, 249, 252,0.5);
   opacity: 1;
 }
 
 .rate{
   flex:2;
+  color:#8755de;
+  font-size: 1.1em;
+  margin-right: 10rpx;
   display: flex;  
   flex-direction: column;  
   justify-content: center; 
