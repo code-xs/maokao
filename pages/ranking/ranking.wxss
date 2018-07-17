@@ -74,7 +74,7 @@ page{
     margin-right: 2%;
 }
 .rule{
-  flex:1;
+    flex:1;
     background:#173645;
     color:#ff3429;
     margin: 2rpx 2rpx;
@@ -86,9 +86,10 @@ page{
 }
 
 .list_bg{
-  margin-left: 60rpx;
-  margin-right: 60rpx;
-  border-radius: 30rpx;
+  margin-top: 30rpx;
+  margin-left: 5%;
+  margin-right: 5%;
+  border-radius: 50rpx;
   height: 1020rpx;
 }
 .group1{
@@ -154,13 +155,13 @@ scroll-view {
 }
 .showRanking{
   color:aliceblue;
-  background: #edab63;
+  background: #8B44C9;
   margin: 20rpx 20% 20rpx 20%;
   padding:20rpx;
   max-height: 100rpx;
   text-align: center;
   border-radius: 40rpx;
-  font-size: 0.9rem;  
+  font-size: 0.9rem;
 }
 .scoredetail1{
     flex:1;
