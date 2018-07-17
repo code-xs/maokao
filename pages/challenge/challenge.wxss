@@ -158,6 +158,11 @@ page{
     margin-bottom: 5rpx;
     display: flex;
 }
+
+.item0hide {
+    display: none;
+}
+
 .item2 {
     margin-left: 30rpx;
     margin-top: 5rpx;
@@ -167,6 +172,11 @@ page{
     flex-wrap:wrap;
     justify-content:center;    
 }
+
+.item2hide {
+    display: none;
+}
+
 .item00 {
   background:#285800;
   max-width: 300rpx;
@@ -174,16 +184,16 @@ page{
 }
 .item4 {
     display: flex;
-    /*background:#285873;*/
-    margin-left: 20%;
-    margin-right: 20%;  
+    /*background:#285873;*/  
     margin-top: 5rpx;
     margin-bottom: 5rpx;      
     flex-direction:row;
     flex-wrap:wrap;
     justify-content:center;       
 }
-
+.item4hide{
+  display: none;
+}
 .box{
     font-size: 1.0rem;
     display:flex;
@@ -364,17 +374,23 @@ page{
 }
 .item1{
   flex:2;
-  margin: 50rpx 10rpx 0rpx 10rpx;
+  margin: 0rpx 10rpx 0rpx 10rpx;
   min-height: 50rpx;
-  padding: 20rpx;
+  padding: 0rpx 20rpx 0rpx 20rpx;
   justify-content: center;
+}
+
+.shareBt{
+  width: 200rpx;
+  height: 100rpx;
+  justify-content: center;  
 }
 .context{
     /*background:#2fff00;*/
     display:flex;
     color: #ffffff;
     align-items: center;
-    min-height: 280rpx;
+    min-height: 150rpx;
     margin-left: 10rpx;
     margin-right: 10rpx;
     margin-bottom: 30rpx;
@@ -386,7 +402,7 @@ page{
     color: #ffffff;
     padding-top: 10rpx;
     margin: 30rpx 10rpx 30rpx 10rpx;
-    min-height: 280rpx;
+    min-height: 150rpx;
     word-break: break-all;
     text-align: center;
     font-size: 1.0rem;
@@ -679,6 +695,18 @@ input-holder {
 .showScore{
     color:aliceblue;
     display: flex;
-    margin: 25rpx 15% 25rpx 15%;
+    margin: 50rpx 15% 25rpx 15%;
     /*background: #e0a3ff;*/
+}
+
+.invite_friends {
+  flex: 2;
+  background-repeat:no-repeat;
+  width: 300rpx;
+  height: 140rpx;  
+  background: none !important;
+}
+
+button::after{
+border:none;
 }
