@@ -29,7 +29,7 @@ var config = {
         // 上传积分更新接口
         updateScoreInfo: `${host}/weapp/update_scoreinfo`,
 
-        // 上传积分更新接口
+        // 获取积分规则
         getLevelRule: `${host}/weapp/get_level_rule`,
 
         // 测试的信道服务地址

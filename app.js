@@ -228,15 +228,16 @@ App({
 
   scoreConvertLevel:function(score){
     var level = 1;
+    console.log('levels:' + score)
     if (this.globalData.rule != null && this.globalData.rule.length > 0){
       for (var i = 0; i < this.globalData.rule.length; i++){
         var levels = this.globalData.rule[i];
         console.log('levels:')
         console.log(levels.levels)
         for (var j = 0; j < levels.levels.length; j++) {
-          var data = levels.levels[i];
+          var data = levels.levels[j];
           if (score <= data.score){
-            return data.level;
+            return data.level-1;
           }
         }
       }
@@ -273,6 +274,8 @@ App({
   updateMaxScore: function (score) {
     if (this.globalData.achievementDetail.maxScore < score)
       this.globalData.achievementDetail.maxScore = score;
+    if(score > 0)
+      this.globalData.totalScore += score;
   },
 
   addTotalInvitation: function (num) {
@@ -328,4 +331,32 @@ App({
       console.log(' setUpdateRankingCallBack param is unvalid!')
     }
   },
+  uploadScoreInfo:function(id, score){
+    var that = this;
+    console.log('uploadScoreInfo');
+    qcloud.request({
+      url: config.service.updateScoreInfo,
+      header: {
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      data: {//这里写你要请求的参数
+        openId: that.globalData.openId,
+        total_score: that.globalData.totalScore,
+        category_id: id,
+        current_score:score,
+        user_experience:10,
+      },
+      success: (response) => {
+        console.log('上传 uploadScoreInfo 成功 statusCode:' + response.statusCode);
+        if (response.statusCode == 200) {
+          console.log(response.data.data);
+          console.log(response.data.code);
+        }
+      },
+      fail: function (err) {
+        console.log('请求 uploadScoreInfo 失败', err);
+      }
+    });
+  }
 })

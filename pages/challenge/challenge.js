@@ -543,10 +543,11 @@ Page({
       clearTimeout(this.data.timer);
       this.data.timer = null;
     }
-    app.updateMaxScore(this.data.score1);
-    this.data.score1 = 0;
+    app.updateMaxScore(this.data.score1);   
     app.updateWinningStreak(this.data.continueRight);
+    app.uploadScoreInfo(this.data.ID, this.data.score1);    
     this.data.continueRight = 0;
+    this.data.score1 = 0;
     app.saveDataToStorage();
   },
 
