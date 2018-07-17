@@ -2,7 +2,9 @@
 <view class="control">
   <view class="score">
     <view class="group0">
-      <image class="userimg" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <view class="avatar_layout">
+        <image class="userimg" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      </view>
       <view class="nametitle">{{userInfo.nickName}}</view>
     </view>
   </view>
