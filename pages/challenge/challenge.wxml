@@ -105,13 +105,16 @@
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{gameOver}}">
   </view>
   <view class="failed" wx:if="{{gameOver}}">
-    <view class="result">连续答对60题</view>
-    <image class="resultImg" mode="top" src="/images/bg.png"></image>
-    <view class="centerText">经验+10分</view>
-    <view class="line"></view>
+    <image class="gameover" mode="widthFix" src="/images/gameover.png"></image>
+    <view class="warp">
+      <image   mode="widthFix" src="/images/result-bg.png" background-size="cover"></image>
+       <text>连续答对{{continueRight}}题</text>
+    </view>
     <view class="retryError">回顾本场错误题目</view>
-    <view class="item1" bindtap="onClickInvitation"> 再次挑战</view>
-    <view class="item1" bindtap="onClickRandom"> 炫耀战绩</view>
+    <view class ="showScore">
+      <image class="item1" mode="widthFix" bindtap="onClickInvitation" src="/images/again1.png"></image>
+      <image class="item1" mode="widthFix" bindtap="onClickRandom" src='/images/again3.png'></image>
+    </view>
   </view>
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}">
   </view>

@@ -27,7 +27,7 @@ page{
   position: fixed;*/
   background-size: 100% 200%;
   margin: 0px;
-  background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge_bg.png');
+  background-image: url('http://static3-cdn.scloud.lfengmobile.com/800000026-mokao/homeback.jpg');
 }
 .canvas{
     width: 100%;
@@ -275,10 +275,29 @@ page{
     align-items: center;
     justify-content: center;
 }
-.resultImg{
-  width: 100%;
-  margin-top: 30rpx;
-  height: 150rpx;  
+
+.warp {
+  margin-top: 50rpx;
+  height: 100%;
+  position: relative;
+  margin-left: 15%;
+  margin-right: 15%;
+  width: 70%;    
+}
+
+.warp image {
+    width: 100%;
+    height: 100%;
+}
+
+.warp text {
+    width: 100%;
+    line-height: 20px;
+    text-align: center;
+    color: #fff;
+    position: absolute;
+    top: 55%;
+    left: 0%;
 }
 .centerText{
   width: 100%;
@@ -286,11 +305,28 @@ page{
   margin-bottom: 20rpx;
   text-align: center;  
 }
+.gameover{
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-top: 80rpx;
+  width: 40%;  
+}
+
+.gameover1{
+  width: 100%;
+  margin-top: 50rpx;
+  margin-bottom: 20rpx;
+  text-align: center;
+  color: #ffffff;
+  font-weight: bolder;
+  font-size: 1.8rem; 
+}
 .retryError{
   width: 100%;
   margin-top: 50rpx;
   text-align: center;
-  font-size: 0.8rem; 
+  font-size: 1.0rem; 
+  color: #ffffff;
   text-decoration:underline; 
 }
 .type6{
@@ -327,17 +363,11 @@ page{
     border-radius: 8rpx;
 }
 .item1{
-    background:#285872;
-    color:aliceblue;
-    margin-left: 30%;
-    margin-right: 30%;
-    margin-top: 50rpx;
-    min-height: 50rpx;
-    padding: 20rpx;
-    text-align: center;
-    border-radius: 30rpx;
-    font-size: 1.2rem;
-    justify-content: center;
+  flex:2;
+  margin: 50rpx 10rpx 0rpx 10rpx;
+  min-height: 50rpx;
+  padding: 20rpx;
+  justify-content: center;
 }
 .context{
     /*background:#2fff00;*/
@@ -644,4 +674,11 @@ input-holder {
   overflow: hidden;
   position: fixed;
   /*background: #dd00ff;*/
+}
+
+.showScore{
+    color:aliceblue;
+    display: flex;
+    margin: 25rpx 15% 25rpx 15%;
+    /*background: #e0a3ff;*/
 }

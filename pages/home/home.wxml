@@ -25,7 +25,7 @@
     </view>
     <view class="empirical-item">
       <view class="empirical-text">经验{{empiricalV}}</view>
-      <view class="empirical-text1">还差50即可升5级别</view>
+      <view class="empirical-text1">还差{{scoreGap}}即可升{{levelV+1}}级别</view>
     </view>
   </view>
 
