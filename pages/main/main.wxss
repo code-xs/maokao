@@ -16,7 +16,7 @@ page{
   background-size: 100% auto;
   margin: 0px;
   background-repeat: no-repeat;
-  background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/my_top_bg.png');
+  background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/my/my_top_bg.png');
 }
 .canvas{
     width: 100%;
@@ -38,16 +38,17 @@ page{
 
 .ranking2 {
     width: 70%;
-    height: 96rpx;
+    height: 90rpx;
     display: flex;
     justify-content:center;
     color: #FFFFFF;
     font-size: 1.0em;
-    background-size: 100% auto;
+    background-size: 96% 96%;
     margin-top: 10rpx;
     margin-left: 15%;
     padding-top:14rpx; 
     background-repeat: no-repeat;
+    background-position:center;
     background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/my/bg_me_beatrank.png');
 }
 
