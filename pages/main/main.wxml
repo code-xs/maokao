@@ -7,7 +7,7 @@
     </view>
   </view>
 
-<view class="ranking"  mode="widthFix" style="background: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/rank-item-bg.png') no-repeat center" >你打败了全球{{rate}}%的用户</view>
+<view class="ranking2" >你打败了全球{{rate}}%的用户</view>
 
 <view class="score1">
     <view class="group0">
@@ -48,6 +48,5 @@
     <view class="data">{{invitationWinRate}}</view>
   </view-->
   <button class="showScore" open-type='share'>炫耀战绩</button>
-
 
 </view>
