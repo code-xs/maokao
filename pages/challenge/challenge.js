@@ -32,6 +32,7 @@ Page({
     showModal:false,
     showFailed:false,
     showSuccess:false,
+    pendEvent:false,
     redCnt:5,
     gameOver:false,
     timer:null,
@@ -310,6 +311,7 @@ Page({
             showFailed:true,
             showFragment:0,
           });
+          this.saveCacheData();
         }else{
           if(that.data.PAGE == 0){
             that.initData();
@@ -325,16 +327,6 @@ Page({
     });
   },
   initData:function(){
-    var _empirical = wx.getStorageSync('empirical');
-    if (_empirical == null || _empirical <= 0)
-      _empirical = 999;
-    var _level = wx.getStorageSync('level');
-    if(_level == null || _level < 0)
-      _level = 0;
-    var _ranking = wx.getStorageSync('ranking');
-    if (_ranking == null || _ranking < 0)
-      _ranking = 0;
-    console.log(' _empirical:' + _empirical + ',_level: ' + _level + ', _ranking:' + _ranking);
     this.initHearts(this.data.redCnt);
     this.setData({
       ranking: 0,
@@ -359,6 +351,8 @@ Page({
     });
   },
   initQuestionAndAnswer(index){
+    this.data.pendEvent = false;
+
     this.data.answer = [];
     this.data.question = [];
     this.data.answerid =[];
@@ -386,7 +380,7 @@ Page({
     this.startCountDown(section.timer*10);
     app.addChallengeCnt(1);
   },
-  onClickContext:function(){
+  showModal:function(){
     this.setData({
       showModal: !this.data.showModal
     })
@@ -452,6 +446,10 @@ Page({
     })
   },
   onClickAnswer:function(e){
+    if (this.data.pendEvent){
+      console.log(' pendEvent !!!');
+      return;
+    }
     if (this.data.timer != null) {
       console.log(' clearTimeout at first !!!');
       clearTimeout(this.data.timer);
@@ -496,10 +494,11 @@ Page({
     }else{
       this.initHearts(--this.data.redCnt);
       this.showAnswer(-1);
+      this.data.pendEvent = true;
       if (this.data.redCnt > 0){
-        //this.loadNext(1000);
+        this.loadNext(2000);
       }else{
-        this.onClickContext();
+        this.showModal();
       }
     }
   },
@@ -530,11 +529,10 @@ Page({
       url: '../select/select' + '?lockLevel=' + (5) + '&maxLevel=' + 5
     })
   },
-  onClickFriend: function () {
 
-  },
-  onClickRanking: function () {
-
+  onClickAgain: function () {
+    this.data.PAGE = 0;
+    this.requestQuestionList(this.data.PAGE, this.data.ID);
   },
 
   saveCacheData:function(){
@@ -543,11 +541,15 @@ Page({
       clearTimeout(this.data.timer);
       this.data.timer = null;
     }
-    app.updateMaxScore(this.data.score1);   
-    app.updateWinningStreak(this.data.continueRight);
-    app.uploadScoreInfo(this.data.ID, this.data.score1);    
-    this.data.continueRight = 0;
-    this.data.score1 = 0;
+    if (this.data.score1 > 0){
+      app.updateMaxScore(this.data.score1);   
+      app.uploadScoreInfo(this.data.ID, this.data.score1);
+      this.data.score1 = 0;
+    }
+    if (this.data.continueRight >0){
+      app.updateWinningStreak(this.data.continueRight);
+      this.data.continueRight = 0;
+    }
     app.saveDataToStorage();
   },
 
@@ -559,5 +561,41 @@ Page({
     console.log("==onUnload==");
     this.saveCacheData();    
   },
+  onShareAppMessage: function (ops) {
+    var that = this;
+    if (ops.from == 'button') {
+      return {
+        title: '[有人@我]免费全面的考题等你挑战',
+        path: 'pages/home/home',
+        success: function (res) {
+          console.log("转发成功:" + JSON.stringify(res));
+          that.retryAgain();
+        },
+        fail: function (res) {
+          console.log("转发失败:" + JSON.stringify(res));
+        }
+      }
+    } else {
+      return {
+        title: '[有人@我]免费全面的考题等你挑战',
+        path: 'pages/home/home',
+        success: function (res) {
+          console.log("转发成功:" + JSON.stringify(res));
+        },
+        fail: function (res) {
+          console.log("转发失败:" + JSON.stringify(res));
+        }
+      }
+    }
+  },
 
+  retryAgain:function(){
+    this.data.redCnt = 5;
+    this.initHearts(this.data.redCnt);
+    this.setData({
+      showModal: false,
+    });
+    this.data.pendEvent = false;
+    this.loadNext(1000);
+  }
 })
