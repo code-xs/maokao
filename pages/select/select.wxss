@@ -29,10 +29,6 @@ page{
   align-items: center;
   justify-content: center; 
 }
-.grid {  
-  padding-top: 30rpx;
-  border-radius: 20rpx;
-}
 
 .lock-grid:active {  
   background-color: #eec790;
@@ -156,6 +152,12 @@ color: transparent;
 
 .scroll_panel {
   width: 100%;
-  height: 1330rpx;
+  height: 1200rpx;
   white-space:nowrap;
 }
+
+.grid {  
+  padding-top: 30rpx;
+  border-radius: 20rpx;
+}
+
