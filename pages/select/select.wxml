@@ -1,6 +1,6 @@
-<view class="control" mode="widthFix" style="background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/bg_select.jpg'); background-size:cover">
+<view class="control" mode="widthFix" >
 
- <scroll-view scroll-y="true" style="height:1330rpx;">
+ <scroll-view class="scroll_panel" scroll-y="true">
     <view class="grid" wx:for="{{categoryTree}}" wx:key="id">
     <view class="first_item" style="background:{{item.color}}">
       <view class="group0">

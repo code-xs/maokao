@@ -1,8 +1,9 @@
 /**level.wxss**/  
 page{
-  display: block;
+  display:block;
   min-height: 100%;
-
+  background-size: cover;
+  background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/bg_select.jpg'); 
 }
 .canvas{
     width: 10%;
@@ -87,8 +88,8 @@ page{
 
 ::-webkit-scrollbar{
 width: 0;
-height: 10rpx;
-color: #ff0000;
+height: 0;
+color: transparent;
 }
  
 .control{
@@ -151,4 +152,10 @@ color: #ff0000;
 .image{
   width: 108rpx;
   height: 108rpx;
+}
+
+.scroll_panel {
+  width: 100%;
+  height: 1330rpx;
+  white-space:nowrap;
 }
