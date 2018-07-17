@@ -126,7 +126,7 @@ Page({
   onLoad: function () {
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
-      backgroundColor: '#bf70d6',
+      backgroundColor: '#bb6ed5',
     });    
     var that = this;
     wx.getSystemInfo({

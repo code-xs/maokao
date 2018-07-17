@@ -29,14 +29,15 @@ page{
   position: fixed;
   background-size: 100% 100%;
   margin: 0px;
-  background-image: url('http://static3-cdn.scloud.lfengmobile.com/800000026-mokao/challenge-bg.png');
+  background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/rank/bg_rank.png');
 }
+
 .canvas{
     width: 100%;
     margin-left: 20rpx;
 }
 .invite{
-  padding-top: 20rpx;
+  padding-top: 20rpx; 
 }
 
 .canvasOverflow{
