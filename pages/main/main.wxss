@@ -46,7 +46,6 @@ page{
   justify-content: center;  
   margin-top: 10rpx;
   margin-bottom: 30rpx;
-  border: 1rpx #000000 solid;
 }
 
 .ranking2 {
@@ -55,11 +54,11 @@ page{
     display: flex;
     justify-content:center;
     color: #FFFFFF;
-    font-size: 0.8em;
+    font-size: 1.0em;
     background-size: 100% auto;
     margin-top: 10rpx;
     margin-left: 15%;
-    padding-top:10rpx; 
+    padding-top:14rpx; 
     background-repeat: no-repeat;
     background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/my/bg_me_beatrank.png');
 }
@@ -78,10 +77,8 @@ page{
     /*background:#285872;*/
 }
 .score0{
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 50%; 
-  background: #e0a30a;
+  width: 70rpx;
+  height: 70rpx;
   text-align: center;
   display: flex;  
   flex-direction: column;  
