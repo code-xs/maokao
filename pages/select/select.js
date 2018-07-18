@@ -252,7 +252,7 @@ Page({
     });
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
-      backgroundColor: '#bf70d6',
+      backgroundColor: '#a753d6',
     });
     this.data.duration = wx.getStorageSync('durations');
     console.log("__level:" + this.data.lockLevel+', max:'+this.data.maxLevel);

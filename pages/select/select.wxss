@@ -3,7 +3,7 @@ page{
   display:block;
   min-height: 100%;
   background-size: cover;
-  background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/bg_select.jpg'); 
+  background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/category/bg_category.jpg'); 
 }
 .canvas{
     width: 10%;
