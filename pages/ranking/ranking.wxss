@@ -6,12 +6,18 @@
 }
 
 .userimg {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 0 auto;  
+  width: 108rpx;
+  height: 108rpx;
+  margin-right: 20rpx; 
   display: flex;
-  border-radius: 50%;
-  opacity: 1;
+  border-radius: 40%;
+}
+
+.userimg_crown {
+  width: 48rpx;
+  height: 48rpx;
+  margin-left: -50rpx;
+  margin-top: -96rpx;
 }
 
 .userinfo-nickname {
@@ -152,6 +158,8 @@ scroll-view {
 .item{
     display: flex;
     /*background: #4b4b4b;*/
+    justify-content:center;
+    align-items: center;
     font-size: 0.9rem;
     color: #f5ede4;
     height: 144rpx;
@@ -217,14 +225,18 @@ scroll-view {
     border-radius: 40rpx;
 }
 .ranking{
-    flex:2;  
-    font-size: 1.5rem;
+    width: 44rpx;
+    height: 44rpx;  
+    font-size: 1.0rem;
     text-align: center;
-    color: #f5ede4;
+    margin-left: 20rpx;
+    margin-right: 20rpx;
+    color: #ffffff;
     display: flex;  
     flex-direction: column;  
     justify-content: center;  
-    opacity: 1;   
+    align-items: center;
+    border-radius: 50%;
 }
 
 .empirical{

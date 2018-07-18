@@ -9,8 +9,9 @@
     <scroll-view scroll-y="true" upper-threshold="10"  lower-threshold="10" bindscrolltoupper="onScrolltoupper" bindscrolltolower="onScrolltolower">
       <view class="list" wx:for="{{datalist}}" wx:for-item="i" wx:key="id">
         <view class="item" style='background: rgba(35, 30, 41, 0.5);'>
-          <view class="ranking">{{datalist[index].ranking}}</view>
+          <view class="ranking" style="background-color: {{idxbgcolorlist[index]}};">{{datalist[index].ranking}}</view>
           <image class="userimg" src="{{datalist[index].src}}" background-size="cover"></image>
+          <image class="userimg_crown" src="{{crownlist[index]}}"  ></image>
           <view class="group0">
             <view class="name">{{datalist[index].name}}</view>
             <view class="level">等级:{{datalist[index].level}}</view>

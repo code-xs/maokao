@@ -1,11 +1,9 @@
-//index.js
-//获取应用实例
 const app = getApp()
 var qcloud = require('../../vendor/wafer2-client-sdk/index');
 var config = require('../../config');
 Page({
   data: {
-    motto: 'Hello World',
+    motto: 'MKWZ',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -21,6 +19,8 @@ Page({
     challenge:-1,
     rankingType:1,
     datalist:[],
+    crownlist:[],
+    idxbgcolorlist:[],
     page_index:0,
     cateoryID:16,
     list: [{ title: "题目1", content: "内容1" },
@@ -120,12 +120,13 @@ Page({
       rate: '50%',
     }],    
   },
-  //事件处理函数
+
   bindViewTap: function() {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
+
   onLoad: function () {
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
@@ -147,8 +148,10 @@ Page({
       rankingType: 2,
       datalist: this.data.friendlist
     });
+
     this.getWorldRankingList(0);
   },
+
   getUserInfo: function(e) {
     console.log(' getUserInfo')
     app.globalData.userInfo = e.detail.userInfo
@@ -246,6 +249,7 @@ Page({
         console.log('请求成功  getWorldRankingList statusCode:' + response.statusCode);
         if (response.statusCode == 200) {
           console.log(response.data);
+
           if (that.data.page_index ==0){
             this.setData({
               datalist: response.data.data,
@@ -259,6 +263,25 @@ Page({
             });
           }
 
+          this.data.crownlist = new Array();
+          this.data.crownlist[0] = "https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/rank/ic_rank_1.png";
+          this.data.crownlist[1] = "https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/rank/ic_rank_2.png";
+          this.data.crownlist[2] = "https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/rank/ic_rank_3.png";
+          // if (datalist.length > 3) {
+          //   for (var i = 3; i < datalist.length; i++) {
+          //     crownlist[i] = "none;";
+          //   }
+          // }
+        
+          this.data.idxbgcolorlist = new Array();
+          this.data.idxbgcolorlist[0] = "#FDAF01";
+          this.data.idxbgcolorlist[1] = "#DD4E43";
+          this.data.idxbgcolorlist[2] = "#00A2FF";
+
+          this.setData({
+            crownlist: this.data.crownlist,
+            idxbgcolorlist: this.data.idxbgcolorlist,
+          });
         }
       },
       fail: function (err) {
