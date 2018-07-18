@@ -1,7 +1,8 @@
 //index.js
 //获取应用实例
 const app = getApp()
-
+var qcloud = require('../../vendor/wafer2-client-sdk/index');
+var config = require('../../config');
 Page({
   data: {
     motto: 'Hello World',
@@ -20,6 +21,8 @@ Page({
     challenge:-1,
     rankingType:1,
     datalist:[],
+    page_index:0,
+    cateoryID:16,
     list: [{ title: "题目1", content: "内容1" },
     { title: "题目2", content: "内容2" },
     { title: "题目3", content: "内容3" },
@@ -141,9 +144,10 @@ Page({
     });
     this.initData();
     this.setData({
-      rankingType: 1,
+      rankingType: 2,
       datalist: this.data.friendlist
-    });    
+    });
+    this.getWorldRankingList(0);
   },
   getUserInfo: function(e) {
     console.log(' getUserInfo')
@@ -187,17 +191,32 @@ Page({
     });
   },
   onClickWorldRanking: function () {
+    if (this.data.rankingType == 2) {
+      return;
+    }
     this.setData({
       rankingType: 2,
-      datalist: this.data.worlddata,
+      page_index: 0,
     });
+    this.getWorldRankingList(0);
   },
-  onClickTypeRanking: function () {
+  onClickCateoryRanking: function () {
+    if (this.data.rankingType == 3){
+      return ;
+    }
     this.setData({
-      rankingType: 3
+      rankingType: 3,
+      page_index:0,
     });
+    this.getCateoryRankingList(0, this.data.cateoryID);
   },
   onScrolltolower:function(e){
+    if (this.data.rankingType == 2){
+      this.getWorldRankingList(++this.data.page_index);
+    } else if (this.data.rankingType == 3){
+      this.getCateoryRankingList(++this.data.page_index, this.data.cateoryID);
+    }
+    /*
     for(var i=0; i< this.data.worlddata.length; i++){
       this.data.datalist.push(this.data.worlddata[i]);
     }
@@ -207,8 +226,83 @@ Page({
       datalist: this.data.datalist,
     });
     console.log(this.data.datalist);
+    */
   },
   onScrolltoupper: function (e) {
     console.log(e);
-  }
+  },
+  getWorldRankingList: function (index) {
+    var that = this;
+    qcloud.request({
+      url: config.service.getWorldRankingList,
+      header: {
+        'Content-Type': 'application/json'
+      },
+      data: {//这里写你要请求的参数
+        openId: app.globalData.openId,
+        page_index: index,
+      },
+      success: (response) => {
+        console.log('请求成功  getWorldRankingList statusCode:' + response.statusCode);
+        if (response.statusCode == 200) {
+          console.log(response.data);
+          if (that.data.page_index ==0){
+            this.setData({
+              datalist: response.data.data,
+            });
+          }else{
+            for (var i = 0; i < response.data.data.length; i++) {
+              this.data.datalist.push(response.data.data[i]);
+            }
+            this.setData({
+              datalist: this.data.datalist,
+            });
+          }
+
+        }
+      },
+      fail: function (err) {
+        console.log('请求 LevelRule 失败', err);
+      }
+    });
+  },
+  getCateoryRankingList: function (index, id) {
+    var that = this;
+    qcloud.request({
+      url: config.service.getRankingList,
+      header: {
+        'Content-Type': 'application/json'
+      },
+      data: {//这里写你要请求的参数
+        openId: app.globalData.openId,
+        page_index: index,
+        category_id:id,
+      },
+      success: (response) => {
+        console.log('请求成功  getCateoryRankingList statusCode:' + response.statusCode);
+        if (response.statusCode == 200) {
+          console.log(response.data);
+          for (var i = 0; i < response.data.data.length; i++) {
+            response.data.data[i].total_score = response.data.data[i].score;
+          }
+          if (that.data.page_index == 0) {
+            this.setData({
+              datalist: response.data.data,
+            });
+          } else {
+            for (var i = 0; i < response.data.data.length; i++) {
+              this.data.datalist.push(response.data.data[i]);
+            }
+            this.setData({
+              datalist: this.data.datalist,
+            });
+          }
+
+        }
+      },
+      fail: function (err) {
+        console.log('请求 LevelRule 失败', err);
+      }
+    });
+  },  
 })
