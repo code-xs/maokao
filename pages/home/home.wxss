@@ -15,20 +15,24 @@
 }
 
 .userinfo-avatar_btn {
-  width: 140rpx;
-  height: 140rpx;
-  border-radius: 50%;
-  border: 4rpx solid #ffffff;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  width: 136rpx;
+  height: 136rpx;
   padding: 0;
-  margin-top: 10rpx;
+  margin-top: 16rpx;
   margin-left: 20rpx;
   background: none !important;  
 }
 
 .userinfo-avatar_cover {
-   width: 140rpx;
-   height: 140rpx;
-   background: none !important;  
+   width: 124rpx;
+   height: 124rpx;
+   border-radius: 50%;
+   border: 6rpx #ffffff solid;
+   background-size: 100% 100%;
+   background: none !important; 
 }
 
 .userinfo-nickname {

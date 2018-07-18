@@ -9,10 +9,10 @@ var config = require('../../config');
 
 Page({
   data: {
-    motto: 'Hello World',
+    motto: 'MKWZ',
     userInfo: {},
     userInfo1: {
-      avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/avatar_default.png",
+avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avatar_default.jpg",
       nickName:"MKING"
     },
     hasUserInfo: false,
@@ -73,6 +73,8 @@ Page({
         })
       }
     }
+    
+
     var that = this;
     wx.getSystemInfo({
       success: function (res) {
