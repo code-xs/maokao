@@ -6,10 +6,12 @@
 }
 
 .userinfo-avatar {
-  width: 160rpx;
-  height: 160rpx;
-  margin: 20rpx;
+  width: 120rpx;
+  height: 120rpx;
   border-radius: 50%;
+  border: 6rpx #F0F0F0 solid;
+  margin-bottom: 20rpx;
+  margin-left: 10rpx;
 }
 
 .userinfo-nickname {
@@ -448,20 +450,17 @@ page{
     color:aliceblue;
     border-radius: 10rpx;
     font-size: 0.6rem;
-    /*background: #ff3429*/
 }
 .score{
     color:aliceblue;
     display: flex;
     margin: 25rpx;
     text-align: center;
-    /*background: #e0a3ff;*/
 }
 .heart-group{ 
   margin-right: 5rpx;
-  margin-top: 10rpx;
+  margin-top: 20rpx;
   display: flex;
-  /*background: #2fffff;*/
   position: relative;  
   float: left;  
 }
@@ -478,7 +477,6 @@ page{
     /*background: #e0a3ff;*/
 }
 .win{
-  margin-top: 10rpx;
   display: flex;
   align-items: center;
   justify-content: center;  
@@ -500,8 +498,6 @@ page{
   background-color: #e0a30a;
 }
 .nametitle{
-    padding-top: 20rpx;
-    padding-bottom: 20rpx;
     font-weight: bold;
     font-size: 1.0rem;
     line-height: 40rpx;
@@ -509,10 +505,9 @@ page{
 }
 .ranking{
     font-size: 1.5rem;
-    margin-top: 30rpx;
-    color: #fbb94e;
-    display: flex;
-    justify-content: center;        
+    margin-left: 10rpx;
+    color: #f8bb39;   
+    margin-top: -10rpx;  
 }
 .empirical{
     padding-bottom: 20rpx;

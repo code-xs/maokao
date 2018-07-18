@@ -19,7 +19,7 @@
               <view class="ranking">{{score}}分</view>
           </view>
         </view>
-        <progress class= "progress" backgroundColor="rgba(255, 255, 255, 0.75)" color="#ffc15c" stroke-width="12" percent="{{progress}}"/>
+        <progress class= "progress" backgroundColor="rgba(255, 255, 255, 0.75)" color="#f8bb39" stroke-width="12" percent="{{progress}}"/>
       </view>
   </view>
 
