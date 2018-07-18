@@ -367,7 +367,9 @@ Page({
       characterBgColor: this.data.characterBgColor,
       character: this.data.character,
     })
+    
     this.startCountDown(section.timer*10);
+    
     app.addChallengeCnt(1);
   },
   showModal:function(){

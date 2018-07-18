@@ -578,39 +578,43 @@ page{
 
 .modal-title {
   padding-top: 50rpx;
-  padding-bottom: 50rpx;
+  padding-bottom: 30rpx;
   font-size: 1.4rem;
-  color: #303060;
+  color: #8b44c9;
   text-align: center;
-  font-weight:900;
+  font-weight:bold;
 }
 .modal-subtitle {
-  padding-top: 10rpx;
+  padding-top: 0rpx;
   padding-bottom: 10rpx;
   font-size: 0.9rem;
-  color: #0000bb;
+  color: #333333;
   text-align: center;
-  font-weight:500;
 }
 .modal-subtitle2 {
-  padding-top: 10rpx;
+  padding-top: 0rpx;
   padding-bottom: 10rpx;  
   font-size: 0.9rem;
-  color: #0000bb;
+  color: #333333;
   text-align: center;
-  font-weight:500;
 }
-.modal-subtitle3 {
-  margin: 20rpx 20% 50rpx 20%;
-  padding-top: 2rpx;
-  padding-bottom: 2rpx;
-  font-size: 0.9rem;
-  color: #0000bb;
-  text-align: center;
-  background: #ec5300;
-  border-radius: 50rpx;
-  box-shadow:6rpx 6rpx 6rpx 6rpx #151515
+.modal-subtitle3{
+    width: 350rpx;
+    height: 88rpx;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    background-size: 100% 100%;
+    margin-top: 40rpx;
+    margin-bottom: 40rpx;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background-repeat: no-repeat;
+    background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/bt_challenge_back.png');
+    background-color: transparent;
 }
+
 .modal-subimage{
   width: 100%;
   margin-top: 30rpx;
@@ -623,10 +627,10 @@ page{
   justify-content: flex-end;
 }
 .modal-closeimage{
-  width: 50rpx;
-  height: 50rpx;
-  margin-top: 10rpx;
-  margin-right: 10rpx;  
+  width: 44rpx;
+  height: 44rpx;
+  margin-top: 16rpx;
+  margin-right: 16rpx;  
 }
 .modal-content {
   padding: 50rpx 32rpx;
