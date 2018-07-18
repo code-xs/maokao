@@ -43,10 +43,10 @@ App({
     userInfo: null,
     openId:null,
     userRanking:9999,
-    totalScore:21000,
-    level:12,
+    totalScore:0,
+    level:0,
     categoryTree:[],
-    rate:10,
+    rate:0,
     rule:null,
     updateScoreInfoCallBack:null,
     scoreInfo:{
@@ -186,7 +186,28 @@ App({
       }
     });
   },
-
+  
+  getWorldRankingList:function() {
+    var that = this;
+    qcloud.request({
+      url: config.service.getWorldRankingList,
+      header: {
+        'Content-Type': 'application/json'
+      },
+      data: {//这里写你要请求的参数
+        openId: that.globalData.openId,
+      },
+      success: (response) => {
+        console.log('请求成功  getWorldRankingList statusCode:' + response.statusCode);
+        if (response.statusCode == 200) {
+          console.log(response.data);
+        }
+      },
+      fail: function (err) {
+        console.log('请求 LevelRule 失败', err);
+      }
+    });
+  },
   getRankingList:function(id){
     var that = this;
     qcloud.request({
@@ -274,8 +295,12 @@ App({
   updateMaxScore: function (score) {
     if (this.globalData.achievementDetail.maxScore < score)
       this.globalData.achievementDetail.maxScore = score;
-    if(score > 0)
+    if(score > 0){
       this.globalData.totalScore += score;
+      if (this.globalData.updateScoreInfoCallBack != null) {
+        this.globalData.updateScoreInfoCallBack(this.globalData.scoreInfo);
+      }
+    }
   },
 
   addTotalInvitation: function (num) {
@@ -333,7 +358,7 @@ App({
   },
   uploadScoreInfo:function(id, score){
     var that = this;
-    console.log('uploadScoreInfo');
+    console.log('uploadScoreInfo id:'+id+', score:'+score);
     qcloud.request({
       url: config.service.updateScoreInfo,
       header: {

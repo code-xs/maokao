@@ -77,19 +77,19 @@
     <view class="context2" >{{question.title}}</view>
     <view class="item4">
       <view class="answerIndex" style="background-color:{{characterBgColor[0]}}">{{character[0]}}</view>
-      <view class="{{ answerIndex == 1? 'item-answer':'item'}}" id="{{question.answers[0].id}}" bindtap="onClickAnswer"> {{question.answers[0].answer}}</view>
+      <view class="{{ answerIndex == 1? 'item-answer':'item'}}" id="{{question.answers[0].id}}" style="color:{{characterBgColor[0]}}" bindtap="onClickAnswer"> {{question.answers[0].answer}}</view>
     </view>
     <view class="item4">
       <view class="answerIndex" style="background-color:{{characterBgColor[1]}}">{{character[1]}}</view>
-      <view class="{{ answerIndex == 2? 'item-answer':'item'}}" id="{{question.answers[1].id}}" bindtap="onClickAnswer"> {{question.answers[1].answer}}</view>
+      <view class="{{ answerIndex == 2? 'item-answer':'item'}}" id="{{question.answers[1].id}}" style="color:{{characterBgColor[1]}}" bindtap="onClickAnswer"> {{question.answers[1].answer}}</view>
     </view>
     <view class="{{question.answers[2].answer == null? 'item4hide':'item4'}}">
       <view class="answerIndex" style="background-color:{{characterBgColor[2]}}">{{character[2]}}</view>
-      <view class="{{ answerIndex == 3? 'item-answer':'item'}}" id="{{question.answers[2].id}}" bindtap="onClickAnswer"> {{question.answers[2].answer}}</view>
+      <view class="{{ answerIndex == 3? 'item-answer':'item'}}" id="{{question.answers[2].id}}" style="color:{{characterBgColor[2]}}" bindtap="onClickAnswer"> {{question.answers[2].answer}}</view>
     </view>
     <view class="{{question.answers[3].answer == null? 'item4hide':'item4'}}">
       <view class="answerIndex" style="background-color:{{characterBgColor[3]}}">{{character[3]}}</view>
-      <view class="{{ answerIndex == 4? 'item-answer':'item'}}" id="{{question.answers[3].id}}" bindtap="onClickAnswer"> {{question.answers[3].answer}}</view>
+      <view class="{{ answerIndex == 4? 'item-answer':'item'}}" style="color:{{characterBgColor[3]}}" id="{{question.answers[3].id}}" bindtap="onClickAnswer"> {{question.answers[3].answer}}</view>
     </view>
   </view>
 

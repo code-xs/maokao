@@ -212,6 +212,20 @@ page{
     justify-content: center;    
     align-self: center;
 }
+
+.item-answer{
+    color:#2fff00;
+    font-weight:bold;
+    padding:30rpx 20rpx 30rpx 20rpx;
+    border-radius: 10rpx;
+    font-size: 1.0rem;
+    min-height: 90rpx;
+    display:flex;
+    align-items: center;
+    justify-content: center;    
+    align-self: center;
+}
+
 .fragement4item{
     background:#285873;
     color:#ffffff;
@@ -255,20 +269,7 @@ page{
     align-items: center;
     justify-content: center;
 }
-.item-answer{
-    /*background:#2fff00;*/
-    color:aliceblue;
-    padding:30rpx 20rpx 30rpx 20rpx;
-    margin-left: 30rpx;
-    margin-right: 30rpx;
-    margin-top: 5rpx;
-    margin-bottom: 5rpx;
-    border-radius: 10rpx;
-    font-size: 1.0rem;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-}
+
 
 .item4-answer{
     /*background:#2fff00;*/

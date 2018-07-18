@@ -236,17 +236,8 @@ Page({
     this.data.ID = option.id;
     console.log(' get select id:'+this.data.ID)
     console.log(' get app.globalData.userInfo:' + app.globalData.userInfo)
-    var score = wx.getStorageSync('totalScore');
-    if(score == null || score == 0)
-      score = 1;
-    var typeScore = wx.getStorageSync('typeScore-'+this.data.ID);
-    if (typeScore == null)
-      typeScore = 0;
-    typeScore = parseInt(typeScore);
-    console.log(' get typeScore:' + typeScore)
     this.setData({
-      score: score,
-      typeScore: typeScore,
+      score: app.globalData.totalScore,
     })    
     if (app.globalData.userInfo) {
       this.setData({
@@ -280,7 +271,6 @@ Page({
       title: "个人挑战"
     })
     this.requestQuestionList(this.data.PAGE, this.data.ID);
-    //this.initData();
   },
   getUserInfo: function(e) {
     console.log(' getUserInfo')
@@ -418,32 +408,28 @@ Page({
       this.data.character[id] = this.data.correct;
       this.data.continueRight ++;
       this.data.score += section.score;
-      this.data.typeScore += section.score;
       this.data.score1 += section.score;
     } else {
       app.updateWinningStreak(this.data.continueRight);
       this.data.continueRight = 0;
       this.data.characterBgColor[section.answer] = '#2fff00';
       this.data.character[section.answer] = this.data.correct;
-      if(id > 0){
+      if(id >= 0){
         this.data.characterBgColor[id] = '#ff3429';
         this.data.character[id] = this.data.incorrect;
       }
     }
-
+    var index = parseInt(section.answer) + 1;
     this.setData({
       score: this.data.score,
       characterBgColor: this.data.characterBgColor,
       character: this.data.character,
+      answerIndex: index,
     });
     wx.setStorage({
       key: 'totalScore',
       data: this.data.score,
     });
-    wx.setStorage({
-      key: 'typeScore-'+this.data.ID,
-      data: this.data.typeScore,
-    })
   },
   onClickAnswer:function(e){
     if (this.data.pendEvent){

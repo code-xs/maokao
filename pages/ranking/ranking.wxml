@@ -1,9 +1,8 @@
 <!--index.wxml-->
 <view class="control">
   <view class="score1">
-      <view bindtap="onClickFriendRanking" class="{{ rankingType == 1?'rankingitem-active':'rankingitem'}}">好友排名</view>
       <view bindtap="onClickWorldRanking" class="{{ rankingType == 2?'rankingitem-active':'rankingitem'}}">世界排名</view>
-      <view bindtap="onClickTypeRanking" class="{{ rankingType == 3?'rankingitem-active':'rankingitem'}}">科目排名</view>
+      <view bindtap="onClickCateoryRanking" class="{{ rankingType == 3?'rankingitem-active':'rankingitem'}}">科目排名</view>
   </view>
   <view class="list_bg" style='background: rgba(0, 0, 0, 0.65);'>
     <view class="" style='height:140rpx;  border-radius: 50rpx 50rpx 0rpx 0rpx;'></view>
@@ -14,10 +13,10 @@
           <image class="userimg" src="{{datalist[index].src}}" background-size="cover"></image>
           <view class="group0">
             <view class="name">{{datalist[index].name}}</view>
-            <view class="level">{{datalist[index].level}}</view>
+            <view class="level">等级:{{datalist[index].level}}</view>
           </view>
-          <view class="rate-title">胜率:</view>
-          <view class="rate">{{datalist[index].rate}}</view>
+          <view class="rate-title">积分:</view>
+          <view class="rate">{{datalist[index].total_score}}</view>
         </view>
       </view>
     </scroll-view>

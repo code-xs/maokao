@@ -20,8 +20,11 @@ var config = {
         // 获取考题列表
         requestQuestionList: `${host}/weapp/get_question_detail`,
       
-        // 获取用户排名列表
-        getRankingList: `${host}/weapp/get_ranking_list`,
+        // 获取用户科目排名列表
+        getRankingList: `${host}/weapp/get_category_ranking`,
+
+        // 获取全球排名列表
+        getWorldRankingList: `${host}/weapp/get_ranking_list`,
 
         // 获取用户积分,排名接口
         getScoreInfo: `${host}/weapp/get_scoreinfo`,
