@@ -162,7 +162,7 @@ scroll-view {
     align-items: center;
     font-size: 0.9rem;
     color: #f5ede4;
-    height: 144rpx;
+    height: 160rpx;
 }
 .showRanking{
   color:aliceblue;
