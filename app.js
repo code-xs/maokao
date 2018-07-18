@@ -9,17 +9,11 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-    //*
-    qcloud.setLoginUrl(config.service.loginUrl);
-    //*/
-    //this.requestQuestionList(0, 10);
-    this.doLogin();    
-    //this.getUserInfo();
+    qcloud.setLoginUrl(config.service.loginUrl);    
+    this.doLogin();
     this.getLevelRule();
     this.getCategory();  
-    //this.getScoreInfo();
     this.getDataFromStorage();
-    //this.saveDataToStorage();
     this.getCommonCateory();
   },
   doLogin() { //登录
@@ -281,7 +275,7 @@ App({
   },
 
   findCategoryItemById(id){
-    for (var i = 0; i < this.globalData.categoryTree.length - 1; i++) {
+    for (var i = 0; i < this.globalData.categoryTree.length; i++) {
       var twoLevel = this.globalData.categoryTree[i].subLevel;
       console.log('twoLevel:');
       console.log(twoLevel);
