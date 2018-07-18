@@ -8,6 +8,14 @@ Page({
     selectLevel:null,
     isClass:true,
     TREE:null,
+    commonList: [],
+    selectCateory: {
+      id: 0,
+      title: "none",
+      subId: 0,
+      src: null,
+      subtitle:"none"
+    },
   },
   onLoad: function (option) {
     console.log('onLoad:')
@@ -19,8 +27,11 @@ Page({
     this.initData(option.id);
   },
   initData: function (id){
+    var that = this;
     var classes = app.findCategoryItemById(id);
     //var classes = JSON.parse(option.class);
+    console.log("classes:");
+    console.log(classes);
     console.log('initData classes.length:' + classes.subLevel.length)
     for (var i = 0; i < classes.subLevel.length; i++) {
       var obj = classes.subLevel[i];
@@ -33,6 +44,17 @@ Page({
       TREE:classes,
     });
     console.log("CLASS:" + this.data.CLASS + ' class len:'+this.data.CLASS.length);
+    wx.getStorage({
+      key: 'commonCateory',
+      success: function (res) {
+        console.log("获取 commonCateory 数据成功:");
+        that.data.commonList = res.data;
+        console.log(that.data.commonList);
+      },
+      fail: function (res) {
+        console.log("获取 commonCateory 数据失败");
+      }
+    });
   },
 
   resetData: function (value) {
@@ -84,6 +106,37 @@ Page({
         break;
       }
     }
+    app.updateCommonCateory(id, this.data.TREE);
+    /*
+    var find = false;
+    for (var i = 0; i < this.data.commonList.length; i++) {
+      var obj = this.data.commonList[i];
+      if (obj.id == this.data.TREE.id){
+        this.data.commonList[i].subId = id;
+        find = true;
+        break;
+      }
+    }
+    console.log('  find:' + find);
+    if(find == false){
+      this.data.selectCateory.id = (10000+this.data.TREE.id);
+      this.data.selectCateory.subId = id;
+      this.data.selectCateory.title = this.data.TREE.title;
+      this.data.selectCateory.src = this.data.TREE.src;
+      this.data.selectCateory.subtitle = this.data.TREE.subtitle;
+      this.data.commonList.push(this.data.selectCateory);
+      console.log(this.data.commonList);
+      wx.setStorage({
+        key: 'commonCateory',
+        data: this.data.commonList,
+      });
+    } else {
+      wx.setStorage({
+        key: 'commonCateory',
+        data: this.data.commonList,
+      });
+    } */
+
     console.log('  open challenge with param id:'+id);
     wx.navigateTo({
       url: '../challenge/challenge?id='+id,

@@ -14,12 +14,13 @@ App({
     //*/
     //this.requestQuestionList(0, 10);
     this.doLogin();    
-    this.getUserInfo();
+    //this.getUserInfo();
     this.getLevelRule();
     this.getCategory();  
     //this.getScoreInfo();
     this.getDataFromStorage();
     //this.saveDataToStorage();
+    this.getCommonCateory();
   },
   doLogin() { //登录
     let that = this
@@ -45,7 +46,7 @@ App({
     userRanking:9999,
     totalScore:0,
     level:0,
-    categoryTree:[],
+    categoryTree:null,
     rate:0,
     rule:null,
     updateScoreInfoCallBack:null,
@@ -62,6 +63,20 @@ App({
       totalInvitation: 0,
       invitationWin: 0,
       invitationWinRate: 0,
+    },
+    commonList: null,
+    commonCateory: {
+      id: 0,
+      title: "常用", src: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/select/category_idx_fav.png',
+      color: '#f49967',
+      subLevel: [],
+    },
+    selectCateory: {
+      id: 0,
+      title: "none",
+      subId: 0,
+      src: null,
+      subtitle: "none"
     },
   },
   setUserInfo: function (res) {
@@ -101,8 +116,7 @@ App({
       success: (response) => {
         console.log('请求成功 statusCode:' + response.statusCode);
         if (response.statusCode == 200) {
-          that.globalData.categoryTree = JSON.stringify(response.data.data);
-          that.globalData.categoryTree = JSON.parse(that.globalData.categoryTree);
+          that.globalData.categoryTree = response.data.data;
         }
         console.log(that.globalData.categoryTree);
       },
@@ -382,6 +396,55 @@ App({
       fail: function (err) {
         console.log('请求 uploadScoreInfo 失败', err);
       }
+    });
+  },
+  getCateoryList:function(){
+    var list = [];
+    if (this.globalData.commonCateory.subLevel.length > 0){
+      list.push(this.globalData.commonCateory);
+    }
+    for (var i in this.globalData.categoryTree) {
+      list.push(this.globalData.categoryTree[i]);
+    }
+    return list;
+  },
+  getCommonCateory:function(){
+    var that = this;
+    wx.getStorage({
+      key: 'commonCateory',
+      success: function (res) {
+        console.log("获取 commonCateory 数据成功:");
+        that.globalData.commonCateory.subLevel = res.data;
+        console.log(that.globalData.commonCateory);
+      },
+      fail: function (res) {
+        console.log("获取 commonCateory 数据失败");
+      }
+    });
+  },
+  updateCommonCateory:function(id, data){
+    var find = false;
+    for (var i = 0; i < this.globalData.commonCateory.subLevel.length; i++) {
+      var obj = this.globalData.commonCateory.subLevel[i];
+      if (obj.id == (data.id+10000)) {
+        this.globalData.commonCateory.subLevel[i].subId = id;
+        find = true;
+        break;
+      }
+    }
+    console.log('  find:' + find);
+    if (find == false) {
+      this.globalData.selectCateory.id = (10000 + data.id);
+      this.globalData.selectCateory.subId = id;
+      this.globalData.selectCateory.title = data.title;
+      this.globalData.selectCateory.src = data.src;
+      this.globalData.selectCateory.subtitle = data.subtitle;
+      this.globalData.commonCateory.subLevel.push(this.globalData.selectCateory);
+      console.log(this.globalData.commonCateory);
+    }
+    wx.setStorage({
+      key: 'commonCateory',
+      data: this.globalData.commonCateory.subLevel,
     });
   }
 })
