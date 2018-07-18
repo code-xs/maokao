@@ -15,11 +15,11 @@
             </view>
           </view>
           <view class="score">
-              <image class="win" mode="widthFix"style="width:68rpx;height:60rpx;" src="../../images/crown.png"> </image>
+              <image class="win" src="https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_crown.png"> </image>
               <view class="ranking">{{score}}分</view>
           </view>
         </view>
-        <progress class= "progress" color="#e18050" stroke-width="12" percent="{{progress}}"/>
+        <progress class= "progress" backgroundColor="rgba(255, 255, 255, 0.75)" color="#ffc15c" stroke-width="12" percent="{{progress}}"/>
       </view>
   </view>
 

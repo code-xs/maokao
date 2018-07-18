@@ -25,9 +25,9 @@ page{
   min-height: 100%;
   /*overflow: hidden;
   position: fixed;*/
-  background-size: 100% 200%;
+  background-size: 100% 100%;
   margin: 0px;
-  background-image: url('http://static3-cdn.scloud.lfengmobile.com/800000026-mokao/homeback.jpg');
+  background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge-bg.jpg');
 }
 .canvas{
     width: 100%;
@@ -356,10 +356,9 @@ page{
   flex-direction: row;
 }
 .progress{
-  margin-right: 20rpx;
+  margin-right: 30rpx;
   border-radius:100rpx;
   overflow:hidden;
-  background: #000000;
 }
 
 .title{
@@ -478,10 +477,12 @@ page{
     /*background: #e0a3ff;*/
 }
 .win{
-  margin-top: 30rpx;
+  margin-top: 10rpx;
   display: flex;
   align-items: center;
   justify-content: center;  
+  width: 44rpx;
+  height: 60rpx;
   /*background-color: #d0d0d0;*/
 }
 .buttonsStyle{
@@ -508,9 +509,8 @@ page{
 .ranking{
     font-size: 1.5rem;
     margin-top: 30rpx;
-    color: #e18050;
+    color: #fbb94e;
     display: flex;
-    /*background-color: #d0d0d0;*/
     justify-content: center;        
 }
 .empirical{
