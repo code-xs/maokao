@@ -42,6 +42,7 @@ Page({
     characterBgColor:[],
     hearts:[],
     continueRight:0,
+    continueMaxRight:0,
     levelRules: [{
       'title': '新手',
       'levels': [{
@@ -386,9 +387,11 @@ Page({
     app.addChallengeCnt(1);
   },
   showModal:function(){
+    this.data.pendEvent = false;
     this.setData({
       showModal: !this.data.showModal
     })
+    this.saveCacheData();
   },
 
   onCancel: function () {
@@ -426,6 +429,11 @@ Page({
       this.data.character[id] = 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_aws_right.png';
     } else {
       app.updateWinningStreak(this.data.continueRight);
+      if (this.data.continueRight > this.data.continueMaxRight){
+        this.setData({
+          continueMaxRight: this.data.continueRight,
+        })
+      }
       this.data.continueRight = 0;
       this.data.characterBgColor[section.answer] = '#9be665';
       this.data.character[section.answer] = 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_aws_right.png';
@@ -433,6 +441,7 @@ Page({
         this.data.characterBgColor[id] = '#F76F40';
         this.data.character[id] = 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_aws_error.png';
       }
+      this.initHearts(--this.data.redCnt);
     }
     var index = parseInt(section.answer) + 1;
     this.setData({
@@ -458,7 +467,12 @@ Page({
     }
     this.showAnswer(e.target.id);
     console.log(' this.data.tree.length:' + this.data.tree.length);
-    this.loadNext(1000);
+    this.data.pendEvent = true;
+    if (this.data.redCnt > 0) {
+      this.loadNext(1000);
+    } else {
+      this.showModal();
+    }
   },
   loadNext:function(delay){
     if (this.data.curIndex >= this.data.tree.length - 1) {
@@ -474,8 +488,10 @@ Page({
   onClickCloseModal:function(){
     console.log(' onClickCloseModal !');
     this.setData({
-      showModal: !this.data.showModal
-    })    
+      showModal: !this.data.showModal,
+      gameOver: true,
+      showFragment: 0,
+    })
   },
   startCountDown:function(duration){
     var that = this;
@@ -532,8 +548,8 @@ Page({
   },
 
   onClickAgain: function () {
-    this.data.PAGE = 0;
-    this.requestQuestionList(this.data.PAGE, this.data.ID);
+    console.log(' onClickAgain !!!');
+    this.reLoadData();
   },
 
   saveCacheData:function(){
@@ -549,6 +565,11 @@ Page({
     }
     if (this.data.continueRight >0){
       app.updateWinningStreak(this.data.continueRight);
+      if (this.data.continueRight > this.data.continueMaxRight){
+        this.setData({
+          continueMaxRight: this.data.continueRight,
+        })
+      }
       this.data.continueRight = 0;
     }
     app.saveDataToStorage();
@@ -570,7 +591,7 @@ Page({
         path: 'pages/home/home',
         success: function (res) {
           console.log("转发成功:" + JSON.stringify(res));
-          that.retryAgain();
+          that.reLoadData();
         },
         fail: function (res) {
           console.log("转发失败:" + JSON.stringify(res));
@@ -587,6 +608,19 @@ Page({
           console.log("转发失败:" + JSON.stringify(res));
         }
       }
+    }
+  },
+  reLoadData:function(){
+    if (this.data.gameOver){
+      this.setData({
+        gameOver: false,
+      })
+      this.data.PAGE = 0;
+      this.data.redCnt = 5;
+      this.data.curIndex = 0;
+      this.requestQuestionList(this.data.PAGE, this.data.ID);    
+    }else if (this.data.showModal) {
+      this.retryAgain();
     }
   },
 

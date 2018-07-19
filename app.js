@@ -428,7 +428,7 @@ App({
         break;
       }
     }
-    console.log('  find:' + find);
+    console.log('  update:' + update);
     if (update == false) {
       console.log(data);
       if (this.globalData.commonCateory.subLevel.length >= 6){

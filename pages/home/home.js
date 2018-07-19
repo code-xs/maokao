@@ -178,6 +178,7 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
     if (ops.from == 'button') {
       return {
         title: '[有人@我]免费全面的考题等你挑战',
+        imageUrl:'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home_rank.png',
         path: 'pages/home/home',
         success: function (res) {
           console.log("转发成功:" + JSON.stringify(res));

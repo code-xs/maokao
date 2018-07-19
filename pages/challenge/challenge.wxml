@@ -112,12 +112,11 @@
 
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{gameOver}}">
   </view>
-
   <view class="failed" wx:if="{{gameOver}}">
     <image class="gameover" mode="widthFix" src="/images/gameover.png"></image>
     <view class="warp">
       <image mode="widthFix" src="/images/result-bg.png" background-size="cover"></image>
-      <text>连续答对{{continueRight}}题</text>
+      <text class="">最多连续答对{{continueMaxRight}}题</text>
     </view>
     <view class="retryError">回顾本场错误题目</view>
     <view class="showScore">
@@ -131,8 +130,6 @@
 
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}">
   </view>
-
-
   <view class="modal-dialog" wx:if="{{showModal}}">
     <view class="image-fail">
       <image class="modal-closeimage" bindtap="onClickCloseModal" mode="widthFix" src="https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_dialog_close.png"></image>
@@ -142,7 +139,5 @@
     <view class="modal-subtitle2">立刻复活一次继续答题</view>
     <button class="modal-subtitle3" open-type='share'>去复活</button>
   </view>
-
-  
   <image class="modal-image" mode="widthFix" src="/images/fail.png" wx:if="{{showModal}}"></image>
 </view>

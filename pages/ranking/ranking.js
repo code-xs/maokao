@@ -25,7 +25,7 @@ Page({
     cateoryID:0,
     myRanking:100,
     showCateoryList:false,
-    cateoryTitle:null,
+    cateoryTitle:'暂无科目',
     cateoryList:[],
     list: [{ title: "题目1", content: "内容1" },
     { title: "题目2", content: "内容2" },
@@ -154,9 +154,13 @@ Page({
       datalist: this.data.friendlist,
       myRanking: app.globalData.userRanking,
       cateoryList: app.globalData.commonList,
-      cateoryTitle: app.globalData.commonList[0].subtitle1,
-      cateoryID: app.globalData.commonList[0].subId
     });
+    if (app.globalData.commonList.length > 0){
+      this.setData({
+        cateoryTitle: app.globalData.commonList[0].subtitle1,
+        cateoryID: app.globalData.commonList[0].subId
+      });
+    }
     this.getWorldRankingList(0);
   },
 
