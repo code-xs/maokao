@@ -420,7 +420,7 @@ App({
     var find = false;
     for (var i = 0; i < this.globalData.commonCateory.subLevel.length; i++) {
       var obj = this.globalData.commonCateory.subLevel[i];
-      if (obj.id == (data.id+10000)) {
+      if (obj.id == (data.id)) {
         this.globalData.commonCateory.subLevel[i].subId = id;
         find = true;
         break;
@@ -428,12 +428,11 @@ App({
     }
     console.log('  find:' + find);
     if (find == false) {
-      this.globalData.selectCateory.id = (10000 + data.id);
-      this.globalData.selectCateory.subId = id;
-      this.globalData.selectCateory.title = data.title;
-      this.globalData.selectCateory.src = data.src;
-      this.globalData.selectCateory.subtitle = data.subtitle;
-      this.globalData.commonCateory.subLevel.push(this.globalData.selectCateory);
+      console.log(data);
+      if (this.globalData.commonCateory.subLevel.length >= 6){
+        this.globalData.commonCateory.subLevel.splice(0, 1);
+      }
+      this.globalData.commonCateory.subLevel.push(data);
       console.log(this.globalData.commonCateory);
     }
     wx.setStorage({
