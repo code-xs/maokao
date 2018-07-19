@@ -15,6 +15,7 @@ App({
     this.getCategory();  
     this.getDataFromStorage();
     this.getCommonCateory();
+    this.getCommonCateoryList();
   },
   doLogin() { //登录
     let that = this
@@ -58,7 +59,7 @@ App({
       invitationWin: 0,
       invitationWinRate: 0,
     },
-    commonList: null,
+    commonList: [],
     commonCateory: {
       id: 0,
       title: "常用", src: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/select/category_idx_fav.png',
@@ -70,7 +71,8 @@ App({
       title: "none",
       subId: 0,
       src: null,
-      subtitle: "none"
+      subtitle: "none",
+      subtitle1:'none'
     },
   },
   setUserInfo: function (res) {
@@ -417,17 +419,17 @@ App({
     });
   },
   updateCommonCateory:function(id, data){
-    var find = false;
+    var update = false;
     for (var i = 0; i < this.globalData.commonCateory.subLevel.length; i++) {
       var obj = this.globalData.commonCateory.subLevel[i];
       if (obj.id == (data.id)) {
         this.globalData.commonCateory.subLevel[i].subId = id;
-        find = true;
+        update = true;
         break;
       }
     }
     console.log('  find:' + find);
-    if (find == false) {
+    if (update == false) {
       console.log(data);
       if (this.globalData.commonCateory.subLevel.length >= 6){
         this.globalData.commonCateory.subLevel.splice(0, 1);
@@ -439,5 +441,38 @@ App({
       key: 'commonCateory',
       data: this.globalData.commonCateory.subLevel,
     });
-  }
+    this.updateCommonCateoryList(id, data);
+  },
+  updateCommonCateoryList: function (id, data) {
+    var find = false;
+    for (var i = 0; i < this.globalData.commonList.length; i++) {
+      var obj = this.globalData.commonList[i];
+      if (obj.subId == (data.subId)) {
+        console.log('  find:'+id+' has already exist!');
+        console.log(data);
+        return;
+      }
+    }
+    console.log(data);
+    this.globalData.commonList.push(data);
+    console.log(this.globalData.commonList);
+    wx.setStorage({
+      key: 'cateoryList',
+      data: this.globalData.commonList,
+    });
+  },
+  getCommonCateoryList: function () {
+    var that = this;
+    wx.getStorage({
+      key: 'cateoryList',
+      success: function (res) {
+        console.log("获取 commonList 数据成功:");
+        that.globalData.commonList = res.data;
+        console.log(that.globalData.commonList);
+      },
+      fail: function (res) {
+        console.log("获取 commonList 数据失败");
+      }
+    });
+  },
 })

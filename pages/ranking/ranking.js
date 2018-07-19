@@ -22,7 +22,11 @@ Page({
     crownlist:[],
     idxbgcolorlist:[],
     page_index:0,
-    cateoryID:16,
+    cateoryID:0,
+    myRanking:100,
+    showCateoryList:false,
+    cateoryTitle:null,
+    cateoryList:[],
     list: [{ title: "题目1", content: "内容1" },
     { title: "题目2", content: "内容2" },
     { title: "题目3", content: "内容3" },
@@ -144,11 +148,15 @@ Page({
       }
     });
     this.initData();
+    console.log(app.globalData.commonList);
     this.setData({
       rankingType: 2,
-      datalist: this.data.friendlist
+      datalist: this.data.friendlist,
+      myRanking: app.globalData.userRanking,
+      cateoryList: app.globalData.commonList,
+      cateoryTitle: app.globalData.commonList[0].subtitle1,
+      cateoryID: app.globalData.commonList[0].subId
     });
-
     this.getWorldRankingList(0);
   },
 
@@ -234,6 +242,13 @@ Page({
   onScrolltoupper: function (e) {
     console.log(e);
   },
+
+  onClickSelectCateory:function(e){
+    this.setData({
+      showCateoryList: !this.data.showCateoryList,
+    });
+  },
+
   getWorldRankingList: function (index) {
     var that = this;
     qcloud.request({
@@ -328,4 +343,18 @@ Page({
       }
     });
   },  
+  onSelectCateory:function(e){
+    console.log('onSelectCateory');
+    console.log(e.target.id);
+    this.setData({
+      showCateoryList: !this.data.showCateoryList,
+      page_index: 0,
+      cateoryID :e.target.id,
+    });
+    this.getCateoryRankingList(0, this.data.cateoryID);
+  },
+
+  onScrolltolower: function (e) {
+
+  }
 })

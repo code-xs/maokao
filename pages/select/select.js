@@ -7,7 +7,8 @@ Page({
       title: "none",
       subId: 0,
       src: null,
-      subtitle: "none"
+      subtitle: "none",
+      subtitle1:'none'
     },
   },
   onLoad: function (option) {
@@ -55,6 +56,7 @@ Page({
         this.data.selectCateory.title = obj.title;
         this.data.selectCateory.src = obj.src;
         this.data.selectCateory.subtitle = obj.subtitle;
+        this.data.selectCateory.subtitle1 = obj.title;
         app.updateCommonCateory(obj.id, this.data.selectCateory);
         wx.navigateTo({
           url: '../challenge/challenge?id=' + obj.id,

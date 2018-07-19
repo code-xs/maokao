@@ -5,7 +5,19 @@
       <view bindtap="onClickCateoryRanking" class="{{ rankingType == 3?'rankingitem-active':'rankingitem'}}">科目排名</view>
   </view>
   <view class="list_bg" style='background: rgba(0, 0, 0, 0.65);'>
-    <view class="" style='height:140rpx;  border-radius: 50rpx 50rpx 0rpx 0rpx;'></view>
+    <view class="" style='height:140rpx;  border-radius: 50rpx 50rpx 0rpx 0rpx;'>
+      <view class="{{ rankingType == 3?'cateoryItem':'cateoryItemHide'}}">
+        <view class="cateoryRanking">选择科目</view>
+        <view class="selectItem" bindtap="onClickSelectCateory">
+          <view class="cateoryRanking">{{cateoryTitle}}</view>
+          <image class="arrow" mode="widthFix" src='/images/fail2.png'></image>
+        </view>
+      </view>
+      <view class="myRankingItem">
+        <view class="myRanking">我的排名</view>
+        <view class="myRanking">{{myRanking}}</view>
+      </view>
+    </view>
     <scroll-view scroll-y="true" upper-threshold="10"  lower-threshold="10" bindscrolltoupper="onScrolltoupper" bindscrolltolower="onScrolltolower">
       <view class="list" wx:for="{{datalist}}" wx:for-item="i" wx:key="id">
         <view class="item" style='background: rgba(35, 30, 41, 0.5);'>
@@ -22,5 +34,16 @@
       </view>
     </scroll-view>
     <button class="showScore" open-type='share'>炫耀排名</button>
+  </view>
+  <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showCateoryList}}">
+  </view>
+  <view class="cateoryList" wx:if="{{showCateoryList}}">
+    <view class="" style='height:40rpx;  border-radius: 50rpx 50rpx 0rpx 0rpx;'>
+    </view>
+    <scroll-view scroll-y="true" bindscrolltolower="onScrolltolowerCateory">
+      <view class="list" wx:for="{{cateoryList}}" wx:for-item="i" wx:key="id">
+        <view class="cateoryText" id="{{cateoryList[index].subId}}" bindtap="onSelectCateory" >{{cateoryList[index].subtitle1}}</view>
+      </view>
+    </scroll-view>
   </view>
 </view>

@@ -14,7 +14,8 @@ Page({
       title: "none",
       subId: 0,
       src: null,
-      subtitle:"none"
+      subtitle:"none",
+      subtitle1: "none",
     },
   },
   onLoad: function (option) {
@@ -74,6 +75,7 @@ Page({
   onLevelSelect:function(e){
     console.log(' onLevelSelect:'+e.target.id);
     var pullID = -1;
+    var title = null;
     var id = e.target.id;
     var tree = this.data.TREE.subLevel;
     for (var i = 0; i < tree.length; i++) {
@@ -86,6 +88,7 @@ Page({
           return;
         }else{
           pullID = id;
+          title = obj.title;
           break;
         }
       }
@@ -99,6 +102,7 @@ Page({
         console.log(' subLevel title:' + obj2.title + ' obj.id:' + obj2.id);
         if (id == obj2.id) {
           pullID = id;
+          title = obj2.title;
           break;
         }
       }
@@ -112,6 +116,7 @@ Page({
     this.data.selectCateory.title = this.data.TREE.title;
     this.data.selectCateory.src = this.data.TREE.src;
     this.data.selectCateory.subtitle = this.data.TREE.subtitle;
+    this.data.selectCateory.subtitle1 = this.data.selectCateory.title+title;
     console.log('  open challenge with param id:' + id);
     console.log(this.data.selectCateory);
     app.updateCommonCateory(id, this.data.selectCateory);
