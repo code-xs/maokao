@@ -133,13 +133,13 @@ Page({
         }],        
         'answer': 3,
         'score':10,
-        'timer':60,
+        'timer':10,
         'type':1,
         'index':999,
     }, {
         'id': 13,
-        'title': '前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
-        'title1': '/images/angrybirds.png',
+        'title': '22222222前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
+        'title2': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
         'answers':[{
           'answer': '回到网页开发去了前段时上线后就弃坑了,回到网页开发去了',
           'id': 0,
@@ -154,14 +154,14 @@ Page({
           'id': 3,
         }],
         'score': 10,
-        'timer': 120,
+        'timer': 10,
         'answer':2,
         'type': 2,
         'index': 1001,
       }, {
       'id': 14,
-      'title': '前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
-      'title1': '/images/angrybirds.png',
+      'title': '33333333前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
+      'title2': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
       'answers': [{
         'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
         'id': 0,
@@ -175,14 +175,27 @@ Page({
           'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
         'id': 3,
       }],
+      'answers_img': [{
+        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+        'id': 0,
+      }, {
+        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+        'id': 1,
+      }, {
+        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+        'id': 2,
+      }, {
+        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+        'id': 3,
+      }],
       'answer': 1,
       'score': 10,
-      'timer': 160,
+      'timer': 10,
       'type': 3,
       'index': 1002,
       }, {
         'id': 15,
-        'title': '接天莲叶无穷尽下一句是', 
+        'title': '44444接天莲叶无穷尽下一句是', 
         'answers': [{
           'answer': '毕竟西湖六月中',
           'id': 0,
@@ -198,13 +211,13 @@ Page({
         }],
         'answer': 2,
         'score': 10,
-        'timer': 200,
+        'timer': 10,
         'type': 4,
         'index': 1003,
       }, {
         'id': 16,
-        'title': '银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运动银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运动银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运',
-        'title1': '/images/angrybirds.png',
+        'title': '5555555银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运动银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运动银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运',
+        'title2': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
         'answers': [{
           'answer': '毕竟西湖六月中',
           'id': 0,
@@ -220,7 +233,7 @@ Page({
         }],
         'answer': 1,
         'score': 10,
-        'timer': 110,
+        'timer': 10,
         'type': 5,
         'index': 1004,
       }]
@@ -297,7 +310,7 @@ Page({
         that.data.tree = response.data.data;
         if (that.data.tree == null || that.data.tree.length == 0){
           this.setData({
-            gameOver: true,            
+            gameOver: true,             
             showFailed:true,
             showFragment:0,
           });
@@ -331,9 +344,9 @@ Page({
     this.data.hearts = [];
     for(var i=0; i< 5; i++){
       if(i <redCnt){
-        this.data.hearts.push('/images/heart-l.png');
+        this.data.hearts.push('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_heart.png');
       }else{
-        this.data.hearts.push('/images/heartfail-l.png');
+        this.data.hearts.push('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_heart_fail.png');
       }
     }
     this.setData({
@@ -351,10 +364,10 @@ Page({
     var section = this.data.tree[index];
     var type = section.type;
 
-    this.data.character.push('A.');
-    this.data.character.push('B.');
-    this.data.character.push('C.');
-    this.data.character.push('D.');      
+    this.data.character.push('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_a.png');
+    this.data.character.push('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_b.png');
+    this.data.character.push('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_c.png');
+    this.data.character.push('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_d.png');      
     console.log(' section ' + index + ' data.type:' + section.type);
     this.setData({
       answer: this.data.answer,
@@ -406,19 +419,19 @@ Page({
     var ret = this.checkAnswer(id);
     console.log(' onClickAnswer:' + id + ' ret is:' + ret);    
     if (ret) {
-      this.data.characterBgColor[id] = '#2fff00';
-      this.data.character[id] = this.data.correct;
+      this.data.characterBgColor[id] = '#9be665';
       this.data.continueRight ++;
       this.data.score += section.score;
       this.data.score1 += section.score;
+      this.data.character[id] = 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_aws_right.png';
     } else {
       app.updateWinningStreak(this.data.continueRight);
       this.data.continueRight = 0;
-      this.data.characterBgColor[section.answer] = '#2fff00';
-      this.data.character[section.answer] = this.data.correct;
+      this.data.characterBgColor[section.answer] = '#9be665';
+      this.data.character[section.answer] = 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_aws_right.png';
       if(id >= 0){
-        this.data.characterBgColor[id] = '#ff3429';
-        this.data.character[id] = this.data.incorrect;
+        this.data.characterBgColor[id] = '#F76F40';
+        this.data.character[id] = 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_aws_error.png';
       }
     }
     var index = parseInt(section.answer) + 1;
