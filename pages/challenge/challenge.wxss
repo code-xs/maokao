@@ -558,6 +558,16 @@ page{
   z-index: 9000;
   color: #fff;
 }
+.upgrade-dialog {
+  margin-left: 15%;
+  width: 70%;
+  overflow: hidden;
+  position: fixed;
+  top: 35%;
+  z-index: 9003;
+  background: #f9f9f9;
+  border-radius: 30rpx;
+}
 
 .modal-dialog {
   margin-left: 20%;
@@ -570,6 +580,43 @@ page{
   border-radius: 30rpx;
 }
 
+.upgrade-bg{
+  z-index: 9003;
+  overflow: hidden;
+  margin-top: 20rpx;
+  position: fixed; 
+  height: 600rpx;
+  width: 400rpx;
+  background: #f9f9f9;
+}
+.upgrade-1{
+  z-index: 9004;
+  overflow: hidden;
+  position: fixed;
+  background: #f9f9f9;
+}
+
+.levelItem{
+  display: flex;
+  text-align: center;
+  justify-content:center;
+  align-items: center;    
+}
+.levelNum{
+  padding-bottom: 10rpx;
+  font-size: 1.3rem;
+  color: #333333;
+  text-align: center; 
+}
+.upgrade-1-bg{
+  width: 248rpx;
+  height: 248rpx;
+  margin-left: 140rpx;
+  margin-top: 20rpx;
+  display: flex;
+  justify-content:center;
+  align-items: center;  
+}
 .modal-title {
   padding-top: 50rpx;
   padding-bottom: 30rpx;

@@ -27,22 +27,22 @@ Page({
     character:[],
     type3imagesW:300,
     type3imagesH:200,
+    levelNum:9999,
     showFragment:1,
     curIndex:0,
+    oldLevel:0,
+    upgradeDialog:false,
     showModal:false,
-    showFailed:false,
-    showSuccess:false,
     pendEvent:false,
     redCnt:5,
     gameOver:false,
     timer:null,
     answerIndex:-1,
-    correct:'√',
-    incorrect: 'X',
     characterBgColor:[],
     hearts:[],
     continueRight:0,
     continueMaxRight:0,
+    errorCateoryList:[],
     levelRules: [{
       'title': '新手',
       'levels': [{
@@ -252,6 +252,7 @@ Page({
     console.log(' get app.globalData.userInfo:' + app.globalData.userInfo)
     this.setData({
       score: app.globalData.totalScore,
+      oldLevel:app.scoreConvertLevel(app.globalData.totalScore),
     })    
     if (app.globalData.userInfo) {
       this.setData({
@@ -312,10 +313,10 @@ Page({
         if (that.data.tree == null || that.data.tree.length == 0){
           this.setData({
             gameOver: true,             
-            showFailed:true,
             showFragment:0,
           });
           this.saveCacheData();
+          this.showUpgradeDialog();
         }else{
           if(that.data.PAGE == 0){
             that.initData();
@@ -434,6 +435,9 @@ Page({
           continueMaxRight: this.data.continueRight,
         })
       }
+      this.data.errorCateoryList.push(section);
+      console.log('errorCateoryList:')
+      console.log(this.data.errorCateoryList)
       this.data.continueRight = 0;
       this.data.characterBgColor[section.answer] = '#9be665';
       this.data.character[section.answer] = '../../images/ic_aws_right.png';
@@ -492,6 +496,18 @@ Page({
       gameOver: true,
       showFragment: 0,
     })
+    this.showUpgradeDialog();
+  },
+
+  showUpgradeDialog:function(){
+    var newLevel = app.scoreConvertLevel(app.globalData.totalScore);
+    if (this.data.oldLevel < newLevel){
+      this.setData({
+        newLevel: newLevel,
+        upgradeDialog: true,
+        oldLevel:newLevel,
+      })
+    }
   },
   startCountDown:function(duration){
     var that = this;
@@ -550,6 +566,11 @@ Page({
   onClickAgain: function () {
     console.log(' onClickAgain !!!');
     this.reLoadData();
+  },
+  onClickUpgradeOk:function(){
+    this.setData({
+      upgradeDialog: false,
+    })   
   },
 
   saveCacheData:function(){
