@@ -11,7 +11,7 @@
       </view>
       <view class="group1">
         <view class="scoredetail1" wx:for="{{item.subLevel}}" wx:for-item="subLevel" wx:key="id">
-          <view class="item1">
+          <view class='{{subLevel.id > 0 ? "item1":"item1Opacity"}}'>
             <view class="text" mode="widthFix" style="background: url('{{subLevel.src}}') no-repeat center" id="{{subLevel.id}}" bindtap="onSelect">{{subLevel.subtitle}}</view>
             <view class="type" style="color:{{item.color}}">{{subLevel.title}}</view>
           </view>
@@ -26,7 +26,7 @@
     <view class="image-fail">
       <image class="modal-closeimage" bindtap="onClickCloseModal" mode="widthFix" src="../../images/ic_dialog_close.png"></image>
     </view>
-    <view class="modal-title">????</view>
-    <button class="modal-subtitle3" bindtap="onClickBack">??</button>
+    <view class="modal-title">暂未开通</view>
+    <button class="modal-subtitle3" bindtap="onClickBack">返回</button>
   </view>
 </view>
