@@ -23,6 +23,7 @@
     </view>
   </view>
 
+ <scroll-view class="scrollview_layout"  scroll-y="true">
   <!-- template 1 -->
   <view class="{{ showFragment == 1? 'type1':'type1hide'}}">
     <view class="context">
@@ -131,6 +132,7 @@
        {{question.title}}
     </view>
 
+
       <image class="type2image" mode="top" src="{{question.title2}}"> </image>
       <view class="answeritem" wx:for="{{question.answers_img}}" wx:for-item="i" wx:key="id">
         <view id="{{question.answers[index].id}}" bindtap="onClickAnswer" class="type5answer">{{question.answers_img[index].answer}}</view>
@@ -139,6 +141,7 @@
   </view>
   <!-- template 5 end -->
 
+</scroll-view>
 
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{gameOver}}">
   </view>
