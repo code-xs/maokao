@@ -14,12 +14,12 @@
         </view>
         
       </view>
-      <view class="myRankingItem">
+      <view class="{{rankingType == 3?'myRankingItem':'myRankingItemSingle'}}">
         <view class="myRanking">我的排名</view>
         <view class="myRanking_number">{{myRanking}}</view>
       </view>
     </view>
-    <scroll-view scroll-y="true" upper-threshold="10"  lower-threshold="10" bindscrolltoupper="onScrolltoupper" bindscrolltolower="onScrolltolower">
+    <scroll-view class="{{rankingType == 3?'scrollview_layout_category':'scrollview_layout_world'}}" scroll-y="true" upper-threshold="10"  lower-threshold="10" bindscrolltoupper="onScrolltoupper" bindscrolltolower="onScrolltolower">
       <view class="list" wx:for="{{datalist}}" wx:for-item="i" wx:key="id">
         <view class="item" style='background: rgba(35, 30, 41, 0.5);'>
           <view class="ranking" style="background-color: {{idxbgcolorlist[index]}};">{{datalist[index].ranking}}</view>
@@ -36,14 +36,15 @@
     </scroll-view>
     <button class="showScore" open-type='share'>炫耀排名</button>
   </view>
+
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showCateoryList}}">
   </view>
+
   <view class="cateoryList" wx:if="{{showCateoryList}}">
-    <view class="" style='height:40rpx;  border-radius: 50rpx 50rpx 0rpx 0rpx;'>
-    </view>
+    <image class="dialog_close" bindtap="onSelectDialogClose" src="/images/ic_dialog_white_close.png"></image>
     <scroll-view scroll-y="true" bindscrolltolower="onScrolltolowerCateory">
       <view class="list" wx:for="{{cateoryList}}" wx:for-item="i" wx:key="id">
-        <view class="cateoryText" id="{{cateoryList[index].subId}}" bindtap="onSelectCateory" >{{cateoryList[index].subtitle1}}</view>
+        <view class="cateoryText" data-idx="{{index}}" id="{{cateoryList[index].subId}}" bindtap="onSelectCateory" >{{cateoryList[index].subtitle1}}</view>
       </view>
     </scroll-view>
   </view>

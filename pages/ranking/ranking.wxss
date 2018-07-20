@@ -15,7 +15,7 @@
 
 .userimg_crown {
   width: 48rpx;
-  height: 48rpx;
+  height: 48rpx; 
   margin-left: -50rpx;
   margin-top: -96rpx;
 }
@@ -373,14 +373,15 @@ scroll-view {
   padding-top: 10rpx;
   color: rgba(246, 249, 252,0.5);
   margin-left: 100rpx;
+  font-size: 1.0rem; 
 }
 
 .myRanking_number {
   color: #FDAF01;
   font-weight: bold;
-  font-size: 1.0rem; 
+  font-size: 1.3rem; 
   margin-left: 30rpx;
-  margin-bottom: 20rpx;
+  margin-top: 0rpx;
 }
 
 .arrow{
@@ -396,7 +397,7 @@ scroll-view {
   align-items: center;
   justify-content: center;  
   color: #FFFFFF;
-  font-size: 0.8rem;  
+  font-size: 1.0rem;  
 }
 
 .choose_category {
@@ -405,15 +406,32 @@ scroll-view {
   margin-left: 100rpx;
   margin-right: 30rpx;
   color: rgba(246, 249, 252,0.5);
-  font-size: 0.8rem;  
+  font-size: 1.0rem;  
 }
 
-.myRankingItem{
+.scrollview_layout_category {
+  margin-top: 40rpx;
+}
+
+.scrollview_layout_world {
+  margin-top: 0rpx;
+}
+
+.myRankingItem{ 
   display: flex;
   padding-top: 10rpx;
+  padding-bottom: 20rpx;
   color: rgba(246, 249, 252,0.5);
   font-size: 0.8rem;
 }
+
+.myRankingItemSingle {
+  display: flex;
+  padding-top: 30rpx;
+  color: rgba(246, 249, 252,0.5);
+  font-size: 0.8rem;
+}
+
 .cateoryItem{
   display: flex;
   padding-top: 20rpx;
@@ -447,6 +465,13 @@ scroll-view {
   z-index: 9000;
   color: #fff;
 }
+.dialog_close {
+  position:relative;
+  left: 90%;
+  width: 60rpx;
+  height: 60rpx;
+}
+
 .cateoryList{
   overflow: hidden;
   position: fixed;
@@ -454,7 +479,7 @@ scroll-view {
   width: 80%;
   top: 20%;
   z-index: 9001;
-  background: #bb6ed5;
+  background: linear-gradient(#c079e4, #8d41ca);
   border-radius: 30rpx;
 }
 .cateoryText{

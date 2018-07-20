@@ -283,14 +283,9 @@ Page({
           }
 
           this.data.crownlist = new Array();
-          this.data.crownlist[0] = "https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/rank/ic_rank_1.png";
-          this.data.crownlist[1] = "https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/rank/ic_rank_2.png";
-          this.data.crownlist[2] = "https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/rank/ic_rank_3.png";
-          // if (datalist.length > 3) {
-          //   for (var i = 3; i < datalist.length; i++) {
-          //     crownlist[i] = "none;";
-          //   }
-          // }
+          this.data.crownlist[0] = "/images/ic_rank_1.png";
+          this.data.crownlist[1] = "/images/ic_rank_2.png";
+          this.data.crownlist[2] = "/images/ic_rank_3.png";
         
           this.data.idxbgcolorlist = new Array();
           this.data.idxbgcolorlist[0] = "#FDAF01";
@@ -354,11 +349,21 @@ Page({
       showCateoryList: !this.data.showCateoryList,
       page_index: 0,
       cateoryID :e.target.id,
+      cateoryTitle: this.data.cateoryList[e.target.dataset.idx].subtitle1,
     });
     this.getCateoryRankingList(0, this.data.cateoryID);
   },
 
   onScrolltolower: function (e) {
 
-  }
+  },
+
+  onSelectDialogClose: function (e) {
+    console.log('onSelectDialogClose');
+    console.log(e.target.id);
+    this.setData({
+      showCateoryList: false,
+    });
+    this.getCateoryRankingList(0, this.data.cateoryID);
+  },
 })
