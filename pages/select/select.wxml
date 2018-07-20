@@ -20,4 +20,13 @@
       </view>
     </view>
   </scroll-view>
+  <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}">
+  </view>
+  <view class="modal-dialog" wx:if="{{showModal}}">
+    <view class="image-fail">
+      <image class="modal-closeimage" bindtap="onClickCloseModal" mode="widthFix" src="../../images/ic_dialog_close.png"></image>
+    </view>
+    <view class="modal-title">ÔÝÎ´¿ªÍ¨</view>
+    <button class="modal-subtitle3" bindtap="onClickBack">·µ»Ø</button>
+  </view>
 </view>

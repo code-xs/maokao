@@ -1,6 +1,7 @@
 var app = getApp()
 Page({
   data: {
+    showModal:false,
     categoryTree: [],
     selectCateory: {
       id: 0,
@@ -29,6 +30,10 @@ Page({
   onSelect:function(e){
     console.log(' onLevelSelect:'+e.target.id);
     var id = e.target.id;
+    if(id < 0){
+      this.showModal();
+      return;
+    }
     if (id > 10000){
       for (var i in this.data.categoryTree[0].subLevel){
         var item = this.data.categoryTree[0].subLevel[i];
@@ -64,4 +69,16 @@ Page({
       }
     }
   },
+  onClickCloseModal: function () {
+    console.log(' onClickCloseModal !');
+    this.showModal(false)
+  },
+  onClickBack:function(){
+    this.showModal(false)
+  },
+  showModal:function(show){
+    this.setData({
+      showModal: show,
+    })
+  }
 })

@@ -161,3 +161,79 @@ color: transparent;
   border-radius: 20rpx;
 }
 
+
+/* modal wxss*/
+.modal-mask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.2;
+  overflow: hidden;
+  z-index: 9000;
+  color: #fff;
+}
+.modal-dialog {
+  margin-left: 20%;
+  width: 60%;
+  overflow: hidden;
+  position: fixed;
+  top: 35%;
+  z-index: 9001;
+  background: #f9f9f9;
+  border-radius: 30rpx;
+}
+.image-fail{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.modal-closeimage{
+  width: 44rpx;
+  height: 44rpx;
+  margin-top: 16rpx;
+  margin-right: 16rpx;  
+}
+.modal-title {
+  padding-top: 50rpx;
+  padding-bottom: 30rpx;
+  font-size: 1.4rem;
+  color: #8b44c9;
+  text-align: center;
+  font-weight:bold;
+}
+.modal-subtitle {
+  padding-top: 0rpx;
+  padding-bottom: 10rpx;
+  font-size: 0.9rem;
+  color: #333333;
+  text-align: center;
+}
+.modal-subtitle2 {
+  padding-top: 0rpx;
+  padding-bottom: 10rpx;  
+  font-size: 0.9rem;
+  color: #333333;
+  text-align: center;
+}
+
+.modal-subtitle3{
+    width: 300rpx;
+    height: 88rpx;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    background-size: 100% 100%;
+    margin-top: 40rpx;
+    margin-bottom: 40rpx;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background-repeat: no-repeat;
+    background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/bt_challenge_back.png');
+    background-color: transparent;
+}
