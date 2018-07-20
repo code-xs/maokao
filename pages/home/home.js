@@ -28,7 +28,7 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
     windowH:0,
     challenge:-1,
     userRanking:100,
-    scoreGap:10,
+    scoreGap:900,
   },
   //事件处理函数
   bindViewTap: function() {

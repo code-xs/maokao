@@ -26,7 +26,7 @@
     <view class="image-fail">
       <image class="modal-closeimage" bindtap="onClickCloseModal" mode="widthFix" src="../../images/ic_dialog_close.png"></image>
     </view>
-    <view class="modal-title">ÔÝÎ´¿ªÍ¨</view>
-    <button class="modal-subtitle3" bindtap="onClickBack">·µ»Ø</button>
+    <view class="modal-title">????</view>
+    <button class="modal-subtitle3" bindtap="onClickBack">??</button>
   </view>
 </view>
