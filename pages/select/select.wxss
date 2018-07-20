@@ -124,6 +124,13 @@ color: transparent;
     flex-direction: column;
     align-items: center;      
 }
+
+.item1Opacity{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0.5;      
+}
 .scoredetail1{
     flex:1;
     float: left;
