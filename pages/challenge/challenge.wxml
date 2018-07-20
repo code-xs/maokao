@@ -157,6 +157,15 @@
     </view>
   </view>
 
+  <view class="upgrade-dialog" wx:if="{{upgradeDialog}}">
+    <image class="upgrade-1-bg" mode="widthFix" src='/images/upgrade-1-bg.png'></image>
+    <view class="modal-title">恭喜升级</view>
+    <view class="levelItem">
+      <view class="modal-subtitle">你的等级已升到</view>
+      <text class="levelNum">LV.{{newLevel}}</text>
+    </view>
+    <button class="modal-subtitle3" bindtap="onClickUpgradeOk">确定</button>
+  </view>
 
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}">
   </view>
