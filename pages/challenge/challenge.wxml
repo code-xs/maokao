@@ -25,7 +25,13 @@
 
   <!-- template 1 -->
   <view class="{{ showFragment == 1? 'type1':'type1hide'}}">
-    <view class="context">{{question.title}}</view>
+    <view class="context">
+       <span class="subject_index_left">(</span>
+       <span class="subject_index">{{question.id}}</span>
+       <span class="subject_index_right">/{{tree.length}})</span>
+       {{question.title}}
+    </view>
+
     <view class="item0">
       <image class="answerIndex" src="{{character[0]}}" mode="widthFix"> </image>
       <view class="answer" id="{{question.answers[0].id}}" bindtap="onClickAnswer"> {{question.answers[0].answer}}</view>
@@ -46,7 +52,13 @@
 
   <!-- template 2 -->
   <view class="{{ showFragment == 2? 'type2':'type2hide'}}">
-    <view class="context2">{{question.title}}</view>
+    <view class="context2">
+       <span class="subject_index_left">(</span>
+       <span class="subject_index">{{question.id}}</span>
+       <span class="subject_index_right">/{{tree.length}})</span>
+       {{question.title}}
+    </view>
+
     <image class="type2image" mode="top" src="{{question.title2}}"> </image>
     <view class="item2">
       <image class="answerIndex" src="{{character[0]}}" mode="widthFix"> </image>
@@ -69,7 +81,13 @@
   <!-- template 3 -->
   <view class="{{ showFragment == 3? 'type3':'type3hide'}}">
     <view class="group1">
-      <view class="context">{{question.title}}</view>
+      <view class="context">
+       <span class="subject_index_left">(</span>
+       <span class="subject_index">{{question.id}}</span>
+       <span class="subject_index_right">/{{tree.length}})</span>
+       {{question.title}}
+    </view>
+
       <view class="answeritem" wx:for="{{question.answers_img}}" wx:for-item="i" wx:key="id">
         <image id="{{question.answers[index].id}}" bindtap="onClickAnswer" src="{{question.answers_img[index].answer}}" style="width:{{type3imagesW}}rpx;height:{{type3imagesH}}rpx;" class="type3image" mode="top"> </image>
       </view>
@@ -78,7 +96,12 @@
 
   <!-- template 4 -->
   <view class="{{ showFragment == 4? 'type1':'type1hide'}}">
-    <view class="context2">{{question.title}}</view>
+    <view class="context2">
+       <span class="subject_index_left">(</span>
+       <span class="subject_index">{{question.id}}</span>
+       <span class="subject_index_right">/{{tree.length}})</span>
+       {{question.title}}
+    </view>
     <view class="item4">
       <image class="answerIndex" src="{{character[0]}}" mode="widthFix"> </image>
       <view class="answer" id="{{question.answers[0].id}}" style="color:{{characterBgColor[0]}}" bindtap="onClickAnswer"> {{question.answers[0].answer}}</view>
@@ -96,11 +119,18 @@
       <view class="answer" style="color:{{characterBgColor[3]}}" id="{{question.answers[3].id}}" bindtap="onClickAnswer"> {{question.answers[3].answer}}</view>
     </view>
   </view>
-
+  <!-- template 4 end -->
+  
   <!-- template 5 -->
   <view class="{{ showFragment == 5? 'type5':'type5hide'}}">
     <view class="group1">
-      <view class="context5">{{question.title}}</view>
+      <view class="context5">
+       <span class="subject_index_left">(</span>
+       <span class="subject_index">{{question.id}}</span>
+       <span class="subject_index_right">/{{tree.length}})</span>
+       {{question.title}}
+    </view>
+
       <image class="type2image" mode="top" src="{{question.title2}}"> </image>
       <view class="answeritem" wx:for="{{question.answers_img}}" wx:for-item="i" wx:key="id">
         <view id="{{question.answers[index].id}}" bindtap="onClickAnswer" class="type5answer">{{question.answers_img[index].answer}}</view>
@@ -132,7 +162,7 @@
   </view>
   <view class="modal-dialog" wx:if="{{showModal}}">
     <view class="image-fail">
-      <image class="modal-closeimage" bindtap="onClickCloseModal" mode="widthFix" src="https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_dialog_close.png"></image>
+      <image class="modal-closeimage" bindtap="onClickCloseModal" mode="widthFix" src="../../images/ic_dialog_close.png"></image>
     </view>
     <view class="modal-title">挑战结束</view>
     <view class="modal-subtitle">转发到微信群</view>

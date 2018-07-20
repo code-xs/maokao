@@ -387,9 +387,7 @@ page{
   justify-content: center;  
 }
 .context{
-    display:flex;
     color: #ffffff;
-    min-height: 120rpx;
     margin-left: 20rpx;
     margin-right: 10rpx;
     margin-bottom: 30rpx;
@@ -397,12 +395,8 @@ page{
     font-size: 1.0rem;
 }
 .context2{
-    display: flex;
-    flex-direction: column;
-    justify-content:center;
     color: #ffffff;
     margin: 20rpx 20rpx 20rpx 20rpx;
-    min-height: 120rpx;
     word-break: break-all;
     font-size: 1.2rem; 
     font-weight: bolder;
@@ -429,9 +423,7 @@ page{
   font-weight: bolder;
 }
 .context5{
-    /*background:#2fffff;*/
     color: #ffffff;
-    display:block;
     margin: 20rpx;
     word-break: break-all;
     text-align: center;
@@ -703,4 +695,27 @@ input-holder {
 
 button::after{
 border:none;
+}
+
+.subject_layout {
+   display: flex;
+   direction: row;
+   border: 1rpx #000 solid;
+}
+
+.subject_index_left {
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  margin-left: 20rpx;
+}
+
+.subject_index {
+  color: #FFC15C;
+  font-size: 1.5rem;
+}
+
+
+.subject_index_right {
+  color: #FFFFFF;
+  font-size: 1.5rem;
 }
