@@ -27,19 +27,19 @@
   <view class="{{ showFragment == 1? 'type1':'type1hide'}}">
     <view class="context">{{question.title}}</view>
     <view class="item0">
-      <view class="answerIndex" style="background-image:url('{{character[0]}}')"></view>
+      <image class="answerIndex" src="{{character[0]}}" mode="widthFix"> </image>
       <view class="answer" id="{{question.answers[0].id}}" bindtap="onClickAnswer"> {{question.answers[0].answer}}</view>
     </view>
     <view class="item0">
-      <view class="answerIndex" style="background-image:url('{{character[1]}}')"></view>
+      <image class="answerIndex" src="{{character[1]}}" mode="widthFix"> </image>
       <view class="answer" id="{{question.answers[1].id}}" bindtap="onClickAnswer"> {{question.answers[1].answer}}</view>
     </view>
     <view class="{{question.answers[2].answer == null? 'item0hide':'item0'}}">
-      <view class="answerIndex" style="background-image:url('{{character[2]}}')"></view>
+      <image class="answerIndex" src="{{character[2]}}" mode="widthFix"> </image>
       <view class="answer" id="{{question.answers[2].id}}" bindtap="onClickAnswer"> {{question.answers[2].answer}}</view>
     </view>
     <view class="{{question.answers[3].answer == null? 'item0hide':'item0'}}">
-      <view class="answerIndex" style="background-image:url('{{character[3]}}')"></view>
+      <image class="answerIndex" src="{{character[3]}}" mode="widthFix"> </image>
       <view class="answer" id="{{question.answers[3].id}}" bindtap="onClickAnswer"> {{question.answers[3].answer}}</view>
     </view>
   </view>
@@ -49,19 +49,19 @@
     <view class="context2">{{question.title}}</view>
     <image class="type2image" mode="top" src="{{question.title2}}"> </image>
     <view class="item2">
-      <view class="answerIndex" style="background-image:url('{{character[0]}}')"></view>
+      <image class="answerIndex" src="{{character[0]}}" mode="widthFix"> </image>
       <view class="answer" id="{{question.answers[0].id}}" bindtap="onClickAnswer"> {{question.answers[0].answer}}</view>
     </view>
     <view class="item2">
-      <view class="answerIndex" style="background-image:url('{{character[1]}}')}"></view>
+      <image class="answerIndex" src="{{character[1]}}" mode="widthFix"> </image>
       <view class="answer" id="{{question.answers[1].id}}" bindtap="onClickAnswer"> {{question.answers[1].answer}}</view>
     </view>
     <view class="{{question.answers[2].answer == null? 'item2hide':'item2'}}">
-      <view class="answerIndex" style="background-image:url('{{character[2]}}')"></view>
+      <image class="answerIndex" src="{{character[2]}}" mode="widthFix"> </image>
       <view class="answer" id="{{question.answers[2].id}}" bindtap="onClickAnswer"> {{question.answers[2].answer}}</view>
     </view>
     <view class="{{question.answers[3].answer == null? 'item2hide':'item2'}}">
-      <view class="answerIndex" style="background-image:url('{{character[3]}}')"></view>
+      <image class="answerIndex" src="{{character[3]}}" mode="widthFix"> </image>
       <view class="answer" id="{{question.answers[3].id}}" bindtap="onClickAnswer"> {{question.answers[3].answer}}</view>
     </view>
   </view>
@@ -80,19 +80,19 @@
   <view class="{{ showFragment == 4? 'type1':'type1hide'}}">
     <view class="context2">{{question.title}}</view>
     <view class="item4">
-      <view class="answerIndex" style="background-image:url('{{character[0]}}')"></view>
+      <image class="answerIndex" src="{{character[0]}}" mode="widthFix"> </image>
       <view class="answer" id="{{question.answers[0].id}}" style="color:{{characterBgColor[0]}}" bindtap="onClickAnswer"> {{question.answers[0].answer}}</view>
     </view>
     <view class="item4">
-      <view class="answerIndex" style="background-image:url('{{character[1]}}')"></view>
+      <image class="answerIndex" src="{{character[1]}}" mode="widthFix"> </image>
       <view class="answer" id="{{question.answers[1].id}}" style="color:{{characterBgColor[1]}}" bindtap="onClickAnswer"> {{question.answers[1].answer}}</view>
     </view>
     <view class="{{question.answers[2].answer == null? 'item4hide':'item4'}}">
-      <view class="answerIndex" style="background-image:url('{{character[2]}}')"></view>
+      <image class="answerIndex" src="{{character[2]}}" mode="widthFix"> </image>
       <view class="answer" id="{{question.answers[2].id}}" style="color:{{characterBgColor[2]}}" bindtap="onClickAnswer"> {{question.answers[2].answer}}</view>
     </view>
     <view class="{{question.answers[3].answer == null? 'item4hide':'item4'}}">
-      <view class="answerIndex" style="background-image:url('{{character[3]}}')"></view>
+      <image class="answerIndex" src="{{character[3]}}" mode="widthFix"> </image>
       <view class="answer" style="color:{{characterBgColor[3]}}" id="{{question.answers[3].id}}" bindtap="onClickAnswer"> {{question.answers[3].answer}}</view>
     </view>
   </view>

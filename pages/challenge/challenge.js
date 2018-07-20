@@ -4,7 +4,7 @@ const app = getApp()
 var qcloud = require('../../vendor/wafer2-client-sdk/index');
 var config = require('../../config');
 Page({
-  data: {
+  data: { 
     ID:-1,
     PAGE:0,
     userInfo: {},
@@ -345,9 +345,9 @@ Page({
     this.data.hearts = [];
     for(var i=0; i< 5; i++){
       if(i <redCnt){
-        this.data.hearts.push('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_heart.png');
+        this.data.hearts.push('../../images/ic_heart.png');
       }else{
-        this.data.hearts.push('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_heart_fail.png');
+        this.data.hearts.push('../../images/ic_heart_fail.png');
       }
     }
     this.setData({
@@ -365,10 +365,10 @@ Page({
     var section = this.data.tree[index];
     var type = section.type;
 
-    this.data.character.push('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_a.png');
-    this.data.character.push('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_b.png');
-    this.data.character.push('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_c.png');
-    this.data.character.push('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_d.png');      
+    this.data.character.push('../../images/ic_a.png');
+    this.data.character.push('../../images/ic_b.png');
+    this.data.character.push('../../images/ic_c.png');
+    this.data.character.push('../../images/ic_d.png');      
     console.log(' section ' + index + ' data.type:' + section.type);
     this.setData({
       answer: this.data.answer,
@@ -426,7 +426,7 @@ Page({
       this.data.continueRight ++;
       this.data.score += section.score;
       this.data.score1 += section.score;
-      this.data.character[id] = 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_aws_right.png';
+      this.data.character[id] = '../../images/ic_aws_right.png';
     } else {
       app.updateWinningStreak(this.data.continueRight);
       if (this.data.continueRight > this.data.continueMaxRight){
@@ -436,10 +436,10 @@ Page({
       }
       this.data.continueRight = 0;
       this.data.characterBgColor[section.answer] = '#9be665';
-      this.data.character[section.answer] = 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_aws_right.png';
+      this.data.character[section.answer] = '../../images/ic_aws_right.png';
       if(id >= 0){
         this.data.characterBgColor[id] = '#F76F40';
-        this.data.character[id] = 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_aws_error.png';
+        this.data.character[id] = '../../images/ic_aws_error.png';
       }
       this.initHearts(--this.data.redCnt);
     }
