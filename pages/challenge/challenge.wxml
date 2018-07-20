@@ -28,8 +28,8 @@
   <view class="{{ showFragment == 1? 'type1':'type1hide'}}">
     <view class="context">
        <span class="subject_index_left">(</span>
-       <span class="subject_index">{{question.id}}</span>
-       <span class="subject_index_right">/{{tree.length}})</span>
+       <span class="subject_index">{{questionIndex+1}}</span>
+       <span class="subject_index_right">/{{questionTotal}})</span>
        {{question.title}}
     </view>
 
@@ -55,8 +55,8 @@
   <view class="{{ showFragment == 2? 'type2':'type2hide'}}">
     <view class="context2">
        <span class="subject_index_left">(</span>
-       <span class="subject_index">{{question.id}}</span>
-       <span class="subject_index_right">/{{tree.length}})</span>
+       <span class="subject_index">{{questionIndex+1}}</span>
+       <span class="subject_index_right">/{{questionTotal}})</span>
        {{question.title}}
     </view>
 
@@ -84,8 +84,8 @@
     <view class="group1">
       <view class="context">
        <span class="subject_index_left">(</span>
-       <span class="subject_index">{{question.id}}</span>
-       <span class="subject_index_right">/{{tree.length}})</span>
+       <span class="subject_index">{{questionIndex+1}}</span>
+       <span class="subject_index_right">/{{questionTotal}})</span>
        {{question.title}}
     </view>
 
@@ -99,8 +99,8 @@
   <view class="{{ showFragment == 4? 'type1':'type1hide'}}">
     <view class="context2">
        <span class="subject_index_left">(</span>
-       <span class="subject_index">{{question.id}}</span>
-       <span class="subject_index_right">/{{tree.length}})</span>
+       <span class="subject_index">{{questionIndex+1}}</span>
+       <span class="subject_index_right">/{{questionTotal}})</span>
        {{question.title}}
     </view>
     <view class="item4">
@@ -127,8 +127,8 @@
     <view class="group1">
       <view class="context5">
        <span class="subject_index_left">(</span>
-       <span class="subject_index">{{question.id}}</span>
-       <span class="subject_index_right">/{{tree.length}})</span>
+       <span class="subject_index">{{questionIndex+1}}</span>
+       <span class="subject_index_right">/{{questionTotal}})</span>
        {{question.title}}
     </view>
 

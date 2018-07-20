@@ -43,6 +43,8 @@ Page({
     continueRight:0,
     continueMaxRight:0,
     errorCateoryList:[],
+    questionTotal:10,
+    questionIndex:0,
     levelRules: [{
       'title': '新手',
       'levels': [{
@@ -317,6 +319,7 @@ Page({
             gameOver: true,             
             showFragment:0,
           });
+          this.cancelTimer();
           this.saveCacheData();
           this.showUpgradeDialog();
         }else{
@@ -383,10 +386,10 @@ Page({
       empiricalV: "第" + section.index + "题",
       characterBgColor: this.data.characterBgColor,
       character: this.data.character,
+      questionIndex: this.data.questionIndex,
     })
-    
+    this.data.questionIndex ++;
     this.startCountDown(section.timer*10);
-    
     app.addChallengeCnt(1);
   },
   showModal:function(){
@@ -394,6 +397,7 @@ Page({
     this.setData({
       showModal: !this.data.showModal
     })
+    this.cancelTimer();
     this.saveCacheData();
   },
 
@@ -466,13 +470,11 @@ Page({
       console.log(' pendEvent !!!');
       return;
     }
-    if (this.data.timer != null) {
-      console.log(' clearTimeout at first !!!');
-      clearTimeout(this.data.timer);
-      this.data.timer = null;
-    }
+    console.log(' call cancelTimer');
+    this.cancelTimer();
+    console.log(' call showAnswer');
     this.showAnswer(e.target.id);
-    console.log(' this.data.tree.length:' + this.data.tree.length);
+    console.log(' this.data.tree.length:');
     this.data.pendEvent = true;
     if (this.data.redCnt > 0) {
       this.loadNext(1000);
@@ -481,6 +483,9 @@ Page({
     }
   },
   loadNext:function(delay){
+    if (this.showChallengeResult(false))
+      return;
+
     if (this.data.curIndex >= this.data.tree.length - 1) {
       this.data.curIndex = 0;
       this.requestQuestionList(++this.data.PAGE, this.data.ID);
@@ -491,14 +496,27 @@ Page({
       }, delay);
     }
   },
+
+
   onClickCloseModal:function(){
     console.log(' onClickCloseModal !');
-    this.setData({
-      showModal: !this.data.showModal,
-      gameOver: true,
-      showFragment: 0,
-    })
-    this.showUpgradeDialog();
+    this.showChallengeResult(true);
+  },
+
+  showChallengeResult:function(force){
+    if (force || this.data.questionIndex >= this.data.questionTotal){
+      this.setData({
+        showModal: false,
+        gameOver: true,
+        showFragment: 0,
+      })
+      this.cancelTimer();
+      this.saveCacheData();
+      this.showUpgradeDialog();
+      return true;
+    }else{
+      return false;
+    }
   },
 
   showUpgradeDialog:function(){
@@ -513,11 +531,7 @@ Page({
   },
   startCountDown:function(duration){
     var that = this;
-    if (that.data.timer != null){
-      console.log(' clearTimeout at first !!!');
-      clearTimeout(this.data.timer);
-      that.data.timer = null;
-    }
+    this.cancelTimer();
     if (that.data.progress > 0){
       that.data.timer = setTimeout(function () {
         that.data.timer = null;
@@ -575,12 +589,15 @@ Page({
     })   
   },
 
-  saveCacheData:function(){
+  cancelTimer:function(){
     if (this.data.timer != null) {
       console.log(' clearTimeout at first !!!');
       clearTimeout(this.data.timer);
       this.data.timer = null;
     }
+  },
+
+  saveCacheData:function(){
     if (this.data.score1 > 0){
       app.updateMaxScore(this.data.score1);   
       app.uploadScoreInfo(this.data.ID, this.data.score1);
@@ -600,10 +617,12 @@ Page({
 
   onHide: function () {
     console.log(' onHide!!!');
+    this.cancelTimer();
     this.saveCacheData();
   },
   onUnload: function () {
     console.log("==onUnload==");
+    this.cancelTimer();
     this.saveCacheData();    
   },
   onShareAppMessage: function (ops) {
@@ -637,6 +656,7 @@ Page({
     if (this.data.gameOver){
       this.setData({
         gameOver: false,
+        questionIndex: 0,
       })
       this.data.PAGE = 0;
       this.data.redCnt = 5;
@@ -652,6 +672,7 @@ Page({
     this.initHearts(this.data.redCnt);
     this.setData({
       showModal: false,
+      questionIndex:0,
     });
     this.data.pendEvent = false;
     this.loadNext(1000);
