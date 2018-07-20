@@ -37,6 +37,7 @@ Page({
     redCnt:5,
     gameOver:false,
     timer:null,
+    pendindDuration: 1000,
     answerIndex:-1,
     characterBgColor:[],
     hearts:[],
@@ -393,12 +394,15 @@ Page({
     app.addChallengeCnt(1);
   },
   showModal:function(){
-    this.data.pendEvent = false;
-    this.setData({
-      showModal: !this.data.showModal
-    })
+    var that = this;
     this.cancelTimer();
     this.saveCacheData();
+    setTimeout(function () {
+      that.data.pendEvent = false;
+      that.setData({
+        showModal: true
+    })
+    }, this.data.pendindDuration);
   },
 
   onCancel: function () {
@@ -477,7 +481,7 @@ Page({
     console.log(' this.data.tree.length:');
     this.data.pendEvent = true;
     if (this.data.redCnt > 0) {
-      this.loadNext(1000);
+      this.loadNext(this.data.pendindDuration);
     } else {
       this.showModal();
     }
@@ -505,14 +509,19 @@ Page({
 
   showChallengeResult:function(force){
     if (force || this.data.questionIndex >= this.data.questionTotal){
-      this.setData({
-        showModal: false,
-        gameOver: true,
-        showFragment: 0,
-      })
+      this.data.pendEvent = true;
+      var that = this;
       this.cancelTimer();
-      this.saveCacheData();
-      this.showUpgradeDialog();
+      var delay = force ? 100 : this.data.pendindDuration;
+      setTimeout(function () {
+        that.setData({
+          showModal: false,
+          gameOver: true,
+          showFragment: 0,
+        })
+        that.saveCacheData();
+        that.showUpgradeDialog();
+      }, delay);
       return true;
     }else{
       return false;
@@ -545,7 +554,7 @@ Page({
       this.showAnswer(-1);
       this.data.pendEvent = true;
       if (this.data.redCnt > 0){
-        this.loadNext(2000);
+        this.loadNext(this.data.pendindDuration);
       }else{
         this.showModal();
       }
@@ -675,6 +684,6 @@ Page({
       questionIndex:0,
     });
     this.data.pendEvent = false;
-    this.loadNext(1000);
+    this.loadNext(200);
   }
 })
