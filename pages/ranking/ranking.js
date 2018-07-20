@@ -151,7 +151,7 @@ Page({
     console.log(app.globalData.commonList);
     this.setData({
       rankingType: 2,
-      datalist: this.data.friendlist,
+      //datalist: this.data.friendlist,
       myRanking: app.globalData.userRanking,
       cateoryList: app.globalData.commonList,
     });
@@ -223,7 +223,14 @@ Page({
       rankingType: 3,
       page_index:0,
     });
-    this.getCateoryRankingList(0, this.data.cateoryID);
+    console.log('cateoryID:' + this.data.cateoryID);
+    if (this.data.cateoryID > 0){
+      this.getCateoryRankingList(0, this.data.cateoryID);
+    }else{
+      this.setData({
+        datalist: [],
+      });
+    }
   },
   onScrolltolower:function(e){
     if (this.data.rankingType == 2){
