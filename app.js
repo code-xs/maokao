@@ -11,6 +11,7 @@ App({
     wx.setStorageSync('logs', logs)
     qcloud.setLoginUrl(config.service.loginUrl);    
     this.doLogin();
+    this.getUserInfo();
     this.getLevelRule();
     this.getCategory();  
     this.getDataFromStorage();
@@ -38,7 +39,7 @@ App({
   globalData: {
     userInfo: null,
     openId:null,
-    userRanking:9999,
+    userRanking:999999,
     totalScore:0,
     level:0,
     categoryTree:null,
@@ -76,11 +77,14 @@ App({
     },
   },
   setUserInfo: function (res) {
+    console.log('setUserInfo:')
+    console.log(res)
     this.globalData.userInfo = res.userInfo;
   },
 
   getUserInfo:function(){
     // 获取用户信息
+    console.log('getUserInfo!')
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
@@ -241,6 +245,7 @@ App({
     });
   },
   getNextLevelScoreGap:function(score, level){
+    console.log(' data score:' + score+', level:'+level)
     if (this.globalData.rule != null && this.globalData.rule.length > 0) {
       for (var i = 0; i < this.globalData.rule.length; i++) {
         var levels = this.globalData.rule[i];
@@ -254,11 +259,11 @@ App({
         }
       }
     }
-    return 1;    
+    return 1;
   },
 
   scoreConvertLevel:function(score){
-    var level = 1;
+    var level = 0;
     console.log('levels:' + score)
     if (this.globalData.rule != null && this.globalData.rule.length > 0){
       for (var i = 0; i < this.globalData.rule.length; i++){
