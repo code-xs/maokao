@@ -23,7 +23,6 @@
 
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}">
   </view>
-
   <view class="modal-dialog" wx:if="{{showModal}}">
     <view class="image-fail">
       <image class="modal-closeimage" bindtap="onClickCloseModal" mode="widthFix" src="../../images/ic_dialog_close.png"></image>
@@ -32,4 +31,16 @@
     <button class="modal-subtitle3" bindtap="onClickBack">返回</button>
   </view>
 
+  <!-- abort dialog -->
+  <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showExitModal}}">
+  </view>
+  <view class="modal-dialog" wx:if="{{showExitModal}}">
+    <view class="image-fail">
+      <image class="modal-closeimage" bindtap="onClickOK" mode="widthFix" src="/images/ic_dialog_close.png"></image>
+    </view>
+    <view class="drop-title">您已放弃本次挑战</view>
+    <button class="modal-subtitle3" bindtap="onClickOK">确定</button>
+  </view>
+  <image class="modal-image" mode="widthFix" src="/images/fail.png" wx:if="{{showExitModal}}"></image>  
+  <!-- abort dialog -->
 </view>

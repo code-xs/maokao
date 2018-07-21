@@ -644,7 +644,10 @@ Page({
   onUnload: function () {
     console.log("==onUnload==");
     this.cancelTimer();
-    this.saveCacheData();    
+    this.saveCacheData();
+    if (!this.data.gameOver && !this.data.showModal){
+      app.globalData.abortExit = true;
+    }
   },
   onShareAppMessage: function (ops) {
     var that = this;
@@ -678,6 +681,7 @@ Page({
       this.setData({
         gameOver: false,
         questionIndex: 0,
+        continueMaxRight:0,
       })
       this.data.PAGE = 0;
       this.data.redCnt = 5;
@@ -696,5 +700,5 @@ Page({
     });
     this.data.pendEvent = false;
     this.loadNext(200);
-  }
+  },
 })

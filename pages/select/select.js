@@ -2,6 +2,7 @@ var app = getApp()
 Page({
   data: {
     showModal:false,
+    showExitModal:false,
     categoryTree: [],
     selectCateory: {
       id: 0,
@@ -80,5 +81,18 @@ Page({
     this.setData({
       showModal: show,
     })
-  }
+  },
+  onClickOK:function(){
+    this.setData({
+      showExitModal: false,
+    })
+  },
+  onShow: function () {
+    if (app.globalData.abortExit){
+      this.setData({
+        showExitModal: true,
+      })
+      app.globalData.abortExit = false;
+    }
+  },
 })

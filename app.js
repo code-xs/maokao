@@ -75,6 +75,7 @@ App({
       subtitle: "none",
       subtitle1:'none'
     },
+    abortExit:false,
   },
   setUserInfo: function (res) {
     console.log('setUserInfo:')
