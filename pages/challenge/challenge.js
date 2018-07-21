@@ -326,7 +326,7 @@ Page({
         console.log('请求成功 statusCode:' + response.statusCode);
         console.log(response.data.data);
        
-        //that.data.tree = response.data.data;
+        that.data.tree = response.data.data;
        
         if (that.data.tree == null || that.data.tree.length == 0){
           this.setData({
