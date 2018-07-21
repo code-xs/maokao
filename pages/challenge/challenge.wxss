@@ -607,10 +607,12 @@ page {
   width: 70%;
   overflow: hidden;
   position: fixed;
-  top: 35%;
+  top: 25%;
   z-index: 9003;
   background: #f9f9f9;
   border-radius: 30rpx;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-dialog {
@@ -622,6 +624,11 @@ page {
   z-index: 9001;
   background: #f9f9f9;
   border-radius: 30rpx;
+}
+
+.art_bg {
+   position:absolute;
+   z-index: 8000;
 }
 
 .upgrade-bg {
@@ -641,6 +648,13 @@ page {
   background: #f9f9f9;
 }
 
+.upgrade-1-bg {
+  width: 248rpx;
+  height: 248rpx;
+  margin-top: 60rpx;
+  align-self: center;
+}
+
 .levelItem {
   display: flex;
   text-align: center;
@@ -651,19 +665,11 @@ page {
 .levelNum {
   padding-bottom: 10rpx;
   font-size: 1.3rem;
-  color: #333;
+  color: #8a4ac6;
   text-align: center;
+  font-weight: bold;
 }
 
-.upgrade-1-bg {
-  width: 248rpx;
-  height: 248rpx;
-  margin-left: 140rpx;
-  margin-top: 20rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .modal-title {
   padding-top: 50rpx;

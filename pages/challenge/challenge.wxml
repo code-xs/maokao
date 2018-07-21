@@ -159,7 +159,7 @@
       <image mode="widthFix" src="/images/result-bg.png" background-size="cover"></image>
       <text class="">最多连续答对{{continueMaxRight}}题</text>
     </view>
-    <view class="retryError">回顾本场错误题目</view>
+    <!--view class="retryError">回顾本场错误题目</view-->
     <view class="showScore">
       <image class="item1" mode="widthFix" bindtap="onClickAgain" src="/images/again1.png"></image>
       <button class="invite_friends" open-type="share">
@@ -168,7 +168,9 @@
     </view>
   </view>
 
+  <!-- dialog upgrade -->
   <view class="upgrade-dialog" wx:if="{{upgradeDialog}}">
+    <image class="art_bg" src="/images/ic_bg_art.png"></image>
     <image class="upgrade-1-bg" mode="widthFix" src='/images/upgrade-1-bg.png'></image>
     <view class="modal-title">恭喜升级</view>
     <view class="levelItem">
@@ -177,12 +179,14 @@
     </view>
     <button class="modal-subtitle3" bindtap="onClickUpgradeOk">确定</button>
   </view>
+  <!-- dialog upgrade end-->
 
+  <!-- dialog fail -->
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}">
   </view>
   <view class="modal-dialog" wx:if="{{showModal}}">
     <view class="image-fail">
-      <image class="modal-closeimage" bindtap="onClickCloseModal" mode="widthFix" src="../../images/ic_dialog_close.png"></image>
+      <image class="modal-closeimage" bindtap="onClickCloseModal" mode="widthFix" src="/images/ic_dialog_close.png"></image>
     </view>
     <view class="modal-title">挑战结束</view>
     <view class="modal-subtitle">转发到微信群</view>
@@ -190,4 +194,5 @@
     <button class="modal-subtitle3" open-type='share'>去复活</button>
   </view>
   <image class="modal-image" mode="widthFix" src="/images/fail.png" wx:if="{{showModal}}"></image>
+  <!-- fail end -->
 </view>
