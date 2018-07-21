@@ -91,15 +91,18 @@ color: transparent;
 .control{
     width: 100%;
     height: 100%;
-    padding-bottom: 30rpx;
 }
 
-.first_item {
+.category_list_item {
     display: flex;
+    flex-direction:row;
     margin-left: 40rpx;
     margin-right: 40rpx;
+    margin-top: 30rpx;
+    margin-bottom: 30rpx;
     border-radius: 10rpx;
 }
+
 .group0{
     flex:2;
     border-top-left-radius: 10rpx;
@@ -117,12 +120,12 @@ color: transparent;
     margin-bottom: 100rpx;
     display: flex;
     flex-direction: column;
-    align-items: center;      
+    align-items: center;  
 }
 .item1{
     display: flex;
     flex-direction: column;
-    align-items: center;      
+    align-items: center;     
 }
 
 .item1Opacity{
@@ -159,15 +162,9 @@ color: transparent;
 
 .scroll_panel {
   width: 100%;
-  height: 1200rpx;
+  height: 100vh;
   white-space:nowrap;
 }
-
-.grid {  
-  padding-top: 30rpx;
-  border-radius: 20rpx;
-}
-
 
 /* modal wxss*/
 .modal-mask {

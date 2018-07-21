@@ -121,18 +121,18 @@ Page({
       }],
     tree:[{
         'id': 11,
-        'title': '前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
+        'title': '11111前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
         'answers': [{
-          'answer': '回到网页开发去了前段时间小程序上线后就弃坑了,回到网页开了',
+          'answer': '回到网页开发去了前段时间小程序上线后就弃坑了,回到网页开了前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
           'id': 0,
         }, {
-          'answer': '最近又有新项目,再次入坑,难免需要一些dem重新dsdsassddasdsa',
+            'answer': '最近又有新项目,再次入坑,难免需要一些dem重新dsdsassddasdsa前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
           'id': 1,
         }, {
-          'answer': '回到网页开发去了在这个过,发现demo中很少有人使用flex布局',
+            'answer': '回到网页开发去了在这个过,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
           'id': 2,
         }, {
-          'answer': '发现demo少有人使用flex布局123323223,回到网页开发去了',
+            'answer': '发现demo少有人使用flex布局123323223,回到网页开发去了前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
           'id': 3,
         }],        
         'answer': 3,
@@ -194,7 +194,7 @@ Page({
       }],
       'answer': 1,
       'score': 10,
-      'timer': 10,
+      'timer': 1000,
       'type': 3,
       'index': 1002,
       }, {
@@ -223,16 +223,29 @@ Page({
         'title': '5555555银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运动银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运动银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运',
         'title2': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
         'answers': [{
-          'answer': '毕竟西湖六月中',
+          'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
           'id': 0,
         }, {
-          'answer': '风光不与四十同',
+          'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
           'id': 1,
         }, {
-          'answer': '映日荷花别样红',
+          'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
           'id': 2,
         }, {
-          'answer': '故人西辞黄鹤楼',
+          'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+          'id': 3,
+        }],
+        'answers_img': [{
+          'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+          'id': 0,
+        }, {
+          'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+          'id': 1,
+        }, {
+          'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+          'id': 2,
+        }, {
+          'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
           'id': 3,
         }],
         'answer': 1,
@@ -313,7 +326,7 @@ Page({
         console.log('请求成功 statusCode:' + response.statusCode);
         console.log(response.data.data);
        
-        that.data.tree = response.data.data;
+        //that.data.tree = response.data.data;
        
         if (that.data.tree == null || that.data.tree.length == 0){
           this.setData({

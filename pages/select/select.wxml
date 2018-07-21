@@ -1,8 +1,7 @@
 <view class="control" mode="widthFix" >
 
  <scroll-view class="scroll_panel" scroll-y="true">
-    <view class="grid" wx:for="{{categoryTree}}" wx:key="id">
-    <view class="first_item" style="background:{{item.color}}">
+    <view class="category_list_item"   wx:for="{{categoryTree}}" wx:key="id"style="background:{{item.color}}">
       <view class="group0">
         <view class="item">
             <image src="{{item.src}}" class="image" mode="widthFix"> </image>
@@ -17,11 +16,14 @@
           </view>
         </view>
        </view>
+       
       </view>
-    </view>
+      <view style="display:block; height:16rpx;"></view>
   </scroll-view>
+
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}">
   </view>
+
   <view class="modal-dialog" wx:if="{{showModal}}">
     <view class="image-fail">
       <image class="modal-closeimage" bindtap="onClickCloseModal" mode="widthFix" src="../../images/ic_dialog_close.png"></image>
@@ -29,4 +31,5 @@
     <view class="modal-title">暂未开通</view>
     <button class="modal-subtitle3" bindtap="onClickBack">返回</button>
   </view>
+
 </view>
