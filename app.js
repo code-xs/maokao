@@ -439,16 +439,21 @@ App({
       if (this.globalData.commonCateory.subLevel.length >= 6){
         this.globalData.commonCateory.subLevel.splice(0, 1);
       }
-      this.globalData.commonCateory.subLevel.push(data);
+      var list = [];
+      list.push(data);
+      for (var i in this.globalData.commonCateory.subLevel) {
+        list.push(this.globalData.commonCateory.subLevel[i]);
+      }
+      this.globalData.commonCateory.subLevel = list;
       console.log(this.globalData.commonCateory);
     }
     wx.setStorage({
       key: 'commonCateory',
       data: this.globalData.commonCateory.subLevel,
     });
-    this.updateCommonCateoryList(id, data);
+    this.updateUserUsedCateoryList(id, data);
   },
-  updateCommonCateoryList: function (id, data) {
+  updateUserUsedCateoryList: function (id, data) {
     var find = false;
     for (var i = 0; i < this.globalData.commonList.length; i++) {
       var obj = this.globalData.commonList[i];
@@ -459,7 +464,12 @@ App({
       }
     }
     console.log(data);
-    this.globalData.commonList.push(data);
+    var list = [];
+    list.push(data);
+    for (var i in this.globalData.commonList){
+      list.push(this.globalData.commonList[i]);
+    }
+    this.globalData.commonList = list;
     console.log(this.globalData.commonList);
     wx.setStorage({
       key: 'cateoryList',
