@@ -121,7 +121,7 @@ Page({
     console.log(this.data.selectCateory);
     app.updateCommonCateory(id, this.data.selectCateory);
     console.log('  open challenge with param id:'+id);
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../challenge/challenge?id='+id,
     })
   },

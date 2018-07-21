@@ -44,7 +44,7 @@ Page({
     continueRight:0,
     continueMaxRight:0,
     errorCateoryList:[],
-    questionTotal:10,
+    questionTotal:30,
     questionIndex:0,
     levelRules: [{
       'title': '新手',
@@ -563,7 +563,6 @@ Page({
         that.startCountDown(duration);
       }, duration);
     }else{
-      this.initHearts(--this.data.redCnt);
       this.showAnswer(-1);
       this.data.pendEvent = true;
       if (this.data.redCnt > 0){
@@ -694,7 +693,6 @@ Page({
     this.initHearts(this.data.redCnt);
     this.setData({
       showModal: false,
-      questionIndex:0,
     });
     this.data.pendEvent = false;
     this.loadNext(200);
