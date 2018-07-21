@@ -413,7 +413,7 @@ Page({
     setTimeout(function () {
       that.data.pendEvent = false;
       that.setData({
-        showModal: true
+        showModal: true,
     })
     }, this.data.pendindDuration);
   },
