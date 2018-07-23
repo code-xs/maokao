@@ -692,12 +692,14 @@ Page({
         gameOver: false,
         questionIndex: 0,
         continueMaxRight:0,
+        curShareTick:0,
       })
       this.data.PAGE = 0;
       this.data.redCnt = 5;
       this.data.curIndex = 0;
       this.requestQuestionList(this.data.PAGE, this.data.ID);    
     }else if (this.data.showModal) {
+      this.data.curShareTick += 1;
       this.retryAgain();
     }
   },
