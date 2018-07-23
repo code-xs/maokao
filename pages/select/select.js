@@ -1,6 +1,7 @@
 var app = getApp()
 Page({
   data: {
+    frompageid: 0,
     showUpgradeModal:false,
     categoryTree: [],
     oldLevel :0,
@@ -14,18 +15,19 @@ Page({
     },
   },
   onLoad: function (option) {
-    console.log('onLoad')
+    console.log('onLoad  frompageid:' + option.frompageid)
     this.data.oldLevel = app.scoreConvertLevel(app.globalData.totalScore)
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
       backgroundColor: '#a753d6',
     });
-    this.initData(0); 
+    this.initData(0, option.frompageid); 
   },
-  initData:function(len){
+  initData: function (len, fpid){
     var that = this;
     this.setData({
       categoryTree: app.getCateoryList(),
+      frompageid: fpid,
     });
   },
 
@@ -41,9 +43,15 @@ Page({
         var item = this.data.categoryTree[0].subLevel[i];
         console.log(item);
         if (id == item.id){
-          wx.navigateTo({
-            url: '../challenge/challenge?id=' + item.subId,
-          })
+          if (this.data.frompageid == 4) {
+            wx.navigateTo({
+              url: '../study/study?id=' + item.subId + '&frompageid=' + this.data.frompageid,
+            })
+          } else {
+            wx.navigateTo({
+              url: '../challenge/challenge?id=' + item.subId,
+            })
+          }
           break;
         }
       }
@@ -69,10 +77,18 @@ Page({
         }else{
           this.data.selectCateory.subtitle1 = obj.title;
         }
+        //todo
         app.updateCommonCateory(obj.id, this.data.selectCateory);
-        wx.navigateTo({
-          url: '../challenge/challenge?id=' + obj.id,
-        })
+
+        if (this.data.frompageid == 4) {
+          wx.navigateTo({
+            url: '../study/study?id=' + obj.id + '&frompageid=' + this.data.frompageid,
+          })
+        } else {
+          wx.navigateTo({
+            url: '../challenge/challenge?id=' + obj.id,
+          })
+        }
       }
     }
   },
@@ -107,13 +123,13 @@ Page({
   },
   showAbortExit:function(){
     wx.showModal({
-      title: 'ÌáÊ¾',
-      content: 'ÄãÒÑ·ÅÆú±¾´ÎÌôÕ½!',
+      title: 'ï¿½ï¿½Ê¾',
+      content: 'ï¿½ï¿½ï¿½Ñ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ½!',
       success: function (res) {
         if (res.confirm) {
-          console.log('ÓÃ»§µã»÷È·¶¨')
+          console.log('ï¿½Ã»ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½')
         } else if (res.cancel) {
-          console.log('ÓÃ»§µã»÷È¡Ïû')
+          console.log('ï¿½Ã»ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½')
         }
       }
     })
