@@ -48,6 +48,7 @@ Page({
       }
     }else{
       var obj = app.findCategoryItemById(e.target.id);
+      var partentObj = app.findParentCategoryById(e.target.id);
       console.log('find obj:');
       console.log(JSON.stringify(obj));    
       if (obj.subLevel != null){
@@ -62,7 +63,11 @@ Page({
         this.data.selectCateory.title = obj.title;
         this.data.selectCateory.src = obj.src;
         this.data.selectCateory.subtitle = obj.subtitle;
-        this.data.selectCateory.subtitle1 = obj.title;
+        if (partentObj != null){
+          this.data.selectCateory.subtitle1 = partentObj.title+obj.title;
+        }else{
+          this.data.selectCateory.subtitle1 = obj.title;
+        }
         app.updateCommonCateory(obj.id, this.data.selectCateory);
         wx.navigateTo({
           url: '../challenge/challenge?id=' + obj.id,

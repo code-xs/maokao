@@ -297,6 +297,18 @@ App({
       }
     }
   },
+  findParentCategoryById(id){
+      for (var i = 0; i < this.globalData.categoryTree.length; i++) {
+        var twoLevel = this.globalData.categoryTree[i].subLevel;
+        for (var j = 0; j < twoLevel.length; j++) {
+          var _obj = twoLevel[j];
+          if (_obj.id == id) {
+            return this.globalData.categoryTree[i];
+          }
+        }
+      }
+      return null;
+  },
 
   addChallengeCnt:function(num){
     this.globalData.achievementDetail.totalChallenge += num;
