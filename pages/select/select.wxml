@@ -32,15 +32,15 @@
   </view>
 
   <!-- abort dialog -->
-  <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showExitModal}}">
+  <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showUpgradeModal}}">
   </view>
-  <view class="modal-dialog" wx:if="{{showExitModal}}">
+  <view class="modal-dialog" wx:if="{{showUpgradeModal}}">
     <view class="image-fail">
       <image class="modal-closeimage" bindtap="onClickOK" mode="widthFix" src="/images/ic_dialog_close.png"></image>
     </view>
-    <view class="drop-title">您已放弃本次挑战</view>
+    <view class="drop-title">恭喜升级!!</view>
     <button class="modal-subtitle3" bindtap="onClickOK">确定</button>
   </view>
-  <image class="modal-image" mode="widthFix" src="/images/fail.png" wx:if="{{showExitModal}}"></image>  
+  <image class="modal-image" mode="widthFix" src="/images/upgrade.png" wx:if="{{showUpgradeModal}}"></image>  
   <!-- abort dialog -->
 </view>

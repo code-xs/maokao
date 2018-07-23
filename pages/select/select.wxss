@@ -232,7 +232,6 @@ color: transparent;
     justify-content:center;
     align-items: center;
     background-size: 100% 100%;
-    margin-top: 40rpx;
     margin-bottom: 40rpx;
     color: #FFFFFF;
     font-size: 1.1rem;
@@ -244,7 +243,7 @@ color: transparent;
 .drop-title {
   padding-top: 50rpx;
   padding-bottom: 30rpx;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   color: #8b44c9;
   text-align: center;
   font-weight:bold;

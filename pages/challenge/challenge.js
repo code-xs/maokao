@@ -39,6 +39,8 @@ Page({
     timer:null,
     pendindDuration: 1000,
     answerIndex:-1,
+    allowShareMax: 2,
+    curShareTick:0,
     characterBgColor:[],
     hearts:[],
     continueRight:0,
@@ -412,9 +414,13 @@ Page({
     this.saveCacheData();
     setTimeout(function () {
       that.data.pendEvent = false;
-      that.setData({
-        showModal: true,
-    })
+      if (that.data.curShareTick >= that.data.allowShareMax){
+        that.showChallengeResult(true);
+      }else{
+        that.setData({
+          showModal: true,
+        })
+      }
     }, this.data.pendindDuration);
   },
 
@@ -448,8 +454,12 @@ Page({
     if (ret) {
       this.data.characterBgColor[id] = '#9be665';
       this.data.continueRight ++;
-      this.data.score += section.score;
-      this.data.score1 += section.score;
+      var score = parseInt(this.data.progress/10)*2;
+      if (score <= 0)
+        score = 1;
+      console.log(' score:' + score);    
+      this.data.score += score;
+      this.data.score1 += score;
       this.data.character[id] = '../../images/ic_aws_right.png';
     } else {
       app.updateWinningStreak(this.data.continueRight);
@@ -682,12 +692,14 @@ Page({
         gameOver: false,
         questionIndex: 0,
         continueMaxRight:0,
+        curShareTick:0,
       })
       this.data.PAGE = 0;
       this.data.redCnt = 5;
       this.data.curIndex = 0;
       this.requestQuestionList(this.data.PAGE, this.data.ID);    
     }else if (this.data.showModal) {
+      this.data.curShareTick += 1;
       this.retryAgain();
     }
   },
