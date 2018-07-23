@@ -32,7 +32,7 @@ Page({
     console.log(' onLevelSelect:'+e.target.id);
     var id = e.target.id;
     if(id < 0){
-      this.showModal();
+      this.showModal(true);
       return;
     }
     if (id > 10000){
