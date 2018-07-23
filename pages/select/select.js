@@ -123,13 +123,13 @@ Page({
   },
   showAbortExit:function(){
     wx.showModal({
-      title: '��ʾ',
-      content: '���ѷ���������ս!',
+      title: '个人挑战',
+      content: '你已放弃本次挑战!',
       success: function (res) {
         if (res.confirm) {
-          console.log('�û����ȷ��')
+          console.log('confirm')
         } else if (res.cancel) {
-          console.log('�û����ȡ��')
+          console.log('cancel')
         }
       }
     })
