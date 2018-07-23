@@ -1,9 +1,9 @@
 var app = getApp()
 Page({
   data: {
-    showModal:false,
-    showExitModal:false,
+    showUpgradeModal:false,
     categoryTree: [],
+    oldLevel :0,
     selectCateory: {
       id: 0,
       title: "none",
@@ -15,6 +15,7 @@ Page({
   },
   onLoad: function (option) {
     console.log('onLoad')
+    this.data.oldLevel = app.scoreConvertLevel(app.globalData.totalScore)
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
       backgroundColor: '#a753d6',
@@ -89,15 +90,32 @@ Page({
   },
   onClickOK:function(){
     this.setData({
-      showExitModal: false,
+      showUpgradeModal: false,
     })
   },
   onShow: function () {
-    if (app.globalData.abortExit){
+    console.log('onShow')
+    console.log(this.data.oldLevel)
+    if (this.data.oldLevel < app.scoreConvertLevel(app.globalData.totalScore)){
       this.setData({
-        showExitModal: true,
+        showUpgradeModal: true,
       })
+    }else if (app.globalData.abortExit){
+      this.showAbortExit();
       app.globalData.abortExit = false;
     }
   },
+  showAbortExit:function(){
+    wx.showModal({
+      title: '提示',
+      content: '你已放弃本次挑战!',
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  }
 })
