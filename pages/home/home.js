@@ -174,6 +174,13 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
       url: '../ranking/ranking'
     })
   },
+
+  onClickStudy:function() {
+    wx.navigateTo({
+      url: '../select/select?frompageid=4',
+    })
+  },
+
   onShareAppMessage: function (ops) {
     if (ops.from == 'button') {
       return {
@@ -233,6 +240,8 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
       this.onClickFriend();
     }else if(id == 3) {
       this.onClickRanking();
+    } else if (id == 4) {
+      this.onClickStudy();
     }
   },
   onShow: function (options) {

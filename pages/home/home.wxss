@@ -377,3 +377,13 @@ border:none;
   height: 140rpx;
 }
 
+
+.scrollview_layout {
+  height: 100vh;
+}
+
+::-webkit-scrollbar{
+width: 0;
+height: 0;
+color: transparent;
+}

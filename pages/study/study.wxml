@@ -1,0 +1,160 @@
+<!--index.wxml-->
+<view class="control">
+  <view class="topbanner">
+    <view class="question_type">单选题</view>
+     <view class="question_bottom_line"></view>
+  </view>
+
+  <scroll-view class="scrollview_layout" scroll-y="true">
+    <!-- template 1 -->
+    <view class="{{ showFragment == 1? 'type1':'type1hide'}}">
+      <view class="context">
+        <span class="subject_index_left">(</span>
+        <span class="subject_index">{{questionIndex+1}}</span>
+        <span class="subject_index_right">/{{questionTotal}})</span>
+        {{question.title}}
+      </view>
+
+      <view class="item0">
+        <image class="answerIndex" src="{{character[0]}}" mode="widthFix"> </image>
+        <view class="answer" id="{{question.answers[0].id}}" bindtap="onClickAnswer"> {{question.answers[0].answer}}</view>
+      </view>
+      <view class="item0">
+        <image class="answerIndex" src="{{character[1]}}" mode="widthFix"> </image>
+        <view class="answer" id="{{question.answers[1].id}}" bindtap="onClickAnswer"> {{question.answers[1].answer}}</view>
+      </view>
+      <view class="{{question.answers[2].answer == null? 'item0hide':'item0'}}">
+        <image class="answerIndex" src="{{character[2]}}" mode="widthFix"> </image>
+        <view class="answer" id="{{question.answers[2].id}}" bindtap="onClickAnswer"> {{question.answers[2].answer}}</view>
+      </view>
+      <view class="{{question.answers[3].answer == null? 'item0hide':'item0'}}">
+        <image class="answerIndex" src="{{character[3]}}" mode="widthFix"> </image>
+        <view class="answer" id="{{question.answers[3].id}}" bindtap="onClickAnswer"> {{question.answers[3].answer}}</view>
+      </view>
+    </view>
+    <!-- template 1 end-->
+
+    <!-- template 2 -->
+    <view class="{{ showFragment == 2? 'type2':'type2hide'}}">
+      <view class="context">
+        <span class="subject_index_left">(</span>
+        <span class="subject_index">{{questionIndex+1}}</span>
+        <span class="subject_index_right">/{{questionTotal}})</span>
+        {{question.title}}
+      </view>
+
+      <image class="type2image" mode="top" src="{{question.title2}}"> </image>
+      <view class="item2">
+        <image class="answerIndex" src="{{character[0]}}" mode="widthFix"> </image>
+        <view class="answer" id="{{question.answers[0].id}}" bindtap="onClickAnswer"> {{question.answers[0].answer}}</view>
+      </view>
+      <view class="item2">
+        <image class="answerIndex" src="{{character[1]}}" mode="widthFix"> </image>
+        <view class="answer" id="{{question.answers[1].id}}" bindtap="onClickAnswer"> {{question.answers[1].answer}}</view>
+      </view>
+      <view class="{{question.answers[2].answer == null? 'item2hide':'item2'}}">
+        <image class="answerIndex" src="{{character[2]}}" mode="widthFix"> </image>
+        <view class="answer" id="{{question.answers[2].id}}" bindtap="onClickAnswer"> {{question.answers[2].answer}}</view>
+      </view>
+      <view class="{{question.answers[3].answer == null? 'item2hide':'item2'}}">
+        <image class="answerIndex" src="{{character[3]}}" mode="widthFix"> </image>
+        <view class="answer" id="{{question.answers[3].id}}" bindtap="onClickAnswer"> {{question.answers[3].answer}}</view>
+      </view>
+    </view>
+    <!-- template 2 end-->
+
+    <!-- template 3 -->
+    <view class="{{ showFragment == 3? 'type3':'type3hide'}}">
+      <view class="context">
+        <span class="subject_index_left">(</span>
+        <span class="subject_index">{{questionIndex+1}}</span>
+        <span class="subject_index_right">/{{questionTotal}})</span>
+        {{question.title}}
+      </view>
+
+      <view class="imageanswer_layout">
+        <view class="answeritem" wx:for="{{question.answers_img}}" wx:for-item="i" wx:key="id">
+          <view id="{{question.answers[index].id}}" bindtap="onClickAnswer" style="width:{{type3imagesW}}rpx;;height:{{type3imagesH}}rpx;; background-size:100% 100%; background-image:url('{{question.answers_img[index].answer}}')">
+            <image class="answerIndex_onimage" src="{{character[index]}}" mode="widthFix"> </image>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- template 3 end-->
+
+    <!-- template 4 -->
+    <view class="{{ showFragment == 4? 'type1':'type1hide'}}">
+      <view class="context">
+        <span class="subject_index_left">(</span>
+        <span class="subject_index">{{questionIndex+1}}</span>
+        <span class="subject_index_right">/{{questionTotal}})</span>
+        {{question.title}}
+      </view>
+      <view class="item4">
+        <image class="answerIndex" src="{{character[0]}}" mode="widthFix"> </image>
+        <view class="answer" id="{{question.answers[0].id}}" style="color:{{characterBgColor[0]}}" bindtap="onClickAnswer"> {{question.answers[0].answer}}</view>
+      </view>
+      <view class="item4">
+        <image class="answerIndex" src="{{character[1]}}" mode="widthFix"> </image>
+        <view class="answer" id="{{question.answers[1].id}}" style="color:{{characterBgColor[1]}}" bindtap="onClickAnswer"> {{question.answers[1].answer}}</view>
+      </view>
+      <view class="{{question.answers[2].answer == null? 'item4hide':'item4'}}">
+        <image class="answerIndex" src="{{character[2]}}" mode="widthFix"> </image>
+        <view class="answer" id="{{question.answers[2].id}}" style="color:{{characterBgColor[2]}}" bindtap="onClickAnswer"> {{question.answers[2].answer}}</view>
+      </view>
+      <view class="{{question.answers[3].answer == null? 'item4hide':'item4'}}">
+        <image class="answerIndex" src="{{character[3]}}" mode="widthFix"> </image>
+        <view class="answer" style="color:{{characterBgColor[3]}}" id="{{question.answers[3].id}}" bindtap="onClickAnswer"> {{question.answers[3].answer}}</view>
+      </view>
+    </view>
+    <!-- template 4 end -->
+
+    <!-- template 5 -->
+    <view class="{{ showFragment == 5? 'type5':'type5hide'}}">
+        <view class="context">
+          <span class="subject_index_left">(</span>
+          <span class="subject_index">{{questionIndex+1}}</span>
+          <span class="subject_index_right">/{{questionTotal}})</span>
+          {{question.title}}
+        </view>
+
+        <image class="type2image" mode="top" src="{{question.title2}}"> </image>
+        
+        <view class="imageanswer_layout">
+        <view class="answeritem" wx:for="{{question.answers_img}}" wx:for-item="i" wx:key="id">
+          <view id="{{question.answers[index].id}}" bindtap="onClickAnswer" style="width:{{type3imagesW}}rpx;;height:{{type3imagesH}}rpx;; background-size:100% 100%; background-image:url('{{question.answers_img[index].answer}}')">
+            <image class="answerIndex_onimage" src="{{character[index]}}" mode="widthFix"> </image>
+          </view>
+        </view>
+      </view>
+  
+    </view>
+    <!-- template 5 end -->
+
+    <view class="{{ showAnalytics ? 'analytics':'analytics_hide'}} ">
+        <view class="analytics_label">解析:</view>
+        <view class="analytics_content">
+            答案为A，原因是备案成功后，您将收到来自工信部的短信、邮件通知；由于信息同步会有延迟，请您收到短信后耐心等待系统信息更新。 如被管局驳回，工作人员在收到管局通知后会第一时间联系并指导您修改备案信息。给您带来的不便,请见谅，工信部查询入口请点击这里。
+        </view>
+    </view>
+       
+  </scroll-view>
+ 
+  <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{gameOver}}">
+  </view>
+  <view class="failed" wx:if="{{gameOver}}">
+    <image class="gameover" mode="widthFix" src="/images/gameover.png"></image>
+    <view class="warp">
+      <image mode="widthFix" src="/images/result-bg.png" background-size="cover"></image>
+      <text class="">最多连续答对{{continueMaxRight}}题</text>
+    </view>
+    <!--view class="retryError">回顾本场错误题目</view-->
+    <view class="showScore">
+      <image class="item1" mode="widthFix" bindtap="onClickAgain" src="/images/again1.png"></image>
+      <button class="invite_friends" open-type="share">
+        <image class="shareBt" mode="widthFix" src='/images/again3.png'></image>
+      </button>
+    </view>
+  </view>
+
+</view>

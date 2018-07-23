@@ -1,5 +1,6 @@
 <!--index.wxml-->
 <view class="control">
+ <scroll-view class="scrollview_layout" scroll-y="true">
   <view class="root">
     <view class="head">
       <view class="user-img">
@@ -29,12 +30,18 @@
     </view>
   </view>
 
+    <button class="item1" id="4" open-type="getUserInfo"  bindgetuserinfo="getUserInfoFun">
+      <image class="item2"  mode="widthFix" src='https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/home_study.png'></image>
+    </button> 
+
     <button class="item1" id="1" open-type="getUserInfo"  bindgetuserinfo="getUserInfoFun">
       <image class="item2"  mode="widthFix" src='https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home_challenge.png'></image>
     </button>  
+
     <button class="item1" id="2" open-type="getUserInfo"  bindgetuserinfo="getUserInfoFun">
       <image class="item2"  mode="widthFix" src='https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home_pk.png'></image>
-    </button>  
+    </button> 
+
     <button class="item1" id="3" open-type="getUserInfo"  bindgetuserinfo="getUserInfoFun">
       <image class="item2"  mode="widthFix" src='https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home_rank.png'></image>
     </button> 
@@ -43,4 +50,5 @@
       <image class="invite_friends_iv"  src='https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/btn_invite_friends_bg2.png'></image>
     </button> 
 
+  </scroll-view>
 </view>

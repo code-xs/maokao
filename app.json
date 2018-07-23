@@ -7,7 +7,8 @@
     "pages/competition/competition",
     "pages/invitation/invitation",
     "pages/main/main",
-    "pages/ranking/ranking",
+    "pages/ranking/ranking", 
+    "pages/study/study",
     "pages/logs/logs",
     "pages/failed/failed",
     "pages/authorization/authorization"    
