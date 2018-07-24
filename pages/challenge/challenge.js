@@ -453,7 +453,7 @@ Page({
   showAnswer:function(id){
     var section = this.data.tree[this.data.curIndex];
     var ret = this.checkAnswer(id);
-    console.log(' onClickAnswer:' + id + ' ret is:' + ret);    
+    console.log(' showAnswer:' + id + ' ret is:' + ret);    
     if (ret) {
       this.data.characterBgColor[id] = '#9be665';
       this.data.continueRight ++;
