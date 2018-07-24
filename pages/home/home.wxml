@@ -26,7 +26,7 @@
     </view>
     <view class="empirical-item">
       <view class="empirical-text">积分{{empiricalV}}</view>
-      <view class="empirical-text1">还差{{scoreGap}}即可升{{levelV+1}}级</view>
+      <view class="empirical-text1">还差{{scoreGap}}分即可升{{levelV+1}}级</view>
     </view>
   </view>
 

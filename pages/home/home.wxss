@@ -98,7 +98,6 @@ page{
     color:rgba(255, 247, 254, 0.6);
 }
 .empirical-text1 {
-    flex:3;
     text-align: right;
     margin-left: 20rpx;
     margin-top: 10rpx;

@@ -443,7 +443,7 @@ scroll-view {
 }
 
 .selectItem{
-  width: 45%;
+  width: 54%;
   height: 60rpx;
   display: flex;
   flex-direction: row;  
