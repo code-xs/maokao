@@ -3,6 +3,149 @@
 const app = getApp()
 var qcloud = require('../../vendor/wafer2-client-sdk/index');
 var config = require('../../config');
+var DEBUG = true;
+
+var touchDown = 0;//触摸时的原点  
+var touchUp = 0;
+var time = 0;// 时间记录，用于滑动时且时间小于1s则执行左右滑动  
+var intervalId = "";// 记录/清理时间记录  
+
+var datatreeDebug = [{
+  'id': 11,
+  'title': '11111前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
+  'answers': [{
+    'answer': '回到网页开发去了前段时间小程序上线后就弃坑了,回到网页开了前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
+    'id': 0,
+  }, {
+    'answer': '最近又有新项目,再次入坑,难免需要一些dem重新dsdsassddasdsa前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
+    'id': 1,
+  }, {
+    'answer': '回到网页开发去了在这个过,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
+    'id': 2,
+  }, {
+    'answer': '发现demo少有人使用flex布局123323223,回到网页开发去了前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
+    'id': 3,
+  }],
+  'answer': 3,
+  'score': 10,
+  'timer': 10,
+  'type': 1,
+  'index': 999,
+}, {
+  'id': 13,
+  'title': '22222222前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
+  'title2': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+  'answers': [{
+    'answer': '回到网页开发去了前段时上线后就弃坑了,回到网页开发去了',
+    'id': 0,
+  }, {
+    'answer': '最近又有新项目,再次入坑,要一些demo来重新dsdsassddasdsa',
+    'id': 1,
+  }, {
+    'answer': '回到网页开发去了在中,发现demo中很少有人使用flex布局',
+    'id': 2,
+  }, {
+    'answer': '回到网页开发时间小程序上线后就弃坑了,回到网页开发去了',
+    'id': 3,
+  }],
+  'score': 10,
+  'timer': 10,
+  'answer': 2,
+  'type': 2,
+  'index': 1001,
+}, {
+  'id': 14,
+  'title': '33333333前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
+  'title2': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+  'answers': [{
+    'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+    'id': 0,
+  }, {
+    'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+    'id': 1,
+  }, {
+    'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+    'id': 2,
+  }, {
+    'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+    'id': 3,
+  }],
+  'answers_img': [{
+    'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+    'id': 0,
+  }, {
+    'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+    'id': 1,
+  }, {
+    'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+    'id': 2,
+  }, {
+    'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+    'id': 3,
+  }],
+  'answer': 1,
+  'score': 10,
+  'timer': 1000,
+  'type': 3,
+  'index': 1002,
+}, {
+  'id': 15,
+  'title': '44444接天莲叶无穷尽下一句是',
+  'answers': [{
+    'answer': '毕竟西湖六月中',
+    'id': 0,
+  }, {
+    'answer': '风光不与四十同',
+    'id': 1,
+  }, {
+    'answer': '映日荷花别样红',
+    'id': 2,
+  }, {
+    'answer': '故人西辞黄鹤楼',
+    'id': 3,
+  }],
+  'answer': 2,
+  'score': 10,
+  'timer': 10,
+  'type': 4,
+  'index': 1003,
+}, {
+  'id': 16,
+  'title': '5555555银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运动银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运动银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运',
+  'title2': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+  'answers': [{
+    'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+    'id': 0,
+  }, {
+    'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+    'id': 1,
+  }, {
+    'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+    'id': 2,
+  }, {
+    'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+    'id': 3,
+  }],
+  'answers_img': [{
+    'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+    'id': 0,
+  }, {
+    'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+    'id': 1,
+  }, {
+    'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+    'id': 2,
+  }, {
+    'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
+    'id': 3,
+  }],
+  'answer': 1,
+  'score': 10,
+  'timer': 10,
+  'type': 5,
+  'index': 1004,
+}];
+
 Page({
   data: {
     ID: -1,
@@ -118,141 +261,7 @@ Page({
         'score': 34500,
       }]
     }],
-    tree: [{
-      'id': 11,
-      'title': '11111前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
-      'answers': [{
-        'answer': '回到网页开发去了前段时间小程序上线后就弃坑了,回到网页开了前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
-        'id': 0,
-      }, {
-        'answer': '最近又有新项目,再次入坑,难免需要一些dem重新dsdsassddasdsa前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
-        'id': 1,
-      }, {
-        'answer': '回到网页开发去了在这个过,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
-        'id': 2,
-      }, {
-        'answer': '发现demo少有人使用flex布局123323223,回到网页开发去了前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
-        'id': 3,
-      }],
-      'answer': 3,
-      'score': 10,
-      'timer': 10,
-      'type': 1,
-      'index': 999, 
-    }, {
-      'id': 13,
-      'title': '22222222前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
-      'title2': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-      'answers': [{
-        'answer': '回到网页开发去了前段时上线后就弃坑了,回到网页开发去了',
-        'id': 0,
-      }, {
-        'answer': '最近又有新项目,再次入坑,要一些demo来重新dsdsassddasdsa',
-        'id': 1,
-      }, {
-        'answer': '回到网页开发去了在中,发现demo中很少有人使用flex布局',
-        'id': 2,
-      }, {
-        'answer': '回到网页开发时间小程序上线后就弃坑了,回到网页开发去了',
-        'id': 3,
-      }],
-      'score': 10,
-      'timer': 10,
-      'answer': 2,
-      'type': 2,
-      'index': 1001,
-    }, {
-      'id': 14,
-      'title': '33333333前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
-      'title2': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-      'answers': [{
-        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-        'id': 0,
-      }, {
-        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-        'id': 1,
-      }, {
-        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-        'id': 2,
-      }, {
-        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-        'id': 3,
-      }],
-      'answers_img': [{
-        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-        'id': 0,
-      }, {
-        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-        'id': 1,
-      }, {
-        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-        'id': 2,
-      }, {
-        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-        'id': 3,
-      }],
-      'answer': 1,
-      'score': 10,
-      'timer': 1000,
-      'type': 3,
-      'index': 1002,
-    }, {
-      'id': 15,
-      'title': '44444接天莲叶无穷尽下一句是',
-      'answers': [{
-        'answer': '毕竟西湖六月中',
-        'id': 0,
-      }, {
-        'answer': '风光不与四十同',
-        'id': 1,
-      }, {
-        'answer': '映日荷花别样红',
-        'id': 2,
-      }, {
-        'answer': '故人西辞黄鹤楼',
-        'id': 3,
-      }],
-      'answer': 2,
-      'score': 10,
-      'timer': 10,
-      'type': 4,
-      'index': 1003,
-    }, {
-      'id': 16,
-      'title': '5555555银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运动银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运动银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运',
-      'title2': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-      'answers': [{
-        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-        'id': 0,
-      }, {
-        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-        'id': 1,
-      }, {
-        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-        'id': 2,
-      }, {
-        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-        'id': 3,
-      }],
-      'answers_img': [{
-        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-        'id': 0,
-      }, {
-        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-        'id': 1,
-      }, {
-        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-        'id': 2,
-      }, {
-        'answer': 'http://img6.bdstatic.com/img/image/smallpic/PPT1215.jpg',
-        'id': 3,
-      }],
-      'answer': 1,
-      'score': 10,
-      'timer': 10,
-      'type': 5,
-      'index': 1004,
-    }]
+    tree: "",
   },
 
   //事件处理函数
@@ -323,7 +332,11 @@ Page({
         console.log('请求成功 statusCode:' + response.statusCode);
         console.log(response.data.data);
 
-        that.data.tree = response.data.data;
+        if(DEBUG) {
+          that.data.tree = datatreeDebug;
+        } else {
+          that.data.tree = response.data.data;
+        }
 
         if (that.data.tree == null || that.data.tree.length == 0) {
           this.setData({
@@ -332,13 +345,13 @@ Page({
           });
           this.cancelTimer();
           this.saveCacheData();
-          this.showUpgradeDialog();
+          this.showUpgradeDialog();   
         } else {
           if (that.data.PAGE == 0) {
             that.initData();
           } else {
             that.initQuestionAndAnswer(that.data.curIndex);
-          }
+          } 
         }
         console.log(that.data.tree);
       },
@@ -568,9 +581,6 @@ Page({
     console.log("==onUnload==");
     this.cancelTimer();
     this.saveCacheData();
-    if (!this.data.gameOver && !this.data.showModal) {
-      app.globalData.abortExit = true;
-    }
   },
   onShareAppMessage: function (ops) {
     var that = this;
@@ -621,4 +631,47 @@ Page({
     this.data.pendEvent = false;
     this.loadNext(200);
   },
+
+
+  /*
+
+var touchDot = 0;//触摸时的原点
+var time = 0;// 时间记录，用于滑动时且时间小于1s则执行左右滑动
+var interval = "";// 记录/清理时间记录
+
+  */
+
+  // 触摸开始事件  
+  touchStart: function (e) {
+    console.log("touchStart----:");
+    touchDown = e.touches[0].pageX; // 获取触摸时的原点  
+    // 使用js计时器记录时间    
+    intervalId = setInterval(function () {
+      time++;
+    }, 100);
+  },
+  // 触摸移动事件  
+  touchMove: function (e) {
+    touchUp = e.touches[0].pageX;
+  }, 
+  // 触摸结束事件      
+  touchEnd: function (e) {
+    console.log("touchEnd----:" );
+    var touchDelta = touchDown - touchUp;
+    console.log("touchDown:" + touchDown + " touchUp:" + touchUp + " time:" + time + " touchDelta:" + touchDelta);
+
+    if (touchUp - touchDown > 0 && touchUp - touchDown <= 250 && time < 5) {
+      console.log('向右滑动');
+      this.loadNext(10);
+    } else if (touchDown - touchUp > 0 && touchDown - touchUp <= 250 && time < 5) {
+      console.log('向左滑动');
+      this.loadNext(10);
+    } else {
+      console.log('ignore slide');
+    }
+
+    clearInterval(intervalId); // 清除setInterval  
+    time = 0;
+  },  
+
 })

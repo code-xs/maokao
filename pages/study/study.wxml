@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="control">
+<view class="control" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
   <view class="topbanner">
     <view class="question_type">单选题</view>
      <view class="question_bottom_line"></view>
