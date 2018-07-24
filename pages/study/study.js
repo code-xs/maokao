@@ -3,7 +3,7 @@
 const app = getApp()
 var qcloud = require('../../vendor/wafer2-client-sdk/index');
 var config = require('../../config');
-var DEBUG = true;
+var DEBUG = false;
 
 var touchDown = 0;//触摸时的原点  
 var touchUp = 0;
