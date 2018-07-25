@@ -76,7 +76,7 @@ Page({
   initData:function(){
     this.setData({
       worldRanking: app.globalData.userRanking,
-      level: app.globalData.level,
+      level: app.scoreConvertLevel(app.globalData.totalScore),
       friendRanking: app.globalData.totalScore,
       rate: app.globalData.rate,
       totalChallenge: app.globalData.achievementDetail.totalChallenge,
