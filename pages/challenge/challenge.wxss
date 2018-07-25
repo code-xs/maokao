@@ -794,6 +794,17 @@ input-holder {
   /*background: #dd00ff;*/
 }
 
+.modal-loading {
+  width: 20%;
+  height: 100rpx;
+  z-index: 9002;
+  margin-left: 40%;
+  top: 50%;
+  overflow: hidden;
+  position: fixed;
+  /*background: #dd00ff;*/
+}
+
 .showScore {
   color: aliceblue;
   display: flex;

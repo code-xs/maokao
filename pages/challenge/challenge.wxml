@@ -195,4 +195,7 @@
   </view>
   <image class="modal-image" mode="widthFix" src="/images/fail.png" wx:if="{{showModal}}"></image>
   <!-- fail end -->
+  
+  <image class="modal-loading" mode="widthFix" src="/images/loading.gif" wx:if="{{showLoading}}"></image>
+
 </view>

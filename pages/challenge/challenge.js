@@ -185,6 +185,7 @@ Page({
     errorCateoryList:[],
     questionTotal:30,
     questionIndex:0,
+    showLoading:false,
     levelRules: [{
       'title': '新手',
       'levels': [{
@@ -318,6 +319,9 @@ Page({
   },
   requestQuestionList: function (page, id) {
     var that = this;
+    this.setData({
+      showLoading: true
+    })
     qcloud.request({
       url: config.service.requestQuestionList,
       header: {
@@ -330,7 +334,9 @@ Page({
       success: (response) => {
         console.log('请求成功 statusCode:' + response.statusCode);
         console.log(response.data.data);
-       
+        that.setData({
+          showLoading: false
+        })       
         that.data.tree = response.data.data;
        
         if (that.data.tree == null || that.data.tree.length == 0){
