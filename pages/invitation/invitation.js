@@ -1,23 +1,12 @@
 //index.js
 //获取应用实例
 const app = getApp()
-
+var tunnel = require('../../tunnel');
 Page({
   data: {
-    motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    empirical:0,
-    level:0,
-    ranking:0,
-    progress:50,
-    Height:150,
-    empiricalV:0,
-    levelV:0,
-    windowW:0,
-    windowH:0,
-    challenge:-1,
     showTicker:false,
     invitationTitle:'等待对方加入'
   },
@@ -66,6 +55,7 @@ Page({
       }
     });
     this.initData();
+    tunnel.createTunnel();
   },
   getUserInfo: function(e) {
     console.log(' getUserInfo')
@@ -77,33 +67,7 @@ Page({
   },
 
   initData:function(){
-    var _empirical = wx.getStorageSync('empirical');
-    if (_empirical == null || _empirical < 0)
-      _empirical = 0;
-    var _level = wx.getStorageSync('level');
-    if(_level == null || _level < 0)
-      _level = 0;
-    var _ranking = wx.getStorageSync('ranking');
-    if (_ranking == null || _ranking < 0)
-      _ranking = 0;
-    console.log(' _empirical:' + _empirical + ',_level: ' + _level + ', _ranking:' + _ranking)
-    this.setData({
-      empirical: 0,
-      level: 0,
-      ranking: 0,
-      empiricalV: "经验: " + this.data.empirical,
-      levelV:this.data.level+"级"
-    });
-    const ctx = wx.createCanvasContext('myCanvas');
-    ctx.setLineWidth(2);
-    this.drawCirque(ctx, 33, 32);
-    this.drawRuleText(ctx, 33, 35, 1);
-    ctx.draw();
-    const ctx1 = wx.createCanvasContext('invite');
-    ctx1.setLineWidth(2);
-    this.drawCircle(ctx1, this.data.windowW/2, 50);
-    this.drawRuleText(ctx1, this.data.windowW / 2, 55, '邀请');
-    ctx1.draw();
+
   },
 
   drawRuleText: function (ctx, x, y, cnt) {

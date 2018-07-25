@@ -1,10 +1,17 @@
 //index.js
 //获取应用实例
 const app = getApp()
-
+var qcloud = require('../../vendor/wafer2-client-sdk/index');
+var config = require('../../config');
 Page({
   data: {
     userInfo: {},
+    userInfo1:{
+      nickName:'Rose',
+      avatarUrl:'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/ic_crown.png',
+      score:100,
+      selectAnswer:1,
+    },
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     empirical:999,
@@ -18,15 +25,42 @@ Page({
     windowW:0,
     windowH:0,
     score:13242,
+    PAGE:0,
+    ID:24,
     scoreStr:null,
-    answer:[],
-    question:[],
-    answerid:[],
+    score1: 0,
+    typeScore: 0,
+    answer: [],
+    question: [],
+    answerid: [],
+    character: [],    
     type3imagesW:300,
     type3imagesH:200,
     showFragment:3,
     showModal:false,
     showFailed:false,
+    levelNum: 9999,
+    showFragment: 1,
+    curIndex: 0,
+    oldLevel: 0,
+    upgradeDialog: false,
+    showModal: false,
+    pendEvent: false,
+    redCnt: 5,
+    gameOver: false,
+    timer: null,
+    pendindDuration: 1000,
+    answerIndex: -1,
+    allowShareMax: 2,
+    curShareTick: 0,
+    characterBgColor: [],
+    hearts: [],
+    continueRight: 0,
+    continueMaxRight: 0,
+    errorCateoryList: [],
+    questionTotal: 30,
+    questionIndex: 0,
+    showLoading: false,    
     type1: [{
       'id': 11,
       'title': '前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
@@ -81,7 +115,7 @@ Page({
     }
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
-      backgroundColor: '#6d6d6d',
+      backgroundColor: '#a753d6',
     });
     wx.setNavigationBarTitle({
       title: "对战"
@@ -97,8 +131,9 @@ Page({
         })
       }
     });
-    this.initData();
-    this.startCountDown(2000);
+    //this.initData();
+    this.requestQuestionList(this.data.PAGE, this.data.ID);
+    //this.startCountDown(2000);
   },
   getUserInfo: function(e) {
     console.log(' getUserInfo')
@@ -108,19 +143,14 @@ Page({
       hasUserInfo: true
     })
   },
-
-  initData:function(){
-    var _empirical = wx.getStorageSync('empirical');
-    if (_empirical == null || _empirical <= 0)
-      _empirical = 999;
-    var _level = wx.getStorageSync('level');
-    if(_level == null || _level < 0)
-      _level = 0;
-    var _ranking = wx.getStorageSync('ranking');
-    if (_ranking == null || _ranking < 0)
-      _ranking = 0;
-    console.log(' _empirical:' + _empirical + ',_level: ' + _level + ', _ranking:' + _ranking);
-    
+  cancelTimer: function () {
+    if (this.data.timer != null) {
+      console.log(' clearTimeout at first !!!');
+      clearTimeout(this.data.timer);
+      this.data.timer = null;
+    }
+  },
+  initData:function(){    
     this.setData({
       empirical: 999,
       ranking: 0,
@@ -129,75 +159,88 @@ Page({
       scoreStr: this.data.score+'分',
       answer: this.data.answer,
     });
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: '#735cd9',
+    });
+    wx.setNavigationBarTitle({
+      title: "对战"
+    })
+    //this.requestQuestionList(this.data.PAGE, this.data.ID);
     this.initQuestionAndAnswer(this.data.showFragment);
   },
+  requestQuestionList: function (page, id) {
+    var that = this;
+    qcloud.request({
+      url: config.service.requestQuestionList,
+      header: {
+        'Content-Type': 'application/json'
+      },
+      data: {//这里写你要请求的参数
+        category_id: id,
+        page_index: page
+      },
+      success: (response) => {
+        console.log('请求成功 statusCode:' + response.statusCode);
+        console.log(response.data.data);
+        that.data.tree = response.data.data;
 
-  initQuestionAndAnswer(type){
+        if (that.data.tree == null || that.data.tree.length == 0) {
+          this.setData({
+            gameOver: true,
+            showFragment: 0,
+          });
+          this.cancelTimer();
+          //this.saveCacheData();
+          //this.showUpgradeDialog();
+        } else {
+          if (that.data.PAGE == 0) {
+            that.initData();
+          } else {
+            that.initQuestionAndAnswer(that.data.curIndex);
+          }
+        }
+        console.log(that.data.tree);
+      },
+      fail: function (err) {
+        console.log('请求失败', err);
+      }
+    });
+  },
+
+  initQuestionAndAnswer(index) {
+    this.data.pendEvent = false;
+
     this.data.answer = [];
     this.data.question = [];
-    this.data.answerid =[];
-    if(type == 1){
-      this.data.question.push('前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局')
-      this.data.answer.push('前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目');
-      this.data.answer.push('前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目');
-      this.data.answer.push('难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局');
-      this.data.answer.push('难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局');
-      this.data.answerid.push([11]);
-      this.data.answerid.push([12]);
-      this.data.answerid.push([13]);
-      this.data.answerid.push([14])
-    }else if (type == 2) {
-      this.data.question.push('前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局');
-      this.data.question.push('/images/angrybirds.png');
-      this.data.answer.push('毕竟西湖六月中');
-      this.data.answer.push('风光不与四十同');
-      this.data.answer.push('映日荷花别样红');
-      this.data.answer.push('故人西辞黄鹤楼');
-      this.data.answerid.push([21]);
-      this.data.answerid.push([22]);
-      this.data.answerid.push([23]);
-      this.data.answerid.push([24])
-    }else if (type == 3) {
-      this.data.question.push('前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局');
-      this.data.answer.push('/images/airdroid.png');
-      this.data.answer.push('/images/angrybirds.png');
-      this.data.answer.push('/images/calendar.png');
-      this.data.answer.push('/images/chrome.png');
-      this.data.answerid.push(31);
-      this.data.answerid.push(32);
-      this.data.answerid.push(33);
-      this.data.answerid.push(34)
-    } else if (type == 4) {
-      this.data.question.push('接天莲叶无穷尽下一句是')
-      this.data.answer.push('毕竟西湖六月中');
-      this.data.answer.push('风光不与四十同');
-      this.data.answer.push('映日荷花别样红');
-      this.data.answer.push('故人西辞黄鹤楼');
-      this.data.answerid.push([41]);
-      this.data.answerid.push([42]);
-      this.data.answerid.push([43]);
-      this.data.answerid.push([44])
-    } else if (type == 5) {
-      this.data.question.push('银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运动银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运动银河系的恒星大约四分之一是双星,某双星由质量不等的S2和S1构成,两星由两者万有引力下构成,某一圆点做运转运');
-      this.data.question.push('/images/angrybirds.png');
-      this.data.answer.push('毕竟西湖六月中');
-      this.data.answer.push('风光不与四十同');
-      this.data.answer.push('映日荷花别样红');
-      this.data.answer.push('故人西辞黄鹤楼');
-      this.data.answerid.push([51]);
-      this.data.answerid.push([52]);
-      this.data.answerid.push([53]);
-      this.data.answerid.push([54])
-    }
-    this.data.empirical += 1;
+    this.data.answerid = [];
+    this.data.characterBgColor = [];
+    this.data.character = [];
+    var section = this.data.tree[index];
+    var type = section.type;
+
+    this.data.character.push('../../images/ic_a.png');
+    this.data.character.push('../../images/ic_b.png');
+    this.data.character.push('../../images/ic_c.png');
+    this.data.character.push('../../images/ic_d.png');
+    console.log(' section ' + index + ' data.type:' + section.type);
     this.setData({
       answer: this.data.answer,
-      question: this.data.question,
+      question: section,
       answerid: this.data.answerid,
-      progress:100,
-      empiricalV: "第" + this.data.empirical + "题",
+      showFragment: type,
+      answerIndex: -1,
+      progress: 100,
+      empiricalV: "第" + section.index + "题",
+      characterBgColor: this.data.characterBgColor,
+      character: this.data.character,
+      questionIndex: this.data.questionIndex,
     })
+    this.data.questionIndex++;
+    this.startCountDown(section.timer * 10);
+    app.addChallengeCnt(1);
   },
+
   onClickContext:function(){
     this.setData({
       showModal: !this.data.showModal
