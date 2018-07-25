@@ -74,11 +74,12 @@ Page({
   },
 
   initData:function(){
+    console.log('initData total:' + app.globalData.total + ' rate:' + app.globalData.rate);
     this.setData({
       worldRanking: app.globalData.userRanking,
       level: app.scoreConvertLevel(app.globalData.totalScore),
       friendRanking: app.globalData.totalScore,
-      rate: app.globalData.rate,
+      rate: Math.round(app.globalData.userRanking * 100 / app.globalData.total),
       totalChallenge: app.globalData.achievementDetail.totalChallenge,
       winningStreak: app.globalData.achievementDetail.winningStreak,
       maxScore: app.globalData.achievementDetail.maxScore,

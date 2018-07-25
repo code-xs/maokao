@@ -41,6 +41,7 @@ App({
     openId:null,
     userRanking:999999,
     totalScore:0,
+    total:10000,
     level:0,
     categoryTree:null,
     rate:0,
@@ -159,14 +160,15 @@ App({
       data: {//这里写你要请求的参数
         openId: that.globalData.openId,
       },
-      success: (response) => {
+      success: (response) => { 
         console.log('请求 getScoreInfo 成功 statusCode:' + response.statusCode);
         if (response.statusCode == 200) {
           that.globalData.scoreInfo = response.data.data;
           console.log(response.data.data);
           that.globalData.totalScore = that.globalData.scoreInfo.totalScore;
           that.globalData.userRanking = that.globalData.scoreInfo.worldRanking;
-          console.log('updateScoreInfoCallBack:')
+          that.globalData.total = that.globalData.scoreInfo.total;
+          console.log('updateScoreInfoCallBack total:' + that.globalData.total);
           console.log(that.globalData.updateScoreInfoCallBack)
           if (that.globalData.updateScoreInfoCallBack != null) {
             that.globalData.updateScoreInfoCallBack(that.globalData.scoreInfo);

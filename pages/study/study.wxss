@@ -140,6 +140,35 @@ page {
   margin: 5rpx;
 }
 
+.type6 {
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  padding-top: 20rpx;
+  padding-bottom: 30rpx;
+}
+
+.type6hide {
+  display: none;
+  margin: 5rpx;
+}
+
+.answer_label {
+  color: #FFF;
+  font-size: 1.0rem;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  margin-top:20rpx;
+}
+
+.answer_content {
+  color: #FFF;
+  font-size: 0.9rem;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  margin-top:20rpx;
+}
+
+
 .failed {
   top: 20%;
   left: 0;  
@@ -367,11 +396,6 @@ page {
   font-size: 1.0rem;
   color: #fff;
   text-decoration: underline;
-}
-
-.type6 {
-  display: none;
-  margin: 5rpx;
 }
 
 .type7 {
@@ -663,7 +687,6 @@ page {
   text-align: center;
   font-weight: bold;
 }
-
 
 .modal-title {
   padding-top: 50rpx;

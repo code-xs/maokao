@@ -11,6 +11,16 @@ var time = 0;// 时间记录，用于滑动时且时间小于1s则执行左右�
 var intervalId = "";// 记录/清理时间记录  
 
 var datatreeDebug = [{
+  'id': 10,
+  'title': '请描述一下Activity 生命周期',
+  'answers': [],
+  'answer': '共有七个周期函数，按顺序分别是: onCreate(), onStart(), onRestart(), onResume(), onPause(),onStop(), onDestroy()。 \r\n onCreate(): 创建Activity时调用，设置在该方法中，还以Bundle的形式提供对以前存储的任何状态的访问。 \n onStart(): Activity变为在屏幕上对用户可见时调用。 onResume(): Activity开始与用户交互时调用(无论是启动还是重新启动一个活动，该方法总是被调用。 \n onPause(): Activity被暂停或收回cpu和其他资源时调用，该方法用户保护活动状态的，也是保护现场。 \n onStop(): Activity被停止并转为不可见阶段及后续的生命周期事件时调用。 \n onRestart(): Activity被重新启动时调用。该活动仍然在栈中，而不是启动新的Activity。 1. 完整生命周期: 即从一个Activity从出现到消失，对应的周期方法是从onCreate()到onDestroy() 。2. 可见生命周期: 当Activity处于可以用户看见的状态，但不一定能与用户交互时，将多次执行从onStart()到onStop() 。3. 前景生命周期: 当Activity处于Activity栈最顶端，能够与其他用户进行交互时，将多次执行从onResume()到onPause() 。',
+  'score': 10,
+  'analysis': '',
+  'timer': 10,
+  'type': 6,
+  'index': 999, 
+},{
   'id': 11,
   'title': '11111前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
   'answers': [{

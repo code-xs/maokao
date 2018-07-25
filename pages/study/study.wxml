@@ -131,6 +131,20 @@
     </view>
     <!-- template 5 end -->
 
+    <!-- template 6 -->
+    <view class="{{ showFragment == 6? 'type6':'type6hide'}}">
+        <view class="context">
+          <span class="subject_index_left">(</span>
+          <span class="subject_index">{{questionIndex+1}}</span>
+          <span class="subject_index_right">/{{questionTotal}})</span>
+          {{question.title}}
+        </view>
+
+        <view class="answer_label">参考答案:</view>
+        <view class="answer_content"> {{question.answer}} </view>
+    </view>
+    <!-- template 6 end -->
+
     <view class="{{ showAnalytics ? 'analytics':'analytics_hide'}} ">
         <view class="analytics_label">解析:</view>
         <view class="analytics_content"> {{question.analysis}} </view>
