@@ -28,6 +28,7 @@ var datatreeDebug = [{
   }],
   'answer': 3,
   'score': 10,
+  'analysis': '答案：A，附近啊看风景安康大法师打发举案说法拉斯法三等奖发神经发顺丰发沙发沙发沙发沙发沙发沙发沙发沙发沙发按算法是否开机阿六块腹肌啊反馈啦爱发呆发呆发发',
   'timer': 10,
   'type': 1,
   'index': 999,
@@ -49,6 +50,7 @@ var datatreeDebug = [{
     'id': 3,
   }],
   'score': 10,
+  'analysis':'答案：B，附近啊看风景安康大法师打发举案说法拉斯法三等奖发神经发顺丰发沙发沙发沙发沙发沙发沙发沙发沙发沙发按算法是否开机阿六块腹肌啊反馈啦爱发呆发呆发发',
   'timer': 10,
   'answer': 2,
   'type': 2,
@@ -85,6 +87,7 @@ var datatreeDebug = [{
   }],
   'answer': 1,
   'score': 10,
+    'analysis': '答案：A，附近啊看风景安康大法师打发举案说法拉斯法三等奖发神经发顺丰发沙发沙发沙发沙发沙发沙发沙发沙发沙发按算法是否开机阿六块腹肌啊反馈啦爱发呆发呆发发',
   'timer': 1000,
   'type': 3,
   'index': 1002,
@@ -107,6 +110,7 @@ var datatreeDebug = [{
   'answer': 2,
   'score': 10,
   'timer': 10,
+  'analysis': '答案：D，附近啊看风景安康大法师打发举案说法拉斯法三等奖发神经发顺丰发沙发沙发沙发沙发沙发沙发沙发沙发沙发按算法是否开机阿六块腹肌啊反馈啦爱发呆发呆发发',
   'type': 4,
   'index': 1003,
 }, {
@@ -142,6 +146,7 @@ var datatreeDebug = [{
   'answer': 1,
   'score': 10,
   'timer': 10,
+  'analysis': '答案：C，附近啊看风景安康大法师打发举案说法拉斯法三等奖发神经发顺丰发沙发沙发沙发沙发沙发沙发沙发沙发沙发按算法是否开机阿六块腹肌啊反馈啦爱发呆发呆发发',
   'type': 5,
   'index': 1004,
 }];
@@ -379,7 +384,7 @@ Page({
     this.data.character.push('../../images/ic_b.png');
     this.data.character.push('../../images/ic_c.png');
     this.data.character.push('../../images/ic_d.png');
-    console.log(' section ' + index + ' data.type:' + section.type);
+    console.log(' section ' + index + ' data.type:' + section.type + ' analysis:' + section.analysis); 
     this.setData({
       answer: this.data.answer,
       question: section,
@@ -453,7 +458,12 @@ Page({
       }
     } 
 
-    this.data.showAnalytics = true;
+    if(section.analysis != "[]") {
+      this.data.showAnalytics = true;
+    } else {
+      this.data.showAnalytics = false;
+    }
+   
     var index = parseInt(section.answer) + 1;
     this.setData({
       characterBgColor: this.data.characterBgColor,
@@ -473,6 +483,7 @@ Page({
     console.log(' call showAnswer');
     this.showAnswer(e.target.id);
     console.log(' showAnalytics:' + this.data.showAnalytics);
+    this.data.pendEvent = true;
   },
 
   loadNext: function (delay) {
