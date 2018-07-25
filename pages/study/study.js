@@ -473,12 +473,10 @@ Page({
     console.log(' call showAnswer');
     this.showAnswer(e.target.id);
     console.log(' showAnalytics:' + this.data.showAnalytics);
-    console.log(' this.data.tree.length:');
-    this.data.pendEvent = true;
-    this.loadNext(this.data.pendindDuration);
   },
 
   loadNext: function (delay) {
+    console.log('loadNext delay:' + delay);
     if (this.showChallengeResult(false))
       return;
 
@@ -576,11 +574,20 @@ Page({
     console.log(' onHide!!!');
     this.cancelTimer();
     this.saveCacheData();
+    if (intervalId != "") {
+      clearInterval(intervalId); // 清除setInterval  
+    }
+   
+    this.time = 0;
   },
   onUnload: function () {
     console.log("==onUnload==");
     this.cancelTimer();
     this.saveCacheData();
+    if (intervalId != "") {
+      clearInterval(intervalId); // 清除setInterval  
+    }  
+    this.time = 0;
   },
   onShareAppMessage: function (ops) {
     var that = this;
@@ -645,9 +652,12 @@ var interval = "";// 记录/清理时间记录
   touchStart: function (e) {
     console.log("touchStart----:");
     touchDown = e.touches[0].pageX; // 获取触摸时的原点  
+    touchUp = 0;
+    time = 0;
     // 使用js计时器记录时间    
     intervalId = setInterval(function () {
       time++;
+      console.log("set interval time :" + time);
     }, 100);
   },
   // 触摸移动事件  
@@ -656,14 +666,21 @@ var interval = "";// 记录/清理时间记录
   }, 
   // 触摸结束事件      
   touchEnd: function (e) {
-    console.log("touchEnd----:" );
+    console.log("touchEnd----" );
+    
+    if(touchUp == 0) {
+      clearInterval(intervalId); // 清除setInterval  
+      time = 0;
+      return;
+    }
+
     var touchDelta = touchDown - touchUp;
     console.log("touchDown:" + touchDown + " touchUp:" + touchUp + " time:" + time + " touchDelta:" + touchDelta);
 
-    if (touchUp - touchDown > 0 && touchUp - touchDown <= 250 && time < 5) {
+    if (touchUp - touchDown > 20 && touchUp - touchDown <= 250 && time < 5) {
       console.log('向右滑动');
       this.loadNext(10);
-    } else if (touchDown - touchUp > 0 && touchDown - touchUp <= 250 && time < 5) {
+    } else if (touchDown - touchUp > 20 && touchDown - touchUp <= 250 && time < 5) {
       console.log('向左滑动');
       this.loadNext(10);
     } else {
