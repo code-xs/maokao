@@ -47,6 +47,9 @@
         <view class="cateoryText" data-idx="{{index}}" id="{{cateoryList[index].subId}}" bindtap="onSelectCateory" >{{cateoryList[index].subtitle1}}</view>
       </view>
     </scroll-view>
+  </view>  <!-- abort dialog -->
+  <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{loading}}">
   </view>
+  <image class="modal-image" mode="widthFix" src="/images/loading.gif" wx:if="{{loading}}"></image>
 </view>
  

@@ -27,6 +27,7 @@ Page({
     showCateoryList:false,
     cateoryTitle:'暂无科目',
     cateoryList:[],
+    loading:false,
     list: [{ title: "题目1", content: "内容1" },
     { title: "题目2", content: "内容2" },
     { title: "题目3", content: "内容3" },
@@ -234,8 +235,14 @@ Page({
   },
   onScrolltolower:function(e){
     if (this.data.rankingType == 2){
+      this.setData({
+        loading: true,
+      });
       this.getWorldRankingList(++this.data.page_index);
     } else if (this.data.rankingType == 3){
+      this.setData({
+        loading: true,
+      });
       this.getCateoryRankingList(++this.data.page_index, this.data.cateoryID);
     }
     /*
@@ -286,9 +293,9 @@ Page({
             }
             this.setData({
               datalist: this.data.datalist,
+                loading: false,
             });
           }
-
           this.data.crownlist = new Array();
           this.data.crownlist[0] = "/images/ic_rank_1.png";
           this.data.crownlist[1] = "/images/ic_rank_2.png";
@@ -359,10 +366,6 @@ Page({
       cateoryTitle: this.data.cateoryList[e.target.dataset.idx].subtitle1,
     });
     this.getCateoryRankingList(0, this.data.cateoryID);
-  },
-
-  onScrolltolower: function (e) {
-
   },
 
   onSelectDialogClose: function (e) {
