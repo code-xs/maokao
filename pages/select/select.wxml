@@ -12,8 +12,8 @@
         <view class="scoredetail1" wx:for="{{item.subLevel}}" wx:for-item="subLevel" wx:key="id">
           <view class='{{subLevel.id > 0 ? "item1":"item1Opacity"}}'>
             <view class="text" mode="widthFix" style="background: url('{{subLevel.src}}') no-repeat center" id="{{subLevel.id}}" bindtap="onSelect">{{subLevel.subtitle}}</view>
-            <view class="type" style="color:{{item.color}}">{{subLevel.title}}</view>
-          </view>
+            <view class="type" style="color:{{item.color}}">{{subLevel.subtitle1 == null ? subLevel.title : subLevel.subtitle1}}</view>
+          </view> 
         </view>
        </view>
        

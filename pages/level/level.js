@@ -144,12 +144,12 @@ Page({
     } 
 
     if (this.data.frompageid == 4) {
-      this.data.selectStudyCateory.id = (10000 + this.data.TREE.id);
+      this.data.selectStudyCateory.id = (10000 + id);
       this.data.selectStudyCateory.subId = id;
       this.data.selectStudyCateory.title = this.data.TREE.title;
       this.data.selectStudyCateory.src = this.data.TREE.src;
       this.data.selectStudyCateory.subtitle = this.data.TREE.subtitle;
-      this.data.selectStudyCateory.subtitle1 = this.data.selectStudyCateory.title + title;
+      this.data.selectStudyCateory.subtitle1 = title;
       console.log('  open study with param id:' + id);
       console.log(this.data.selectStudyCateory);
       app.updateCommonStudyCateory(id, this.data.selectStudyCateory);
@@ -157,7 +157,7 @@ Page({
         url: '../study/study?id=' + id,
       })
     } else {
-      this.data.selectCateory.id = (10000 + this.data.TREE.id);
+      this.data.selectCateory.id = (10000 + id);
       this.data.selectCateory.subId = id;
       this.data.selectCateory.title = this.data.TREE.title;
       this.data.selectCateory.src = this.data.TREE.src;

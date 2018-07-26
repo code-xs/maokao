@@ -87,16 +87,12 @@ Page({
             url: '../level/level' + '?id=' + obj.id + '&frompageid=' + this.data.frompageid
           })
         } else {
-          this.data.selectStudyCateory.id = (10000 + obj.id);
+          this.data.selectStudyCateory.id = (10000 + id);
           this.data.selectStudyCateory.subId = id;
           this.data.selectStudyCateory.title = obj.title;
           this.data.selectStudyCateory.src = obj.src;
           this.data.selectStudyCateory.subtitle = obj.subtitle;
-          if (parentObj != null) {
-            this.data.selectStudyCateory.subtitle1 = parentObj.title + obj.title;
-          } else {
-            this.data.selectStudyCateory.subtitle1 = obj.title;
-          }
+          this.data.selectStudyCateory.subtitle1 = obj.title;
 
           wx.navigateTo({
             url: '../study/study?id=' + obj.id + '&frompageid=' + this.data.frompageid,
@@ -131,20 +127,16 @@ Page({
         if (obj.subLevel != null) {
           wx.navigateTo({
             url: '../level/level' + '?id=' + obj.id
-          })
+          }) 
         } else {
           console.log(' select:');
           console.log(obj);
-          this.data.selectCateory.id = (10000 + obj.id);
+          this.data.selectCateory.id = (10000 + id);
           this.data.selectCateory.subId = id;
           this.data.selectCateory.title = obj.title;
           this.data.selectCateory.src = obj.src;
           this.data.selectCateory.subtitle = obj.subtitle;
-          if (partentObj != null) {
-            this.data.selectCateory.subtitle1 = partentObj.title + obj.title;
-          } else {
-            this.data.selectCateory.subtitle1 = obj.title;
-          }
+          this.data.selectCateory.subtitle1 = obj.title;
 
           //todo
           app.updateCommonCateory(obj.id, this.data.selectCateory);

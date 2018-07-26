@@ -4,15 +4,15 @@ var qcloud = require('./vendor/wafer2-client-sdk/index');
 var config = require('./config');
 
 App({
-  onLaunch: function () {
+  onLaunch: function() {
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-    qcloud.setLoginUrl(config.service.loginUrl);    
+    qcloud.setLoginUrl(config.service.loginUrl);
     this.doLogin();
     this.getUserInfo();
     this.getLevelRule();
-    this.getCategory();  
+    this.getCategory();
     this.getDataFromStorage();
     this.getCommonCateory();
     this.getCommonStudyCateory();
@@ -24,10 +24,10 @@ App({
     let that = this
     //util.showBusy('正在登录');
     qcloud.login({
-      success(result) {//此处的result竟然不包含openid,所以res取缓存中的数据
+      success(result) { //此处的result竟然不包含openid,所以res取缓存中的数据
         console.log('登录成功-----')
         let res = wx.getStorageSync('user_info_F2C224D4-2BCE-4C64-AF9F-A6D872000D1A');
-        console.log('openId:'+res.openId)
+        console.log('openId:' + res.openId)
         that.globalData.openId = res.openId;
         console.log(res)
         that.getScoreInfo();
@@ -40,23 +40,23 @@ App({
 
   globalData: {
     userInfo: null,
-    openId:null,
-    userRanking:999999,
-    totalScore:0,
-    total:10000,
-    level:0,
-    categoryTree:null,
-    categoryStudyTree:null,
-    rate:0,
-    rule:null,
-    updateScoreInfoCallBack:null,
-    scoreInfo:{
-      totalScore:0,
-      experience:0,
-      worldRanking:0,
-      total:0
+    openId: null,
+    userRanking: 999999,
+    totalScore: 0,
+    total: 10000,
+    level: 0,
+    categoryTree: null,
+    categoryStudyTree: null,
+    rate: 0,
+    rule: null,
+    updateScoreInfoCallBack: null,
+    scoreInfo: {
+      totalScore: 0,
+      experience: 0,
+      worldRanking: 0,
+      total: 0
     },
-    achievementDetail:{
+    achievementDetail: {
       totalChallenge: 0,
       winningStreak: 0,
       maxScore: 0,
@@ -69,13 +69,15 @@ App({
 
     commonCateory: {
       id: 0,
-      title: "常用", src: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/select/category_idx_fav.png',
+      title: "常用",
+      src: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/select/category_idx_fav.png',
       color: '#f49967',
       subLevel: [],
     },
     commonStudyCateory: {
       id: 0,
-      title: "常用", src: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/select/category_idx_fav.png',
+      title: "常用",
+      src: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/select/category_idx_fav.png',
       color: '#f49967',
       subLevel: [],
     },
@@ -86,7 +88,7 @@ App({
       subId: 0,
       src: null,
       subtitle: "none",
-      subtitle1:'none'
+      subtitle1: 'none'
     },
     selectStudyCateory: {
       id: 0,
@@ -97,14 +99,14 @@ App({
       subtitle1: 'none'
     },
 
-    abortExit:false,
+    abortExit: false,
   },
-  setUserInfo: function (res) {
+  setUserInfo: function(res) {
     console.log('setUserInfo:')
     console.log(res)
     this.globalData.userInfo = res.userInfo;
   },
-  getUserInfo:function(){
+  getUserInfo: function() {
     // 获取用户信息
     console.log('getUserInfo!')
     wx.getSetting({
@@ -127,7 +129,7 @@ App({
       }
     })
   },
-  requestQuestionList: function (page, id) {
+  requestQuestionList: function(page, id) {
     var that = this;
     console.log('enter  requestQuestionList');
     qcloud.request({
@@ -135,7 +137,7 @@ App({
       header: {
         'content-type': 'application/json'
       },
-      data: {//这里写你要请求的参数
+      data: { //这里写你要请求的参数
         category_id: 10,
         page_index: 0
       },
@@ -143,22 +145,22 @@ App({
         console.log('请求成功 statusCode:' + response.statusCode);
         console.log(response.data.data);
       },
-      fail: function (err) {
+      fail: function(err) {
         conssole.log('请求失败23', err);
       }
     });
   },
-  getScoreInfo:function(){
+  getScoreInfo: function() {
     var that = this;
     qcloud.request({
       url: config.service.getScoreInfo,
       header: {
         'Content-Type': 'application/json'
       },
-      data: {//这里写你要请求的参数
+      data: { //这里写你要请求的参数
         openId: that.globalData.openId,
       },
-      success: (response) => { 
+      success: (response) => {
         console.log('请求 getScoreInfo 成功 statusCode:' + response.statusCode);
         if (response.statusCode == 200) {
           that.globalData.scoreInfo = response.data.data;
@@ -173,19 +175,19 @@ App({
           }
         }
       },
-      fail: function (err) {
+      fail: function(err) {
         console.log('请求失败', err);
       }
     });
   },
-  getLevelRule:function(){
+  getLevelRule: function() {
     var that = this;
     qcloud.request({
       url: config.service.getLevelRule,
       header: {
         'Content-Type': 'application/json'
       },
-      data: {//这里写你要请求的参数
+      data: { //这里写你要请求的参数
         openId: that.globalData.openId,
       },
       success: (response) => {
@@ -196,19 +198,19 @@ App({
           console.log(that.globalData.rule);
         }
       },
-      fail: function (err) {
+      fail: function(err) {
         console.log('请求 LevelRule 失败', err);
       }
     });
   },
-  getWorldRankingList:function() {
+  getWorldRankingList: function() {
     var that = this;
     qcloud.request({
       url: config.service.getWorldRankingList,
       header: {
         'Content-Type': 'application/json'
       },
-      data: {//这里写你要请求的参数
+      data: { //这里写你要请求的参数
         openId: that.globalData.openId,
       },
       success: (response) => {
@@ -217,19 +219,19 @@ App({
           console.log(response.data);
         }
       },
-      fail: function (err) {
+      fail: function(err) {
         console.log('请求 LevelRule 失败', err);
       }
     });
   },
-  getRankingList:function(id){
+  getRankingList: function(id) {
     var that = this;
     qcloud.request({
       url: config.service.getRankingList,
       header: {
         'Content-Type': 'application/json'
       },
-      data: {//这里写你要请求的参数
+      data: { //这里写你要请求的参数
         openId: that.globalData.openId,
         typeId: id,
       },
@@ -239,13 +241,13 @@ App({
           console.log(response);
         }
       },
-      fail: function (err) {
+      fail: function(err) {
         console.log('请求 LevelRule 失败', err);
       }
     });
   },
-  getNextLevelScoreGap:function(score, level){
-    console.log(' data score:' + score+', level:'+level)
+  getNextLevelScoreGap: function(score, level) {
+    console.log(' data score:' + score + ', level:' + level)
     if (this.globalData.rule != null && this.globalData.rule.length > 0) {
       for (var i = 0; i < this.globalData.rule.length; i++) {
         var levels = this.globalData.rule[i];
@@ -253,7 +255,7 @@ App({
           console.log(' cur level:' + level)
           var data = levels.levels[j];
           console.log(' data level:' + data.level)
-          if (level == data.level){
+          if (level == data.level) {
             return data.score - score;
           }
         }
@@ -261,54 +263,54 @@ App({
     }
     return 1;
   },
-  scoreConvertLevel:function(score){
+  scoreConvertLevel: function(score) {
     var level = 0;
     console.log('levels:' + score)
-    if (this.globalData.rule != null && this.globalData.rule.length > 0){
-      for (var i = 0; i < this.globalData.rule.length; i++){
+    if (this.globalData.rule != null && this.globalData.rule.length > 0) {
+      for (var i = 0; i < this.globalData.rule.length; i++) {
         var levels = this.globalData.rule[i];
         console.log('levels:')
         console.log(levels.levels)
         for (var j = 0; j < levels.levels.length; j++) {
           var data = levels.levels[j];
-          if (score <= data.score){
-            return data.level-1;
+          if (score <= data.score) {
+            return data.level - 1;
           }
         }
       }
     }
     return level;
   },
-  addChallengeCnt:function(num){
+  addChallengeCnt: function(num) {
     this.globalData.achievementDetail.totalChallenge += num;
     console.log('update achievementDetail:' + this.globalData.achievementDetail.totalChallenge);
-  }, 
-  updateWinningStreak: function (num) {
+  },
+  updateWinningStreak: function(num) {
     if (this.globalData.achievementDetail.winningStreak < num)
       this.globalData.achievementDetail.winningStreak = num;
   },
-  updateMaxScore: function (score) {
+  updateMaxScore: function(score) {
     if (this.globalData.achievementDetail.maxScore < score)
       this.globalData.achievementDetail.maxScore = score;
-    if(score > 0){
+    if (score > 0) {
       this.globalData.totalScore += score;
       if (this.globalData.updateScoreInfoCallBack != null) {
         this.globalData.updateScoreInfoCallBack(this.globalData.scoreInfo);
       }
     }
   },
-  addTotalInvitation: function (num) {
+  addTotalInvitation: function(num) {
     console.log(this.globalData.achievementDetail.totalInvitation);
     this.globalData.achievementDetail.totalInvitation += num;
     console.log(this.globalData.achievementDetail.totalInvitation);
   },
-  addInvitationWin: function (num) {
+  addInvitationWin: function(num) {
     return this.globalData.achievementDetail.invitationWin += num;
   },
-  updateInvitationWinRate:function(){
+  updateInvitationWinRate: function() {
     this.globalData.achievementDetail.invitationWinRate = (this.globalData.achievementDetail.invitationWin * 100 / this.globalData.achievementDetail.totalInvitation)
   },
-  saveDataToStorage:function(){
+  saveDataToStorage: function() {
     console.log('save achievementDetail:');
     console.log(this.globalData.achievementDetail);
     wx.setStorage({
@@ -316,16 +318,16 @@ App({
       data: this.globalData.achievementDetail,
     });
   },
-  getDataFromStorage: function () {
+  getDataFromStorage: function() {
     var that = this;
     wx.getStorage({
       key: 'achievementDetail',
-      success: function (res) {
+      success: function(res) {
         console.log("获取 achievementDetail 数据成功:");
         console.log(res.data);
         that.globalData.achievementDetail = res.data;
       },
-      fail: function (res) {
+      fail: function(res) {
         console.log("获取 achievementDetail 数据失败");
       }
     });
@@ -340,29 +342,29 @@ App({
     console.log('get achievementDetail:');
     console.log(this.globalData.achievementDetail);
     */
-  },  
-  setUpdateRankingCallBack: function (cb) {
-    if(typeof cb == "function"){
+  },
+  setUpdateRankingCallBack: function(cb) {
+    if (typeof cb == "function") {
       this.globalData.updateScoreInfoCallBack = cb;
-    }else{
+    } else {
       console.log(' setUpdateRankingCallBack param is unvalid!')
     }
   },
-  uploadScoreInfo:function(id, score){
+  uploadScoreInfo: function(id, score) {
     var that = this;
-    console.log('uploadScoreInfo id:'+id+', score:'+score);
+    console.log('uploadScoreInfo id:' + id + ', score:' + score);
     qcloud.request({
       url: config.service.updateScoreInfo,
       header: {
         'Content-Type': 'application/json'
       },
       method: "POST",
-      data: {//这里写你要请求的参数
+      data: { //这里写你要请求的参数
         openId: that.globalData.openId,
         total_score: that.globalData.totalScore,
         category_id: id,
-        current_score:score,
-        user_experience:10,
+        current_score: score,
+        user_experience: 10,
       },
       success: (response) => {
         console.log('上传 uploadScoreInfo 成功 statusCode:' + response.statusCode);
@@ -371,13 +373,13 @@ App({
           console.log(response.data.code);
         }
       },
-      fail: function (err) {
+      fail: function(err) {
         console.log('请求 uploadScoreInfo 失败', err);
       }
     });
   },
 
-  getCategory: function () {
+  getCategory: function() {
     console.log("getCategory");
     var that = this;
     qcloud.request({
@@ -393,7 +395,7 @@ App({
         }
         console.log(that.globalData.categoryTree);
       },
-      fail: function (err) {
+      fail: function(err) {
         console.log('请求挑战类别失败', err);
       }
     });
@@ -411,15 +413,15 @@ App({
         }
         console.log(that.globalData.categoryStudyTree);
       },
-      fail: function (err) {
+      fail: function(err) {
         console.log('请求学习类别失败', err);
       }
     });
   },
-  
-  getCateoryList:function(){
+
+  getCateoryList: function() {
     var list = [];
-    if (this.globalData.commonCateory.subLevel.length > 0){
+    if (this.globalData.commonCateory.subLevel.length > 0) {
       list.push(this.globalData.commonCateory);
     }
     for (var i in this.globalData.categoryTree) {
@@ -427,7 +429,7 @@ App({
     }
     return list;
   },
-  getCateoryStudyList: function () {
+  getCateoryStudyList: function() {
     console.log('getCateoryStudyList');
     var list = [];
     if (this.globalData.commonStudyCateory.subLevel.length > 0) {
@@ -440,36 +442,36 @@ App({
     return list;
   },
 
-  getCommonCateory:function(){
+  getCommonCateory: function() {
     var that = this;
     wx.getStorage({
       key: 'commonCateory',
-      success: function (res) {
+      success: function(res) {
         console.log("获取 commonCateory 数据成功:");
         that.globalData.commonCateory.subLevel = res.data;
         console.log(that.globalData.commonCateory);
       },
-      fail: function (res) {
+      fail: function(res) {
         console.log("获取 commonCateory 数据失败");
       }
     });
   },
-  getCommonStudyCateory: function () {
+  getCommonStudyCateory: function() {
     var that = this;
     wx.getStorage({
       key: 'commonStudyCateory',
-      success: function (res) {
+      success: function(res) {
         console.log("获取 commonStudyCateory 数据成功:");
         that.globalData.commonStudyCateory.subLevel = res.data;
         console.log(that.globalData.commonStudyCateory);
       },
-      fail: function (res) {
+      fail: function(res) {
         console.log("获取 commonStudyCateory 数据失败");
       }
     });
   },
 
-  updateCommonCateory:function(id, data){
+  updateCommonCateory: function(id, data) {
     var update = false;
     for (var i = 0; i < this.globalData.commonCateory.subLevel.length; i++) {
       var obj = this.globalData.commonCateory.subLevel[i];
@@ -482,7 +484,7 @@ App({
     console.log('  update:' + update);
     if (update == false) {
       console.log(data);
-      if (this.globalData.commonCateory.subLevel.length >= 6){
+      if (this.globalData.commonCateory.subLevel.length >= 6) {
         this.globalData.commonCateory.subLevel.splice(0, 1);
       }
       var list = [];
@@ -499,66 +501,98 @@ App({
     });
     this.updateUserUsedCateoryList(id, data);
   },
-  updateCommonStudyCateory: function (id, data) {
-    console.log('updateCommonStudyCateory id:'+id);
+
+  /*
+    updateCommonStudyCateory: function(id, data) {
+      console.log('updateCommonStudyCateory id:'+id);
+      console.log(data);
+
+      var update = false;
+      for (var i = 0; i < this.globalData.commonStudyCateory.subLevel.length; i++) {
+        var obj = this.globalData.commonStudyCateory.subLevel[i];
+        if (obj.id == (data.id)) {
+          this.globalData.commonStudyCateory.subLevel[i].subId = id;
+          update = true;
+          break;
+        }
+      }
+
+      console.log('  update:' + update);
+      if (update == false) {
+        console.log(data);
+        if (this.globalData.commonStudyCateory.subLevel.length >= 6) {
+          this.globalData.commonStudyCateory.subLevel.splice(0, 1);
+        }
+        var list = [];
+        list.push(data);
+        for (var i in this.globalData.commonStudyCateory.subLevel) {
+          list.push(this.globalData.commonStudyCateory.subLevel[i]);
+        }
+        this.globalData.commonStudyCateory.subLevel = list;
+        console.log(this.globalData.commonStudyCateory);
+      }
+
+      wx.setStorage({
+        key: 'commonStudyCateory',
+        data: this.globalData.commonStudyCateory.subLevel,
+      });
+      this.updateUserUsedCateoryList(id, data);
+    },*/
+
+  updateCommonStudyCateory: function(id, data) {
+    console.log('++++++> updateCommonStudyCateory id:' + id);
     console.log(data);
-    var update = false;
+
+    var alreadyInCommonPosIdx = -1;
     for (var i = 0; i < this.globalData.commonStudyCateory.subLevel.length; i++) {
       var obj = this.globalData.commonStudyCateory.subLevel[i];
       if (obj.id == (data.id)) {
-        this.globalData.commonStudyCateory.subLevel[i].subId = id;
-        update = true;
+        alreadyInCommonPosIdx = i;
         break;
       }
     }
-    console.log('  update:' + update);
-    if (update == false) {
-      console.log(data);
+
+    console.log('  alreadyInCommonPosIdx:' + alreadyInCommonPosIdx);
+
+    if (alreadyInCommonPosIdx < 0) { //not in common at before.
       if (this.globalData.commonStudyCateory.subLevel.length >= 6) {
-        this.globalData.commonStudyCateory.subLevel.splice(0, 1);
+        this.globalData.commonStudyCateory.subLevel.splice(5, 1);
       }
+
       var list = [];
       list.push(data);
+
       for (var i in this.globalData.commonStudyCateory.subLevel) {
         list.push(this.globalData.commonStudyCateory.subLevel[i]);
       }
+
       this.globalData.commonStudyCateory.subLevel = list;
-      console.log(this.globalData.commonStudyCateory);
+    } else if (alreadyInCommonPosIdx == 0) { //already stay at the latest position in common.
+      //no need move, evething is ok.
+    } else { //stay in common, not the latest one, move to the first position.
+      this.globalData.commonStudyCateory.subLevel.splice(alreadyInCommonPosIdx, 1);
+
+      var list = [];
+      list.push(data);
+
+      for (var i in this.globalData.commonStudyCateory.subLevel) {
+        list.push(this.globalData.commonStudyCateory.subLevel[i]);
+      }
+
+      this.globalData.commonStudyCateory.subLevel = list;
     }
+
     wx.setStorage({
       key: 'commonStudyCateory',
       data: this.globalData.commonStudyCateory.subLevel,
     });
-    this.updateUserUsedCateoryList(id, data);
+    this.updateUserUsedStudyCateoryList(id, data);
   },
 
-  updateUserUsedCateoryList: function (id, data) {
+  updateUserUsedCateoryList: function(id, data) {
     var find = false;
     for (var i = 0; i < this.globalData.commonList.length; i++) {
       var obj = this.globalData.commonList[i];
-      if (obj.subId == (data.subId)) {
-        console.log('  find:'+id+' has already exist!');
-        console.log(data);
-        return;
-      }
-    }
-    console.log(data);
-    var list = [];
-    list.push(data);
-    for (var i in this.globalData.commonList){
-      list.push(this.globalData.commonList[i]);
-    }
-    this.globalData.commonList = list;
-    console.log(this.globalData.commonList);
-    wx.setStorage({
-      key: 'cateoryList',
-      data: this.globalData.commonList,
-    });
-  },
-  updateUserUsedStudyCateoryList: function (id, data) {
-    var find = false;
-    for (var i = 0; i < this.globalData.commonStudyList.length; i++) {
-      var obj = this.globalData.commonStudyList[i];
       if (obj.subId == (data.subId)) {
         console.log('  find:' + id + ' has already exist!');
         console.log(data);
@@ -568,10 +602,51 @@ App({
     console.log(data);
     var list = [];
     list.push(data);
-    for (var i in this.globalData.commonStudyList) {
-      list.push(this.globalData.commonStudyList[i]);
+    for (var i in this.globalData.commonList) {
+      list.push(this.globalData.commonList[i]);
     }
-    this.globalData.commonStudyList = list;
+    this.globalData.commonList = list;
+    console.log(this.globalData.commonList);
+    wx.setStorage({
+      key: 'cateoryList',
+      data: this.globalData.commonList,
+    });
+  },
+  updateUserUsedStudyCateoryList: function(id, data) {
+    console.log(data);
+    var alreadyInCommonPosIdx = -1;
+    for (var i = 0; i < this.globalData.commonStudyList.length; i++) {
+      var obj = this.globalData.commonStudyList[i];
+      if (obj.subId == (data.subId)) {
+        console.log('  find:' + id + ' has already exist!');
+        console.log(data);
+        alreadyInCommonPosIdx = i;
+        break;
+      }
+    } 
+
+    console.log('  alreadyInCommonPosIdx:' + alreadyInCommonPosIdx);
+
+    var list = [];
+    if (alreadyInCommonPosIdx < 0) { 
+      list.push(data);
+      for (var i in this.globalData.commonStudyList) {
+        list.push(this.globalData.commonStudyList[i]);
+      }
+      this.globalData.commonStudyList = list;
+    } else if (alreadyInCommonPosIdx == 0) {
+      //no need update.
+    } else {
+      list.push(data);
+      for (var i in this.globalData.commonStudyList) {
+        if (i == alreadyInCommonPosIdx) {
+          continue;
+        }
+        list.push(this.globalData.commonStudyList[i]);
+      }
+      this.globalData.commonStudyList = list;
+    }
+    
     console.log(this.globalData.commonStudyList);
     wx.setStorage({
       key: 'cateoryStudyList',
@@ -579,30 +654,30 @@ App({
     });
   },
 
-  getCommonCateoryList: function () {
+  getCommonCateoryList: function() {
     var that = this;
     wx.getStorage({
       key: 'cateoryList',
-      success: function (res) {
+      success: function(res) {
         console.log("获取 commonList 数据成功:");
         that.globalData.commonList = res.data;
         console.log(that.globalData.commonList);
       },
-      fail: function (res) {
+      fail: function(res) {
         console.log("获取 commonList 数据失败");
       }
     });
   },
-  getCommonStudyCateoryList: function () {
+  getCommonStudyCateoryList: function() {
     var that = this;
     wx.getStorage({
       key: 'cateoryStudyList',
-      success: function (res) {
+      success: function(res) {
         console.log("获取 commonStudyList 数据成功:");
         that.globalData.commonStudyList = res.data;
         console.log(that.globalData.commonStudyList);
       },
-      fail: function (res) {
+      fail: function(res) {
         console.log("获取 commonStudyList 数据失败");
       }
     });
@@ -624,7 +699,7 @@ App({
     }
   },
   findCategoryStudyItemById(id) {
-    console.log('---findCategoryStudyItemById id:'+id+' categoryStudyTree:');
+    console.log('---findCategoryStudyItemById id:' + id + ' categoryStudyTree:');
     console.log(this.globalData.categoryStudyTree);
     for (var i = 0; i < this.globalData.categoryStudyTree.length; i++) {
       var twoLevel = this.globalData.categoryStudyTree[i].subLevel;
@@ -655,7 +730,7 @@ App({
     return null;
   },
   findParentCategoryStudyById(id) {
-    console.log('----findParentCategoryStudyById id:'+id);
+    console.log('----findParentCategoryStudyById id:' + id);
     for (var i = 0; i < this.globalData.categoryStudyTree.length; i++) {
       var twoLevel = this.globalData.categoryStudyTree[i].subLevel;
       for (var j = 0; j < twoLevel.length; j++) {
@@ -672,6 +747,3 @@ App({
   },
 
 })
-
-
-

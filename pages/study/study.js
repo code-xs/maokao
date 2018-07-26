@@ -359,8 +359,7 @@ Page({
             showFragment: 0,
           });
           this.cancelTimer();
-          this.saveCacheData();
-          this.showUpgradeDialog();   
+          this.saveCacheData(); 
         } else {
           if (that.data.PAGE == 0) {
             that.initData();
