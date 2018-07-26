@@ -162,7 +162,7 @@ Page({
       this.data.selectCateory.title = this.data.TREE.title;
       this.data.selectCateory.src = this.data.TREE.src;
       this.data.selectCateory.subtitle = this.data.TREE.subtitle;
-      this.data.selectCateory.subtitle1 = this.data.selectCateory.title + title;
+      this.data.selectCateory.subtitle1 = title;
       console.log('  open challenge with param id:' + id);
       console.log(this.data.selectCateory);
       app.updateCommonCateory(id, this.data.selectCateory);

@@ -67,8 +67,20 @@ Page({
       if (id > 10000) {
         for (var i in this.data.categoryStudyTree[0].subLevel) {
           var item = this.data.categoryStudyTree[0].subLevel[i];
+
+          console.log('item');
           console.log(item);
           if (id == item.id) {
+
+            this.data.selectStudyCateory.id = item.id;
+            this.data.selectStudyCateory.subId = item.subId;
+            this.data.selectStudyCateory.title = item.title;
+            this.data.selectStudyCateory.src = item.src;
+            this.data.selectStudyCateory.subtitle = item.subtitle;
+            this.data.selectStudyCateory.subtitle1 = item.title;
+
+            app.updateCommonStudyCateory(item.id, this.data.selectStudyCateory);
+
             wx.navigateTo({
               url: '../study/study?id=' + item.subId + '&frompageid=' + this.data.frompageid,
             })
@@ -97,7 +109,7 @@ Page({
           wx.navigateTo({
             url: '../study/study?id=' + obj.id + '&frompageid=' + this.data.frompageid,
           })
-          //todo
+          
           app.updateCommonStudyCateory(obj.id, this.data.selectStudyCateory);
         }
       }
@@ -111,8 +123,17 @@ Page({
       if (id > 10000) {
         for (var i in this.data.categoryTree[0].subLevel) {
           var item = this.data.categoryTree[0].subLevel[i];
-          console.log(item);
           if (id == item.id) {
+
+            this.data.selectCateory.id = item.id;
+            this.data.selectCateory.subId = item.subId;
+            this.data.selectCateory.title = item.title;
+            this.data.selectCateory.src = item.src;
+            this.data.selectCateory.subtitle = item.subtitle;
+            this.data.selectCateory.subtitle1 = item.title;
+
+            app.updateCommonCateory(item.id, this.data.selectCateory);
+
             wx.navigateTo({
               url: '../challenge/challenge?id=' + item.subId,
             })
@@ -123,7 +144,7 @@ Page({
         var obj = app.findCategoryItemById(e.target.id);
         var partentObj = app.findParentCategoryById(e.target.id);
         console.log('find obj:');
-        console.log(JSON.stringify(obj));
+        console.log(obj);
         if (obj.subLevel != null) {
           wx.navigateTo({
             url: '../level/level' + '?id=' + obj.id
@@ -138,7 +159,6 @@ Page({
           this.data.selectCateory.subtitle = obj.subtitle;
           this.data.selectCateory.subtitle1 = obj.title;
 
-          //todo
           app.updateCommonCateory(obj.id, this.data.selectCateory);
           wx.navigateTo({
             url: '../challenge/challenge?id=' + obj.id,
