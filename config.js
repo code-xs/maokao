@@ -15,7 +15,10 @@ var config = {
         loginUrl: `${host}/weapp/login`,
 
         // 获取考题分类及子类
-        requestUrl: `${host}/weapp/get_category`,
+        requestCategory: `${host}/weapp/get_category`,
+
+        // 获取练习分类及子类
+        requestStudyCategory: `${host}/weapp/get_category?type=1`,
 
         // 获取考题列表
         requestQuestionList: `${host}/weapp/get_question_detail`,

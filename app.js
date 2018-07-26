@@ -5,7 +5,6 @@ var config = require('./config');
 
 App({
   onLaunch: function () {
-    // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
@@ -16,8 +15,11 @@ App({
     this.getCategory();  
     this.getDataFromStorage();
     this.getCommonCateory();
+    this.getCommonStudyCateory();
     this.getCommonCateoryList();
+    this.getCommonStudyCateoryList();
   },
+
   doLogin() { //登录
     let that = this
     //util.showBusy('正在登录');
@@ -44,6 +46,7 @@ App({
     total:10000,
     level:0,
     categoryTree:null,
+    categoryStudyTree:null,
     rate:0,
     rule:null,
     updateScoreInfoCallBack:null,
@@ -62,12 +65,21 @@ App({
       invitationWinRate: 0,
     },
     commonList: [],
+    commonStudyList: [],
+
     commonCateory: {
       id: 0,
       title: "常用", src: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/select/category_idx_fav.png',
       color: '#f49967',
       subLevel: [],
     },
+    commonStudyCateory: {
+      id: 0,
+      title: "常用", src: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/select/category_idx_fav.png',
+      color: '#f49967',
+      subLevel: [],
+    },
+
     selectCateory: {
       id: 0,
       title: "none",
@@ -76,6 +88,15 @@ App({
       subtitle: "none",
       subtitle1:'none'
     },
+    selectStudyCateory: {
+      id: 0,
+      title: "none",
+      subId: 0,
+      src: null,
+      subtitle: "none",
+      subtitle1: 'none'
+    },
+
     abortExit:false,
   },
   setUserInfo: function (res) {
@@ -83,7 +104,6 @@ App({
     console.log(res)
     this.globalData.userInfo = res.userInfo;
   },
-
   getUserInfo:function(){
     // 获取用户信息
     console.log('getUserInfo!')
@@ -107,27 +127,6 @@ App({
       }
     })
   },
-  getCategory: function () {
-    var that = this;
-    qcloud.request({
-      url: config.service.requestUrl,
-      login:false,
-      header: {
-        'Content-Type': 'application/json'
-      },
-      success: (response) => {
-        console.log('请求成功 statusCode:' + response.statusCode);
-        if (response.statusCode == 200) {
-          that.globalData.categoryTree = response.data.data;
-        }
-        console.log(that.globalData.categoryTree);
-      },
-      fail: function (err) {
-        console.log('请求失败', err);
-      }
-    });
-  },
-  
   requestQuestionList: function (page, id) {
     var that = this;
     console.log('enter  requestQuestionList');
@@ -149,7 +148,6 @@ App({
       }
     });
   },
-
   getScoreInfo:function(){
     var that = this;
     qcloud.request({
@@ -203,7 +201,6 @@ App({
       }
     });
   },
-  
   getWorldRankingList:function() {
     var that = this;
     qcloud.request({
@@ -264,7 +261,6 @@ App({
     }
     return 1;
   },
-
   scoreConvertLevel:function(score){
     var level = 0;
     console.log('levels:' + score)
@@ -283,45 +279,14 @@ App({
     }
     return level;
   },
-
-  findCategoryItemById(id){
-    for (var i = 0; i < this.globalData.categoryTree.length; i++) {
-      var twoLevel = this.globalData.categoryTree[i].subLevel;
-      console.log('twoLevel:');
-      console.log(twoLevel);
-      for (var j = 0; j < twoLevel.length; j++) {
-        var _obj = twoLevel[j];
-        console.log('obj:');
-        console.log(_obj);
-        if (_obj.id == id) {
-          return _obj;
-        }
-      }
-    }
-  },
-  findParentCategoryById(id){
-      for (var i = 0; i < this.globalData.categoryTree.length; i++) {
-        var twoLevel = this.globalData.categoryTree[i].subLevel;
-        for (var j = 0; j < twoLevel.length; j++) {
-          var _obj = twoLevel[j];
-          if (_obj.id == id) {
-            return this.globalData.categoryTree[i];
-          }
-        }
-      }
-      return null;
-  },
-
   addChallengeCnt:function(num){
     this.globalData.achievementDetail.totalChallenge += num;
     console.log('update achievementDetail:' + this.globalData.achievementDetail.totalChallenge);
-  },
-
+  }, 
   updateWinningStreak: function (num) {
     if (this.globalData.achievementDetail.winningStreak < num)
       this.globalData.achievementDetail.winningStreak = num;
   },
-
   updateMaxScore: function (score) {
     if (this.globalData.achievementDetail.maxScore < score)
       this.globalData.achievementDetail.maxScore = score;
@@ -332,13 +297,11 @@ App({
       }
     }
   },
-
   addTotalInvitation: function (num) {
     console.log(this.globalData.achievementDetail.totalInvitation);
     this.globalData.achievementDetail.totalInvitation += num;
     console.log(this.globalData.achievementDetail.totalInvitation);
   },
-
   addInvitationWin: function (num) {
     return this.globalData.achievementDetail.invitationWin += num;
   },
@@ -378,7 +341,6 @@ App({
     console.log(this.globalData.achievementDetail);
     */
   },  
-  
   setUpdateRankingCallBack: function (cb) {
     if(typeof cb == "function"){
       this.globalData.updateScoreInfoCallBack = cb;
@@ -414,6 +376,47 @@ App({
       }
     });
   },
+
+  getCategory: function () {
+    console.log("getCategory");
+    var that = this;
+    qcloud.request({
+      url: config.service.requestCategory,
+      login: false,
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: (response) => {
+        console.log('请求挑战类别成功 statusCode:' + response.statusCode);
+        if (response.statusCode == 200) {
+          that.globalData.categoryTree = response.data.data;
+        }
+        console.log(that.globalData.categoryTree);
+      },
+      fail: function (err) {
+        console.log('请求挑战类别失败', err);
+      }
+    });
+
+    qcloud.request({
+      url: config.service.requestStudyCategory,
+      login: false,
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: (response) => {
+        console.log('请求学习类别成功 statusCode:' + response.statusCode);
+        if (response.statusCode == 200) {
+          that.globalData.categoryStudyTree = response.data.data;
+        }
+        console.log(that.globalData.categoryStudyTree);
+      },
+      fail: function (err) {
+        console.log('请求学习类别失败', err);
+      }
+    });
+  },
+  
   getCateoryList:function(){
     var list = [];
     if (this.globalData.commonCateory.subLevel.length > 0){
@@ -424,6 +427,19 @@ App({
     }
     return list;
   },
+  getCateoryStudyList: function () {
+    console.log('getCateoryStudyList');
+    var list = [];
+    if (this.globalData.commonStudyCateory.subLevel.length > 0) {
+      list.push(this.globalData.commonStudyCateory);
+    }
+    for (var i in this.globalData.categoryStudyTree) {
+      list.push(this.globalData.categoryStudyTree[i]);
+    }
+
+    return list;
+  },
+
   getCommonCateory:function(){
     var that = this;
     wx.getStorage({
@@ -438,6 +454,21 @@ App({
       }
     });
   },
+  getCommonStudyCateory: function () {
+    var that = this;
+    wx.getStorage({
+      key: 'commonStudyCateory',
+      success: function (res) {
+        console.log("获取 commonStudyCateory 数据成功:");
+        that.globalData.commonStudyCateory.subLevel = res.data;
+        console.log(that.globalData.commonStudyCateory);
+      },
+      fail: function (res) {
+        console.log("获取 commonStudyCateory 数据失败");
+      }
+    });
+  },
+
   updateCommonCateory:function(id, data){
     var update = false;
     for (var i = 0; i < this.globalData.commonCateory.subLevel.length; i++) {
@@ -468,6 +499,39 @@ App({
     });
     this.updateUserUsedCateoryList(id, data);
   },
+  updateCommonStudyCateory: function (id, data) {
+    console.log('updateCommonStudyCateory id:'+id);
+    console.log(data);
+    var update = false;
+    for (var i = 0; i < this.globalData.commonStudyCateory.subLevel.length; i++) {
+      var obj = this.globalData.commonStudyCateory.subLevel[i];
+      if (obj.id == (data.id)) {
+        this.globalData.commonStudyCateory.subLevel[i].subId = id;
+        update = true;
+        break;
+      }
+    }
+    console.log('  update:' + update);
+    if (update == false) {
+      console.log(data);
+      if (this.globalData.commonStudyCateory.subLevel.length >= 6) {
+        this.globalData.commonStudyCateory.subLevel.splice(0, 1);
+      }
+      var list = [];
+      list.push(data);
+      for (var i in this.globalData.commonStudyCateory.subLevel) {
+        list.push(this.globalData.commonStudyCateory.subLevel[i]);
+      }
+      this.globalData.commonStudyCateory.subLevel = list;
+      console.log(this.globalData.commonStudyCateory);
+    }
+    wx.setStorage({
+      key: 'commonStudyCateory',
+      data: this.globalData.commonStudyCateory.subLevel,
+    });
+    this.updateUserUsedCateoryList(id, data);
+  },
+
   updateUserUsedCateoryList: function (id, data) {
     var find = false;
     for (var i = 0; i < this.globalData.commonList.length; i++) {
@@ -491,6 +555,30 @@ App({
       data: this.globalData.commonList,
     });
   },
+  updateUserUsedStudyCateoryList: function (id, data) {
+    var find = false;
+    for (var i = 0; i < this.globalData.commonStudyList.length; i++) {
+      var obj = this.globalData.commonStudyList[i];
+      if (obj.subId == (data.subId)) {
+        console.log('  find:' + id + ' has already exist!');
+        console.log(data);
+        return;
+      }
+    }
+    console.log(data);
+    var list = [];
+    list.push(data);
+    for (var i in this.globalData.commonStudyList) {
+      list.push(this.globalData.commonStudyList[i]);
+    }
+    this.globalData.commonStudyList = list;
+    console.log(this.globalData.commonStudyList);
+    wx.setStorage({
+      key: 'cateoryStudyList',
+      data: this.globalData.commonStudyList,
+    });
+  },
+
   getCommonCateoryList: function () {
     var that = this;
     wx.getStorage({
@@ -505,4 +593,85 @@ App({
       }
     });
   },
+  getCommonStudyCateoryList: function () {
+    var that = this;
+    wx.getStorage({
+      key: 'cateoryStudyList',
+      success: function (res) {
+        console.log("获取 commonStudyList 数据成功:");
+        that.globalData.commonStudyList = res.data;
+        console.log(that.globalData.commonStudyList);
+      },
+      fail: function (res) {
+        console.log("获取 commonStudyList 数据失败");
+      }
+    });
+  },
+
+  findCategoryItemById(id) {
+    for (var i = 0; i < this.globalData.categoryTree.length; i++) {
+      var twoLevel = this.globalData.categoryTree[i].subLevel;
+      console.log('twoLevel:');
+      console.log(twoLevel);
+      for (var j = 0; j < twoLevel.length; j++) {
+        var _obj = twoLevel[j];
+        console.log('obj:');
+        console.log(_obj);
+        if (_obj.id == id) {
+          return _obj;
+        }
+      }
+    }
+  },
+  findCategoryStudyItemById(id) {
+    console.log('---findCategoryStudyItemById id:'+id+' categoryStudyTree:');
+    console.log(this.globalData.categoryStudyTree);
+    for (var i = 0; i < this.globalData.categoryStudyTree.length; i++) {
+      var twoLevel = this.globalData.categoryStudyTree[i].subLevel;
+      console.log('twoLevel:');
+      console.log(twoLevel);
+      for (var j = 0; j < twoLevel.length; j++) {
+        var _obj = twoLevel[j];
+        if (_obj.id == id) {
+          console.log('obj:');
+          console.log(_obj);
+          console.log('---findCategoryStudyItemById end ---');
+          return _obj;
+        }
+      }
+    }
+  },
+
+  findParentCategoryById(id) {
+    for (var i = 0; i < this.globalData.categoryTree.length; i++) {
+      var twoLevel = this.globalData.categoryTree[i].subLevel;
+      for (var j = 0; j < twoLevel.length; j++) {
+        var _obj = twoLevel[j];
+        if (_obj.id == id) {
+          return this.globalData.categoryTree[i];
+        }
+      }
+    }
+    return null;
+  },
+  findParentCategoryStudyById(id) {
+    console.log('----findParentCategoryStudyById id:'+id);
+    for (var i = 0; i < this.globalData.categoryStudyTree.length; i++) {
+      var twoLevel = this.globalData.categoryStudyTree[i].subLevel;
+      for (var j = 0; j < twoLevel.length; j++) {
+        var _obj = twoLevel[j];
+        if (_obj.id == id) {
+          var _obj = this.globalData.categoryStudyTree[i];
+          console.log('obj:');
+          console.log(_obj);
+          return _obj;
+        }
+      }
+    }
+    return null;
+  },
+
 })
+
+
+
