@@ -44,7 +44,9 @@
     <image class="dialog_close" bindtap="onSelectDialogClose" src="/images/ic_dialog_white_close.png"></image>
     <scroll-view scroll-y="true" bindscrolltolower="onScrolltolowerCateory">
       <view class="list" wx:for="{{cateoryList}}" wx:for-item="i" wx:key="id">
-        <view class="cateoryText" data-idx="{{index}}" id="{{cateoryList[index].subId}}" bindtap="onSelectCateory" >{{cateoryList[index].subtitle1}}</view>
+        <view class="cateoryText" data-idx="{{index}}" id="{{cateoryList[index].subId}}" bindtap="onSelectCateory" >
+        {{cateoryList[index].title == cateoryList[index].subtitle1 ? cateoryList[index].subtitle1 : cateoryList[index].title + cateoryList[index].subtitle1}}
+        </view>
       </view>
     </scroll-view>
   </view>  <!-- abort dialog -->

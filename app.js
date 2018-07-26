@@ -647,7 +647,7 @@ App({
       }
       this.globalData.commonStudyList = list;
     }
-    
+     
     console.log(this.globalData.commonStudyList);
     wx.setStorage({
       key: 'cateoryStudyList',

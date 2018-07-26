@@ -157,8 +157,14 @@ Page({
       cateoryList: app.globalData.commonList,
     });
     if (app.globalData.commonList.length > 0){
+      var tmptitle = '';
+      if (app.globalData.commonList[0].title == app.globalData.commonList[0].subtitle1) {
+        tmptitle = app.globalData.commonList[0].title;
+        } else {
+        tmptitle = app.globalData.commonList[0].title + app.globalData.commonList[0].subtitle1;
+        }
       this.setData({
-        cateoryTitle: app.globalData.commonList[0].subtitle1,
+        cateoryTitle : tmptitle,
         cateoryID: app.globalData.commonList[0].subId
       });
     }
@@ -359,11 +365,21 @@ Page({
   onSelectCateory:function(e){
     console.log('onSelectCateory');
     console.log(e.target.id);
+
+    var tmptitle = '';
+    if (this.data.cateoryList[e.target.dataset.idx].title == this.data.cateoryList[e.target.dataset.idx].subtitle1) {
+      tmptitle = this.data.cateoryList[e.target.dataset.idx].subtitle1;
+    } else {
+      tmptitle = this.data.cateoryList[e.target.dataset.idx].title + this.data.cateoryList[e.target.dataset.idx].subtitle1;
+    }
+
+    console.log('----------------- tmptitle:' + tmptitle);
+
     this.setData({
       showCateoryList: !this.data.showCateoryList,
       page_index: 0,
       cateoryID :e.target.id,
-      cateoryTitle: this.data.cateoryList[e.target.dataset.idx].subtitle1,
+      cateoryTitle: tmptitle,
     });
     this.getCateoryRankingList(0, this.data.cateoryID);
   },
