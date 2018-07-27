@@ -1,5 +1,6 @@
 var app = getApp()
-
+var needupdate = false;
+var onloadDone = false;
 
 Page({
   data: {
@@ -44,6 +45,8 @@ Page({
     }
 
     this.initData(0, option.frompageid);
+
+    onloadDone = true; 
   },
   initData: function(len, fpid) {
     var that = this;
@@ -52,7 +55,7 @@ Page({
       categoryStudyTree: app.getCateoryStudyList(),
       frompageid: fpid,
     });
-  },
+  }, 
 
   onSelect: function(e) {
     console.log(' onSelect:' + e.target.id);
@@ -68,7 +71,7 @@ Page({
         for (var i in this.data.categoryStudyTree[0].subLevel) {
           var item = this.data.categoryStudyTree[0].subLevel[i];
 
-          console.log('item');
+          console.log('id>10000, item');
           console.log(item);
           if (id == item.id) {
 
@@ -85,15 +88,11 @@ Page({
               url: '../study/study?id=' + item.subId + '&frompageid=' + this.data.frompageid,
             })
             break;
-          }
-        } 
+          } 
+        }  
       } else {
         var obj = app.findCategoryStudyItemById(e.target.id);
         var parentObj = app.findParentCategoryStudyById(e.target.id);
-        console.log('find obj:');
-        console.log(obj);
-        console.log('find parentObj:');
-        console.log(parentObj);
         if (obj.subLevel != null) {
           wx.navigateTo({
             url: '../level/level' + '?id=' + obj.id + '&frompageid=' + this.data.frompageid
@@ -164,8 +163,10 @@ Page({
             url: '../challenge/challenge?id=' + obj.id,
           })
         }
-      }
-    }
+      } 
+    } 
+
+    console.log(' onSelect end --------------');
   },
   onClickCloseModal: function() {
     console.log(' onClickCloseModal !');
@@ -177,24 +178,54 @@ Page({
   showModal: function(show) {
     this.setData({
       showModal: show,
-    })
+    })  
   },
   onClickOK: function() {
     this.setData({
-      showUpgradeModal: false,
-    })
+      showUpgradeModal: false, 
+    }) 
   },
+
   onShow: function() {
     console.log('onShow')
     console.log(this.data.oldLevel)
+    console.log('this.globalData.commonStudyCateory');
+    console.log(app.globalData.commonStudyCateory);
+
+    if(this.data.frompageid == 4) {
+      if (needupdate) {
+        console.log('onShow udpate Study Category---------');
+        var tmpcategoryStudyTree = app.getCateoryStudyList();
+ 
+        this.setData({
+          categoryStudyTree: tmpcategoryStudyTree,
+        })
+      }
+    } else {
+      if (needupdate) {
+        console.log('onShow udpate Category---------');
+        var tmpcategoryTree = app.getCateoryList();
+
+        this.setData({
+          categoryTree: tmpcategoryTree,
+        })
+      }
+    }
+
+    if (onloadDone) {
+      needupdate = true; 
+    }
+
     if (this.data.oldLevel < app.scoreConvertLevel(app.globalData.totalScore)) {
       this.setData({
         showUpgradeModal: true,
       })
     } else if (app.globalData.abortExit) {
-      this.showAbortExit();
+      this.showAbortExit(); 
       app.globalData.abortExit = false;
     }
+
+    console.log('onShow end ----------')
   },
   showAbortExit: function() {
     wx.showModal({
@@ -208,5 +239,5 @@ Page({
         }
       }
     })
-  }
-})
+  } 
+}) 

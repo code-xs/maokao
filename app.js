@@ -247,14 +247,11 @@ App({
     });
   },
   getNextLevelScoreGap: function(score, level) {
-    console.log(' data score:' + score + ', level:' + level)
     if (this.globalData.rule != null && this.globalData.rule.length > 0) {
       for (var i = 0; i < this.globalData.rule.length; i++) {
         var levels = this.globalData.rule[i];
         for (var j = 0; j < levels.levels.length; j++) {
-          console.log(' cur level:' + level)
           var data = levels.levels[j];
-          console.log(' data level:' + data.level)
           if (level == data.level) {
             return data.score - score;
           }
@@ -265,12 +262,9 @@ App({
   },
   scoreConvertLevel: function(score) {
     var level = 0;
-    console.log('levels:' + score)
     if (this.globalData.rule != null && this.globalData.rule.length > 0) {
       for (var i = 0; i < this.globalData.rule.length; i++) {
         var levels = this.globalData.rule[i];
-        console.log('levels:')
-        console.log(levels.levels)
         for (var j = 0; j < levels.levels.length; j++) {
           var data = levels.levels[j];
           if (score <= data.score) {
@@ -453,12 +447,12 @@ App({
       },
       fail: function(res) {
         console.log("获取 commonCateory 数据失败");
-      }
+      } 
     });
   },
   getCommonStudyCateory: function() {
     var that = this;
-    wx.getStorage({
+    wx.getStorage({ 
       key: 'commonStudyCateory',
       success: function(res) {
         console.log("获取 commonStudyCateory 数据成功:");
@@ -469,7 +463,7 @@ App({
         console.log("获取 commonStudyCateory 数据失败");
       }
     });
-  },
+  }, 
 
   updateCommonCateory: function(id, data) {
     console.log('++++++> updateCommonCateory id:' + id);
@@ -519,13 +513,17 @@ App({
       data: this.globalData.commonCateory.subLevel,
     });
     this.updateUserUsedCateoryList(id, data);
-  },
+  },    
 
   updateCommonStudyCateory: function(id, data) {
     console.log('++++++> updateCommonStudyCateory id:' + id);
     console.log(data);
-
+  
     var alreadyInCommonPosIdx = -1;
+
+    console.log('commonStudyCateory:');
+    console.log(this.globalData.commonStudyCateory);
+
     for (var i = 0; i < this.globalData.commonStudyCateory.subLevel.length; i++) {
       var obj = this.globalData.commonStudyCateory.subLevel[i];
       if (obj.id == (data.id)) {
@@ -612,8 +610,9 @@ App({
       data: this.globalData.commonList,
     });
   },
-
+  
   updateUserUsedStudyCateoryList: function(id, data) {
+    console.log('updateUserUsedStudyCateoryList data:');
     console.log(data);
     var alreadyInCommonPosIdx = -1;
     for (var i = 0; i < this.globalData.commonStudyList.length; i++) {
@@ -740,6 +739,7 @@ App({
           var _obj = this.globalData.categoryStudyTree[i];
           console.log('obj:');
           console.log(_obj);
+          console.log('----findParentCategoryStudyById end----' );
           return _obj;
         }
       }
