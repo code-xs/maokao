@@ -38,6 +38,9 @@ var config = {
         // 获取积分规则
         getLevelRule: `${host}/weapp/get_level_rule`,
 
+        // 解密数据
+        getDecodeData: `${host}/weapp/get_decode_data`,
+
         // 测试的信道服务地址
         tunnelUrl: `${host}/weapp/tunnel`,
 
