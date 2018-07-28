@@ -47,6 +47,8 @@ var config = {
         // 上传图片接口
         uploadUrl: `${host}/weapp/upload`,
 
+        // 获取Gid
+        getGID: `${host}/weapp/getGId`,
     }
 };
 

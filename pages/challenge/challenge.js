@@ -153,8 +153,6 @@ Page({
     Height:150,
     empiricalV:0,
     levelV:0,
-    windowW:0,
-    windowH:0,
     score:13242,
     score1:0,
     typeScore:0,
@@ -275,31 +273,8 @@ Page({
     this.setData({
       score: app.globalData.totalScore,
       oldLevel:app.scoreConvertLevel(app.globalData.totalScore),
-    })    
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    }
-    var that = this;
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res);
-        that.setData({
-          windowW: res.windowWidth,
-          windowH: res.windowHeight,
-          screenWidth: res.windowWidth,
-        })
-      }
-    });
+      userInfo: app.globalData.userInfo,
+    })
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
       backgroundColor: '#735cd9',

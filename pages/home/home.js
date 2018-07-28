@@ -37,6 +37,10 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
     })
   },
   onLoad: function () {
+    wx.showShareMenu({
+      // 要求小程序返回分享目标信息
+      withShareTicket: true
+    });
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -270,35 +274,7 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
                 success: function (res) {
                   console.log('shareTickets:');
                   console.log(res);
-                  var encrypt = res.encryptedData
-                  var iv = res.iv
-                  wx.request({
-                    url: config.service.getDecodeData,
-                    data: {
-                      encrypt: encrypt,
-                      iv: iv,
-                      sessionKey: app.globalData.sessionKey
-                    },
-                    success: function (res) {
-                      console.log(res)
-                      console.log(res.data)
-                      var x = res.data;
-                      console.log(typeof (x))
-                      var y = eval('(' + x + ')');
-                      console.log(typeof (y))
-                      var openGId = y.openGId
-                      console.log(y.openGId)
-                      /*
-                      that.setData({
-                        id: openGId,
-                        gid: openGId,
-                      })*/
-                    }, 
-                    fail: function (res) {
-                      console.log('fail get user OpenGid!!!');
-                      console.log(res);
-                    }
-                  })
+                  that.getOpenGId(res);
                 },
                 fail: function (res) {//这个方法就是分享到的是好友，给一个提示
                   console.log('fail shareTickets:');
@@ -324,6 +300,7 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
                   shareTicket: res.shareTickets,
                   success: function (res) {
                     //分享到群之后你要做的事情
+                    that.getOpenGId(res);
                   }
                 })
 
@@ -341,6 +318,35 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
                   }
                 })
               }
+            }else{
+              wx.getShareInfo({//获取群详细信息
+                shareTicket: res.shareTickets,
+                success: function (res) {
+                  console.log('shareTickets:');
+                  console.log(res);
+                  var iv = res.iv
+                  console.log('openId:')
+                  console.log("" + app.globalData.openId)
+              
+                  console.log(JSON.stringify(res.encryptedData))
+                  that.getOpenGId(res);
+                },
+                fail: function (res) {//这个方法就是分享到的是好友，给一个提示
+                  console.log('fail shareTickets:');
+                  console.log(res);
+                  wx.showModal({
+                    title: '提示',
+                    content: '分享好友无效，请分享群',
+                    success: function (res) {
+                      if (res.confirm) {
+                        console.log('用户点击确定')
+                      } else if (res.cancel) {
+                        console.log('用户点击取消')
+                      }
+                    }
+                  })
+                }
+              })
             }
 
           },
@@ -349,7 +355,29 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
           }
         })
       }
-
     }
+  },
+
+  getOpenGId:function(res){
+    console.log('openId:')
+    console.log(""+app.globalData.openId)
+    wx.request({
+      url: config.service.getGID,
+      data: {
+        encryptedData: res.encryptedData,
+        iv: JSON.stringify(res.iv),
+        appId: 'wx7cf81d27e6c79640',
+        openId: app.globalData.openId,
+      },
+      success: function (res) {
+        console.log(res.data)
+        var openGId = res.data.data.openGId
+        app.addShareTargeOpenGId(0, openGId);
+      },
+      fail: function (res) {
+        console.log('fail get user OpenGid!!!');
+        console.log(res);
+      }
+    })    
   },
 })

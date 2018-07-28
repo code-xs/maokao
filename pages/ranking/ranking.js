@@ -171,15 +171,6 @@ Page({
     this.getWorldRankingList(0);
   },
 
-  getUserInfo: function(e) {
-    console.log(' getUserInfo')
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  },
-
   initData:function(){
 
   },

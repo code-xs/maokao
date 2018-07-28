@@ -18,6 +18,7 @@ App({
     this.getCommonStudyCateory();
     this.getCommonCateoryList();
     this.getCommonStudyCateoryList();
+    this.getShareTargeOpenGId();
   },
 
   doLogin() { //登录
@@ -49,6 +50,7 @@ App({
     categoryStudyTree: null,
     rate: 0,
     rule: null,
+    openGids:[],
     updateScoreInfoCallBack: null,
     scoreInfo: {
       totalScore: 0,
@@ -746,5 +748,38 @@ App({
     }
     return null;
   },
-
+  addShareTargeOpenGId: function (TYPE, openGid) {
+    for (var i in this.globalData.openGids){
+      if (openGid == this.globalData.openGids[i]){
+        console.log('has exist gid:' + openGid)
+        console.log(openGid)
+        return false;
+      }
+    }
+    this.globalData.totalScore += 100;
+    if (this.globalData.updateScoreInfoCallBack != null) {
+      this.globalData.updateScoreInfoCallBack(this.globalData.scoreInfo);
+    }
+    console.log('addShareTargeOpenGId:' + openGid)
+    this.globalData.openGids.push(openGid);
+    wx.setStorage({
+      key: 'openGids',
+      data: this.globalData.openGids,
+    });
+  },
+  getShareTargeOpenGId:function(){
+    var that = this;
+    wx.getStorage({
+      key: 'openGids',
+      success: function (res) {
+        console.log("获取 openGids 数据成功:");
+        console.log(res.data);
+        that.globalData.openGids = res.data;
+        console.log(that.globalData.openGids);
+      },
+      fail: function (res) {
+        console.log("获取 openGids 数据失败");
+      }
+    });
+  }
 })
