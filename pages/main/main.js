@@ -66,6 +66,7 @@ Page({
         path: 'pages/home/home',
         success: function (res) {
           console.log("转发成功:" + JSON.stringify(res));
+          app.getShareTicket(res);
         },
         fail: function (res) {
           console.log("转发失败:" + JSON.stringify(res));
@@ -77,6 +78,7 @@ Page({
         path: 'pages/home/home',
         success: function (res) {
           console.log("转发成功:" + JSON.stringify(res));
+          app.getShareTicket(res)
         },
         fail: function (res) {
           console.log("转发失败:" + JSON.stringify(res));

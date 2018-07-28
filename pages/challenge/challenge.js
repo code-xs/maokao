@@ -651,6 +651,7 @@ Page({
         path: 'pages/home/home',
         success: function (res) {
           console.log("转发成功:" + JSON.stringify(res));
+          app.getShareTicket(res)
           that.reLoadData();
         },
         fail: function (res) {

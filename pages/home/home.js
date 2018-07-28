@@ -184,7 +184,7 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
       url: '../select/select?frompageid=4',
     })
   },
-
+/*
   onShareAppMessage: function (ops) {
     if (ops.from == 'button') {
       return {
@@ -210,7 +210,7 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
         }
       }
     }
-  },
+  },*/
   getUserInfoFun: function (e) {
     var S = this;
     console.log("home page onClick id:" + e.target.id);
@@ -263,121 +263,8 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
         //还需要调用wx.getShareInfo()，只有当成功回调才是转发群，ios就只需判断shareTickets
         //获取用户设备信息
         console.log(res)
-        wx.getSystemInfo({
-          success: function (d) {
-            console.log('data:');
-            console.log(d);
-            //判断用户手机是IOS还是Android
-            if (d.platform == 'android') {
-              wx.getShareInfo({//获取群详细信息
-                shareTicket: res.shareTickets,
-                success: function (res) {
-                  console.log('shareTickets:');
-                  console.log(res);
-                  that.getOpenGId(res);
-                },
-                fail: function (res) {//这个方法就是分享到的是好友，给一个提示
-                  console.log('fail shareTickets:');
-                  console.log(res);
-                  wx.showModal({
-                    title: '提示',
-                    content: '分享好友无效，请分享群',
-                    success: function (res) {
-                      if (res.confirm) {
-                        console.log('用户点击确定')
-                      } else if (res.cancel) {
-                        console.log('用户点击取消')
-                      }
-                    }
-                  })
-                }
-              })
-            }
-            if (d.platform == 'ios') {//如果用户的设备是IOS
-              if (res.shareTickets != undefined) {
-                console.log("分享的是群");
-                wx.getShareInfo({
-                  shareTicket: res.shareTickets,
-                  success: function (res) {
-                    //分享到群之后你要做的事情
-                    that.getOpenGId(res);
-                  }
-                })
-
-              } else {//分享到个人要做的事情，我给的是一个提示
-                console.log("分享的是个人");
-                wx.showModal({
-                  title: '提示',
-                  content: '分享好友无效，请分享群',
-                  success: function (res) {
-                    if (res.confirm) {
-                      console.log('用户点击确定')
-                    } else if (res.cancel) {
-                      console.log('用户点击取消')
-                    }
-                  }
-                })
-              }
-            }else{
-              wx.getShareInfo({//获取群详细信息
-                shareTicket: res.shareTickets,
-                success: function (res) {
-                  console.log('shareTickets:');
-                  console.log(res);
-                  var iv = res.iv
-                  console.log('openId:')
-                  console.log("" + app.globalData.openId)
-              
-                  console.log(JSON.stringify(res.encryptedData))
-                  that.getOpenGId(res);
-                },
-                fail: function (res) {//这个方法就是分享到的是好友，给一个提示
-                  console.log('fail shareTickets:');
-                  console.log(res);
-                  wx.showModal({
-                    title: '提示',
-                    content: '分享好友无效，请分享群',
-                    success: function (res) {
-                      if (res.confirm) {
-                        console.log('用户点击确定')
-                      } else if (res.cancel) {
-                        console.log('用户点击取消')
-                      }
-                    }
-                  })
-                }
-              })
-            }
-
-          },
-          fail: function (res) {
-
-          }
-        })
+        app.getShareTicket(res)
       }
     }
-  },
-
-  getOpenGId:function(res){
-    console.log('openId:')
-    console.log(""+app.globalData.openId)
-    wx.request({
-      url: config.service.getGID,
-      data: {
-        encryptedData: res.encryptedData,
-        iv: JSON.stringify(res.iv),
-        appId: 'wx7cf81d27e6c79640',
-        openId: app.globalData.openId,
-      },
-      success: function (res) {
-        console.log(res.data)
-        var openGId = res.data.data.openGId
-        app.addShareTargeOpenGId(0, openGId);
-      },
-      fail: function (res) {
-        console.log('fail get user OpenGid!!!');
-        console.log(res);
-      }
-    })    
   },
 })
