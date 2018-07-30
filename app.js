@@ -12,12 +12,12 @@ App({
     this.doLogin();
     this.getUserInfo();
     this.getLevelRule();
-    this.getCategory();
+    this.getCategory(); 
     this.getDataFromStorage();
-    this.getCommonCateory();
-    this.getCommonStudyCateory();
-    this.getCommonCateoryList();
-    this.getCommonStudyCateoryList();
+    this.getCommonCategory();
+    this.getCommonStudyCategory();
+    this.getCommonCategoryList();
+    this.getCommonStudyCategoryList();
     this.getShareTargeOpenGId();
   },
 
@@ -61,7 +61,7 @@ App({
     achievementDetail: {
       totalChallenge: 0,
       winningStreak: 0,
-      maxScore: 0,
+      maxScore: 0, 
       totalInvitation: 0,
       invitationWin: 0,
       invitationWinRate: 0,
@@ -69,14 +69,14 @@ App({
     commonList: [],
     commonStudyList: [],
 
-    commonCateory: {
+    commonCategory: {
       id: 0,
       title: "常用",
       src: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/select/category_idx_fav.png',
       color: '#f49967',
       subLevel: [],
     },
-    commonStudyCateory: {
+    commonStudyCategory: {
       id: 0,
       title: "常用",
       src: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/select/category_idx_fav.png',
@@ -84,7 +84,7 @@ App({
       subLevel: [],
     },
 
-    selectCateory: {
+    selectCategory: {
       id: 0,
       title: "none",
       subId: 0,
@@ -92,7 +92,7 @@ App({
       subtitle: "none",
       subtitle1: 'none'
     },
-    selectStudyCateory: {
+    selectStudyCategory: {
       id: 0,
       title: "none",
       subId: 0,
@@ -415,65 +415,68 @@ App({
     });
   },
 
-  getCateoryList: function() {
+  getCategoryList: function() {
+    console.log('getCategoryList');
     var list = [];
-    if (this.globalData.commonCateory.subLevel.length > 0) {
-      list.push(this.globalData.commonCateory);
+    if (this.globalData.commonCategory.subLevel.length > 0) {
+      list.push(this.globalData.commonCategory);
     }
     for (var i in this.globalData.categoryTree) {
       list.push(this.globalData.categoryTree[i]);
     }
     return list;
   },
-  getCateoryStudyList: function() {
-    console.log('getCateoryStudyList');
+  getCategoryStudyList: function() {
+    console.log('getCategoryStudyList');
     var list = [];
-    if (this.globalData.commonStudyCateory.subLevel.length > 0) {
-      list.push(this.globalData.commonStudyCateory);
+    if (this.globalData.commonStudyCategory.subLevel.length > 0) {
+      list.push(this.globalData.commonStudyCategory);
     }
     for (var i in this.globalData.categoryStudyTree) {
       list.push(this.globalData.categoryStudyTree[i]);
     }
 
+    console.log('categoryStudyTree');
+    console.log(list);
     return list;
-  },
+  }, 
 
-  getCommonCateory: function() {
+  getCommonCategory: function() {
     var that = this;
     wx.getStorage({
-      key: 'commonCateory',
+      key: 'commonCategory',
       success: function(res) {
-        console.log("获取 commonCateory 数据成功:");
-        that.globalData.commonCateory.subLevel = res.data;
-        console.log(that.globalData.commonCateory);
+        console.log("获取 commonCategory 数据成功:");
+        that.globalData.commonCategory.subLevel = res.data;
+        console.log(that.globalData.commonCategory);
       },
       fail: function(res) {
-        console.log("获取 commonCateory 数据失败");
+        console.log("获取 commonCategory 数据失败");
       } 
     });
   },
-  getCommonStudyCateory: function() {
+  getCommonStudyCategory: function() {
     var that = this;
     wx.getStorage({ 
-      key: 'commonStudyCateory',
+      key: 'commonStudyCategory',
       success: function(res) {
-        console.log("获取 commonStudyCateory 数据成功:");
-        that.globalData.commonStudyCateory.subLevel = res.data;
-        console.log(that.globalData.commonStudyCateory);
-      },
+        console.log("获取 commonStudyCategory 数据成功:");
+        that.globalData.commonStudyCategory.subLevel = res.data;
+        console.log(that.globalData.commonStudyCategory);
+      }, 
       fail: function(res) {
-        console.log("获取 commonStudyCateory 数据失败");
+        console.log("获取 commonStudyCategory 数据失败");
       }
     });
   }, 
 
-  updateCommonCateory: function(id, data) {
-    console.log('++++++> updateCommonCateory id:' + id);
+  updateCommonCategory: function(id, data) {
+    console.log('++++++> updateCommonCategory id:' + id);
     console.log(data);
 
     var alreadyInCommonPosIdx = -1;
-    for (var i = 0; i < this.globalData.commonCateory.subLevel.length; i++) {
-      var obj = this.globalData.commonCateory.subLevel[i];
+    for (var i = 0; i < this.globalData.commonCategory.subLevel.length; i++) {
+      var obj = this.globalData.commonCategory.subLevel[i];
       if (obj.id == (data.id)) {
         alreadyInCommonPosIdx = i;
         break;
@@ -483,51 +486,51 @@ App({
     console.log('  alreadyInCommonPosIdx:' + alreadyInCommonPosIdx);
 
     if (alreadyInCommonPosIdx < 0) { //not in common at before.
-      if (this.globalData.commonCateory.subLevel.length >= 6) {
-        this.globalData.commonCateory.subLevel.splice(5, 1);
+      if (this.globalData.commonCategory.subLevel.length >= 6) {
+        this.globalData.commonCategory.subLevel.splice(5, 1);
       }
 
       var list = [];
       list.push(data);
 
-      for (var i in this.globalData.commonCateory.subLevel) {
-        list.push(this.globalData.commonCateory.subLevel[i]);
+      for (var i in this.globalData.commonCategory.subLevel) {
+        list.push(this.globalData.commonCategory.subLevel[i]);
       }
 
-      this.globalData.commonCateory.subLevel = list;
+      this.globalData.commonCategory.subLevel = list;
     } else if (alreadyInCommonPosIdx == 0) { //already stay at the latest position in common.
       //no need move, evething is ok.
     } else { //stay in common, not the latest one, move to the first position.
-      this.globalData.commonCateory.subLevel.splice(alreadyInCommonPosIdx, 1);
+      this.globalData.commonCategory.subLevel.splice(alreadyInCommonPosIdx, 1);
 
       var list = [];
       list.push(data);
 
-      for (var i in this.globalData.commonCateory.subLevel) {
-        list.push(this.globalData.commonCateory.subLevel[i]);
+      for (var i in this.globalData.commonCategory.subLevel) {
+        list.push(this.globalData.commonCategory.subLevel[i]);
       }
 
-      this.globalData.commonCateory.subLevel = list;
+      this.globalData.commonCategory.subLevel = list;
     }
 
     wx.setStorage({
-      key: 'commonCateory',
-      data: this.globalData.commonCateory.subLevel,
+      key: 'commonCategory',
+      data: this.globalData.commonCategory.subLevel,
     });
-    this.updateUserUsedCateoryList(id, data);
+    this.updateUserUsedCategoryList(id, data);
   },    
-
-  updateCommonStudyCateory: function(id, data) {
-    console.log('++++++> updateCommonStudyCateory id:' + id);
+    
+  updateCommonStudyCategory: function(id, data) {
+    console.log('++++++> updateCommonStudyCategory id:' + id);
     console.log(data);
-  
+   
     var alreadyInCommonPosIdx = -1;
 
-    console.log('commonStudyCateory:');
-    console.log(this.globalData.commonStudyCateory);
+    console.log('commonStudyCategory:');
+    console.log(this.globalData.commonStudyCategory);
 
-    for (var i = 0; i < this.globalData.commonStudyCateory.subLevel.length; i++) {
-      var obj = this.globalData.commonStudyCateory.subLevel[i];
+    for (var i = 0; i < this.globalData.commonStudyCategory.subLevel.length; i++) {
+      var obj = this.globalData.commonStudyCategory.subLevel[i];
       if (obj.id == (data.id)) {
         alreadyInCommonPosIdx = i;
         break;
@@ -537,41 +540,41 @@ App({
     console.log('  alreadyInCommonPosIdx:' + alreadyInCommonPosIdx);
 
     if (alreadyInCommonPosIdx < 0) { //not in common at before.
-      if (this.globalData.commonStudyCateory.subLevel.length >= 6) {
-        this.globalData.commonStudyCateory.subLevel.splice(5, 1);
+      if (this.globalData.commonStudyCategory.subLevel.length >= 6) {
+        this.globalData.commonStudyCategory.subLevel.splice(5, 1);
       }
 
       var list = [];
       list.push(data);
 
-      for (var i in this.globalData.commonStudyCateory.subLevel) {
-        list.push(this.globalData.commonStudyCateory.subLevel[i]);
+      for (var i in this.globalData.commonStudyCategory.subLevel) {
+        list.push(this.globalData.commonStudyCategory.subLevel[i]);
       }
 
-      this.globalData.commonStudyCateory.subLevel = list;
+      this.globalData.commonStudyCategory.subLevel = list;
     } else if (alreadyInCommonPosIdx == 0) { //already stay at the latest position in common.
       //no need move, evething is ok.
     } else { //stay in common, not the latest one, move to the first position.
-      this.globalData.commonStudyCateory.subLevel.splice(alreadyInCommonPosIdx, 1);
+      this.globalData.commonStudyCategory.subLevel.splice(alreadyInCommonPosIdx, 1);
 
       var list = [];
       list.push(data);
 
-      for (var i in this.globalData.commonStudyCateory.subLevel) {
-        list.push(this.globalData.commonStudyCateory.subLevel[i]);
+      for (var i in this.globalData.commonStudyCategory.subLevel) {
+        list.push(this.globalData.commonStudyCategory.subLevel[i]);
       }
 
-      this.globalData.commonStudyCateory.subLevel = list;
+      this.globalData.commonStudyCategory.subLevel = list;
     }
 
     wx.setStorage({
-      key: 'commonStudyCateory',
-      data: this.globalData.commonStudyCateory.subLevel,
+      key: 'commonStudyCategory',
+      data: this.globalData.commonStudyCategory.subLevel,
     });
-    this.updateUserUsedStudyCateoryList(id, data);
+    this.updateUserUsedStudyCategoryList(id, data);
   },
 
-  updateUserUsedCateoryList: function(id, data) {
+  updateUserUsedCategoryList: function(id, data) {
     console.log(data);
     var alreadyInCommonPosIdx = -1;
     for (var i = 0; i < this.globalData.commonList.length; i++) {
@@ -608,14 +611,16 @@ App({
 
     console.log(this.globalData.commonList);
     wx.setStorage({
-      key: 'cateoryList',
+      key: 'categoryList',
       data: this.globalData.commonList,
     });
   },
   
-  updateUserUsedStudyCateoryList: function(id, data) {
-    console.log('updateUserUsedStudyCateoryList data:');
+  updateUserUsedStudyCategoryList: function(id, data) {
+    console.log('updateUserUsedStudyCategoryList data:');
     console.log(data);
+    console.log('commonStudyList');
+    console.log(this.globalData.commonStudyList);
     var alreadyInCommonPosIdx = -1;
     for (var i = 0; i < this.globalData.commonStudyList.length; i++) {
       var obj = this.globalData.commonStudyList[i];
@@ -623,7 +628,7 @@ App({
         console.log('  find:' + id + ' has already exist!');
         console.log(data);
         alreadyInCommonPosIdx = i;
-        break;
+        break; 
       }
     } 
 
@@ -645,21 +650,21 @@ App({
           continue;
         }
         list.push(this.globalData.commonStudyList[i]);
-      }
+      }  
       this.globalData.commonStudyList = list;
     }
-     
+          
     console.log(this.globalData.commonStudyList);
     wx.setStorage({
-      key: 'cateoryStudyList',
+      key: 'categoryStudyList',
       data: this.globalData.commonStudyList,
     });
-  },
+  }, 
 
-  getCommonCateoryList: function() {
+  getCommonCategoryList: function() {
     var that = this;
     wx.getStorage({
-      key: 'cateoryList',
+      key: 'categoryList',
       success: function(res) {
         console.log("获取 commonList 数据成功:");
         that.globalData.commonList = res.data;
@@ -670,10 +675,10 @@ App({
       }
     });
   },
-  getCommonStudyCateoryList: function() {
+  getCommonStudyCategoryList: function() {
     var that = this;
     wx.getStorage({
-      key: 'cateoryStudyList',
+      key: 'categoryStudyList',
       success: function(res) {
         console.log("获取 commonStudyList 数据成功:");
         that.globalData.commonStudyList = res.data;
@@ -718,7 +723,6 @@ App({
       }
     }
   },
-
   findParentCategoryById(id) {
     for (var i = 0; i < this.globalData.categoryTree.length; i++) {
       var twoLevel = this.globalData.categoryTree[i].subLevel;
@@ -786,7 +790,6 @@ App({
       }
     });
   },
-
   getShareTicket: function (res) {
     var that = this;
     wx.getSystemInfo({

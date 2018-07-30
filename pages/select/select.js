@@ -1,6 +1,4 @@
 var app = getApp()
-var needupdate = false;
-var onloadDone = false;
 
 Page({
   data: {
@@ -9,7 +7,7 @@ Page({
     categoryTree: [],
     categoryStudyTree:[],
     oldLevel: 0,
-    selectCateory: {
+    selectCategory: {
       id: 0,
       title: "none",
       subId: 0,
@@ -17,7 +15,7 @@ Page({
       subtitle: "none",
       subtitle1: 'none'
     },
-    selectStudyCateory: {
+    selectStudyCategory: {
       id: 0,
       title: "none",
       subId: 0,
@@ -43,23 +41,25 @@ Page({
         title: "个人挑战"
       })
     }
-
+  
     this.initData(0, option.frompageid);
-
-    onloadDone = true; 
   },
+
   initData: function(len, fpid) {
     var that = this;
     this.setData({
-      categoryTree: app.getCateoryList(),
-      categoryStudyTree: app.getCateoryStudyList(),
+      // categoryTree: app.getCategoryList(),
+      // categoryStudyTree: app.getCategoryStudyList(),
       frompageid: fpid,
     });
   }, 
 
   onSelect: function(e) {
     console.log(' onSelect:' + e.target.id);
-    var id = e.target.id;
+    var id = e.target.id;   
+
+    console.log('onSelect ---> commonStudyCategory:');
+    console.log(app.globalData.commonStudyCategory);
 
     if (this.data.frompageid == 4) { //study page
       if (id < 0) {
@@ -71,18 +71,19 @@ Page({
         for (var i in this.data.categoryStudyTree[0].subLevel) {
           var item = this.data.categoryStudyTree[0].subLevel[i];
 
-          console.log('id>10000, item');
+          console.log('id > 10000, item');
           console.log(item);
+
           if (id == item.id) {
 
-            this.data.selectStudyCateory.id = item.id;
-            this.data.selectStudyCateory.subId = item.subId;
-            this.data.selectStudyCateory.title = item.title;
-            this.data.selectStudyCateory.src = item.src;
-            this.data.selectStudyCateory.subtitle = item.subtitle;
-            this.data.selectStudyCateory.subtitle1 = item.title;
+            this.data.selectStudyCategory.id = item.id;
+            this.data.selectStudyCategory.subId = item.subId;
+            this.data.selectStudyCategory.title = item.title;
+            this.data.selectStudyCategory.src = item.src;
+            this.data.selectStudyCategory.subtitle = item.subtitle;
+            this.data.selectStudyCategory.subtitle1 = item.title;
 
-            app.updateCommonStudyCateory(item.id, this.data.selectStudyCateory);
+            app.updateCommonStudyCategory(item.id, this.data.selectStudyCategory);
 
             wx.navigateTo({
               url: '../study/study?id=' + item.subId + '&frompageid=' + this.data.frompageid,
@@ -98,19 +99,19 @@ Page({
             url: '../level/level' + '?id=' + obj.id + '&frompageid=' + this.data.frompageid
           })
         } else {
-          this.data.selectStudyCateory.id = (10000 + id);
-          this.data.selectStudyCateory.subId = id;
-          this.data.selectStudyCateory.title = obj.title;
-          this.data.selectStudyCateory.src = obj.src;
-          this.data.selectStudyCateory.subtitle = obj.subtitle;
-          this.data.selectStudyCateory.subtitle1 = obj.title;
+          this.data.selectStudyCategory.id = (10000 + id); 
+          this.data.selectStudyCategory.subId = id; 
+          this.data.selectStudyCategory.title = obj.title;    
+          this.data.selectStudyCategory.src = obj.src;
+          this.data.selectStudyCategory.subtitle = obj.subtitle;
+          this.data.selectStudyCategory.subtitle1 = obj.title;
+ 
+          app.updateCommonStudyCategory(obj.id, this.data.selectStudyCategory);
 
           wx.navigateTo({
             url: '../study/study?id=' + obj.id + '&frompageid=' + this.data.frompageid,
           })
-          
-          app.updateCommonStudyCateory(obj.id, this.data.selectStudyCateory);
-        }
+        } 
       }
 
     } else {
@@ -124,14 +125,14 @@ Page({
           var item = this.data.categoryTree[0].subLevel[i];
           if (id == item.id) {
 
-            this.data.selectCateory.id = item.id;
-            this.data.selectCateory.subId = item.subId;
-            this.data.selectCateory.title = item.title;
-            this.data.selectCateory.src = item.src;
-            this.data.selectCateory.subtitle = item.subtitle;
-            this.data.selectCateory.subtitle1 = item.title;
+            this.data.selectCategory.id = item.id;
+            this.data.selectCategory.subId = item.subId;
+            this.data.selectCategory.title = item.title;
+            this.data.selectCategory.src = item.src;
+            this.data.selectCategory.subtitle = item.subtitle;
+            this.data.selectCategory.subtitle1 = item.title;
 
-            app.updateCommonCateory(item.id, this.data.selectCateory);
+            app.updateCommonCategory(item.id, this.data.selectCategory);
 
             wx.navigateTo({
               url: '../challenge/challenge?id=' + item.subId,
@@ -151,14 +152,14 @@ Page({
         } else {
           console.log(' select:');
           console.log(obj);
-          this.data.selectCateory.id = (10000 + id);
-          this.data.selectCateory.subId = id;
-          this.data.selectCateory.title = obj.title;
-          this.data.selectCateory.src = obj.src;
-          this.data.selectCateory.subtitle = obj.subtitle;
-          this.data.selectCateory.subtitle1 = obj.title;
+          this.data.selectCategory.id = (10000 + id);
+          this.data.selectCategory.subId = id;
+          this.data.selectCategory.title = obj.title;
+          this.data.selectCategory.src = obj.src;
+          this.data.selectCategory.subtitle = obj.subtitle;
+          this.data.selectCategory.subtitle1 = obj.title;
 
-          app.updateCommonCateory(obj.id, this.data.selectCateory);
+          app.updateCommonCategory(obj.id, this.data.selectCategory);
           wx.navigateTo({
             url: '../challenge/challenge?id=' + obj.id,
           })
@@ -186,34 +187,23 @@ Page({
     }) 
   },
 
-  onShow: function() {
+  onShow: function() {  
     console.log('onShow')
-    console.log(this.data.oldLevel)
-    console.log('this.globalData.commonStudyCateory');
-    console.log(app.globalData.commonStudyCateory);
-
-    if(this.data.frompageid == 4) {
-      if (needupdate) {
-        console.log('onShow udpate Study Category---------');
-        var tmpcategoryStudyTree = app.getCateoryStudyList();
+    console.log('this.globalData.commonStudyCategory');
+    console.log(app.globalData.commonStudyCategory);
  
+    if(this.data.frompageid == 4) { 
+        console.log('onShow udpate Study Category---------');
+        var tmpcategoryStudyTree = app.getCategoryStudyList();
         this.setData({
           categoryStudyTree: tmpcategoryStudyTree,
         })
-      }
     } else {
-      if (needupdate) {
         console.log('onShow udpate Category---------');
-        var tmpcategoryTree = app.getCateoryList();
-
+        var tmpcategoryTree = app.getCategoryList();
         this.setData({
           categoryTree: tmpcategoryTree,
         })
-      }
-    }
-
-    if (onloadDone) {
-      needupdate = true; 
     }
 
     if (this.data.oldLevel < app.scoreConvertLevel(app.globalData.totalScore)) {

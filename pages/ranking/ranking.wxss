@@ -390,7 +390,7 @@ scroll-view {
   margin-right: 20rpx;
 }
 
-.cateoryRanking{
+.categoryRanking{
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -432,13 +432,13 @@ scroll-view {
   font-size: 0.8rem;
 }
 
-.cateoryItem{
+.categoryItem{
   display: flex;
   padding-top: 20rpx;
   color: #ffffff;
   font-size: 0.9rem;
 }
-.cateoryItemHide{
+.categoryItemHide{
   display: none;
 }
 
@@ -472,7 +472,7 @@ scroll-view {
   height: 60rpx;
 }
 
-.cateoryList{
+.categoryList{
   overflow: hidden;
   position: fixed;
   margin-left: 10%;
@@ -482,7 +482,7 @@ scroll-view {
   background: linear-gradient(#c079e4, #8d41ca);
   border-radius: 30rpx;
 }
-.cateoryText{
+.categoryText{
   font-size: 1.0rem;
   text-align: center;
   background: #ffffff;

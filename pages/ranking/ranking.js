@@ -22,11 +22,11 @@ Page({
     crownlist:[],
     idxbgcolorlist:[],
     page_index:0,
-    cateoryID:0,
+    categoryID:0,
     myRanking:100,
-    showCateoryList:false,
-    cateoryTitle:'暂无科目',
-    cateoryList:[],
+    showCategoryList:false,
+    categoryTitle:'暂无科目',
+    categoryList:[],
     loading:false,
     list: [{ title: "题目1", content: "内容1" },
     { title: "题目2", content: "内容2" },
@@ -154,7 +154,7 @@ Page({
       rankingType: 2,
       //datalist: this.data.friendlist,
       myRanking: app.globalData.userRanking,
-      cateoryList: app.globalData.commonList,
+      categoryList: app.globalData.commonList,
     });
     if (app.globalData.commonList.length > 0){
       var tmptitle = '';
@@ -164,8 +164,8 @@ Page({
         tmptitle = app.globalData.commonList[0].title + app.globalData.commonList[0].subtitle1;
         }
       this.setData({
-        cateoryTitle : tmptitle,
-        cateoryID: app.globalData.commonList[0].subId
+        categoryTitle : tmptitle,
+        categoryID: app.globalData.commonList[0].subId
       });
     }
     this.getWorldRankingList(0);
@@ -213,7 +213,7 @@ Page({
     });
     this.getWorldRankingList(0);
   },
-  onClickCateoryRanking: function () {
+  onClickCategoryRanking: function () {
     if (this.data.rankingType == 3){
       return ;
     }
@@ -221,9 +221,9 @@ Page({
       rankingType: 3,
       page_index:0,
     });
-    console.log('cateoryID:' + this.data.cateoryID);
-    if (this.data.cateoryID > 0){
-      this.getCateoryRankingList(0, this.data.cateoryID);
+    console.log('categoryID:' + this.data.categoryID);
+    if (this.data.categoryID > 0){
+      this.getCategoryRankingList(0, this.data.categoryID);
     }else{
       this.setData({
         datalist: [],
@@ -240,7 +240,7 @@ Page({
       this.setData({
         loading: true,
       });
-      this.getCateoryRankingList(++this.data.page_index, this.data.cateoryID);
+      this.getCategoryRankingList(++this.data.page_index, this.data.categoryID);
     }
     /*
     for(var i=0; i< this.data.worlddata.length; i++){
@@ -258,9 +258,9 @@ Page({
     console.log(e);
   },
 
-  onClickSelectCateory:function(e){
+  onClickSelectCategory:function(e){
     this.setData({
-      showCateoryList: !this.data.showCateoryList,
+      showCategoryList: !this.data.showCategoryList,
     });
   },
 
@@ -314,7 +314,7 @@ Page({
       }
     });
   },
-  getCateoryRankingList: function (index, id) {
+  getCategoryRankingList: function (index, id) {
     var that = this;
     qcloud.request({
       url: config.service.getRankingList,
@@ -327,7 +327,7 @@ Page({
         category_id:id,
       },
       success: (response) => {
-        console.log('请求成功  getCateoryRankingList statusCode:' + response.statusCode);
+        console.log('请求成功  getCategoryRankingList statusCode:' + response.statusCode);
         if (response.statusCode == 200) {
           console.log(response.data);
           for (var i = 0; i < response.data.data.length; i++) {
@@ -353,34 +353,34 @@ Page({
       }
     });
   },  
-  onSelectCateory:function(e){
-    console.log('onSelectCateory');
+  onSelectCategory:function(e){
+    console.log('onSelectCategory');
     console.log(e.target.id);
 
     var tmptitle = '';
-    if (this.data.cateoryList[e.target.dataset.idx].title == this.data.cateoryList[e.target.dataset.idx].subtitle1) {
-      tmptitle = this.data.cateoryList[e.target.dataset.idx].subtitle1;
+    if (this.data.categoryList[e.target.dataset.idx].title == this.data.categoryList[e.target.dataset.idx].subtitle1) {
+      tmptitle = this.data.categoryList[e.target.dataset.idx].subtitle1;
     } else {
-      tmptitle = this.data.cateoryList[e.target.dataset.idx].title + this.data.cateoryList[e.target.dataset.idx].subtitle1;
+      tmptitle = this.data.categoryList[e.target.dataset.idx].title + this.data.categoryList[e.target.dataset.idx].subtitle1;
     }
 
     console.log('----------------- tmptitle:' + tmptitle);
 
     this.setData({
-      showCateoryList: !this.data.showCateoryList,
+      showCategoryList: !this.data.showCategoryList,
       page_index: 0,
-      cateoryID :e.target.id,
-      cateoryTitle: tmptitle,
+      categoryID :e.target.id,
+      categoryTitle: tmptitle,
     });
-    this.getCateoryRankingList(0, this.data.cateoryID);
+    this.getCategoryRankingList(0, this.data.categoryID);
   },
 
   onSelectDialogClose: function (e) {
     console.log('onSelectDialogClose');
     console.log(e.target.id);
     this.setData({
-      showCateoryList: false,
+      showCategoryList: false,
     });
-    this.getCateoryRankingList(0, this.data.cateoryID);
+    this.getCategoryRankingList(0, this.data.categoryID);
   },
 })

@@ -711,4 +711,12 @@ var interval = "";// 记录/清理时间记录
     time = 0;
   },  
 
+
+  onShow: function () {
+    console.log('study ------------->  onShow')
+    console.log('this.globalData.commonStudyCategory');
+    console.log(app.globalData.commonStudyCategory);
+    console.log('study ------------->  onShow end')
+  }
+
 })
