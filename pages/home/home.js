@@ -160,7 +160,7 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
   },
   onClickSelf:function(){
     wx.navigateTo({
-      url: '../select/select' + '?lockLevel=' + (5) + '&maxLevel=' + 5
+      url: '../select/select' + '?frompageid=1&lockLevel=' + (5) + '&maxLevel=' + 5
     })
   },
   onClickFriend: function () {
