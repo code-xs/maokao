@@ -44,6 +44,7 @@ App({
     level: 0,
     categoryTree: null,
     categoryStudyTree: null,
+    categoryPKTree: null,
     rate: 0,
     rule: null,
     openGids:[],
@@ -372,6 +373,24 @@ App({
       },
       fail: function(err) {
         console.log('请求学习类别失败', err);
+      }
+    });
+
+    qcloud.request({
+      url: config.service.requestPKCategory,
+      login: false,
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: (response) => {
+        console.log('请求对战类别成功 statusCode:' + response.statusCode);
+        if (response.statusCode == 200) {
+          that.globalData.categoryPKTree = response.data.data;
+        }
+        console.log(that.globalData.categoryPKTree);
+      },
+      fail: function (err) {
+        console.log('请求对战类别失败', err);
       }
     });
   }, 

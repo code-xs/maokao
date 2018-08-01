@@ -1,7 +1,7 @@
 <view class="control" mode="widthFix" >
 
  <scroll-view class="scroll_panel" scroll-y="true">
-    <view class="category_list_item"   wx:for="{{ frompageid == 4 ? categoryStudyTree : categoryTree}}" wx:key="id"style="background:{{item.color}}">
+    <view class="category_list_item"   wx:for="{{ frompageid == 4 ? categoryStudyTree : ( frompageid == 2 ? categoryPKTree : categoryTree)}}" wx:key="id"style="background:{{item.color}}">
       <view class="group0">
         <view class="item">
             <image src="{{item.src}}" class="image" mode="widthFix"> </image>

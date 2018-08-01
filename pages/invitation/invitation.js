@@ -16,7 +16,8 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
+  onLoad: function (option) {
+    console.log('onLoad option.id' + option.id+' frompageid:' + option.frompageid)
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

@@ -20,6 +20,9 @@ var config = {
         // 获取练习分类及子类
         requestStudyCategory: `${host}/weapp/get_category?type=1`,
 
+        // 获取对战分类及子类
+        requestPKCategory: `${host}/weapp/get_category?type=2`,
+
         // 获取考题列表
         requestQuestionList: `${host}/weapp/get_question_detail`,
       

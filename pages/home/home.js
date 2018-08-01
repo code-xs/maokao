@@ -168,6 +168,11 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
       url: '../invitation/invitation'
     })
   },
+  onClickPK: function() {
+    wx.navigateTo({
+      url: '../select/select?frompageid=2',
+    })
+  },
   onClickMain:function(){
     wx.navigateTo({
       url: '../main/main'
@@ -241,7 +246,7 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
     }else if(id==1){
       this.onClickSelf();
     }else if(id == 2) {
-      this.onClickFriend();
+      this.onClickPK();
     }else if(id == 3) {
       this.onClickRanking();
     } else if (id == 4) {

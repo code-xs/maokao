@@ -9,6 +9,7 @@ Page({
     CLASSID:[],
     categoryTree: [],
     categoryStudyTree: [],
+    categoryPKTree: [],
     selectClass:null,
     selectLevel:null, 
     isClass:true,
@@ -45,6 +46,22 @@ Page({
       subtitle: "none",
       subtitle1: "none",
     },
+    favoritePKList: [],
+    favoritePKCategory: {
+      id: 0,
+      title: "常用",
+      src: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/select/category_idx_fav.png',
+      color: '#f49967',
+      subLevel: [],
+    },
+    selectPKCategory: {
+      id: 0,
+      title: "none",
+      subId: 0,
+      src: null,
+      subtitle: "none",
+      subtitle1: "none",
+    },
   },
   onLoad: function (option) {
     console.log('onLoad option.id:' + option.id+' frompageid:' + option.frompageid)
@@ -57,6 +74,8 @@ Page({
 
     if (option.frompageid == 4) {
       this.loadFavoriteStudyCategory();
+    } else if (option.frompageid == 2) {
+      this.loadFavoritePKCategory();
     } else {
       this.loadFavoriteCategory();
     }
@@ -70,6 +89,8 @@ Page({
     
     if(fpid == 4) {
       classes = this.findCategoryStudyItemById(id);
+    } else if (fpid == 2) {
+      classes = this.findCategoryPKItemById(id);
     } else {
       classes = this.findCategoryItemById(id);
     }
@@ -162,6 +183,22 @@ Page({
       wx.redirectTo({
         url: '../study/study?id=' + id,
       })
+    } else if (this.data.frompageid == 2) {
+      this.data.selectPKCategory.id = (10000 + id);
+      this.data.selectPKCategory.subId = id;
+      this.data.selectPKCategory.title = this.data.TREE.title;
+      this.data.selectPKCategory.src = this.data.TREE.src;
+      this.data.selectPKCategory.subtitle = this.data.TREE.subtitle;
+      this.data.selectPKCategory.subtitle1 = title;
+
+      console.log('  open study with param id:' + id);
+      console.log(this.data.selectPKCategory);
+
+      this.updateFavoritePKCategory(id, this.data.selectPKCategory);
+
+      wx.redirectTo({
+        url: '../invitation/invitation?id=' + id,
+      })
     } else {
       this.data.selectCategory.id = (10000 + id);
       this.data.selectCategory.subId = id;
@@ -193,7 +230,7 @@ Page({
   updateFavoriteStudyCategory: function (id, data) {
     console.log('++++++> updateFavoriteStudyCategory id:' + id);
     console.log(data);
- 
+
     var alreadyInFavoritePosIdx = -1;
 
     console.log('favoriteStudyCategory:');
@@ -246,18 +283,18 @@ Page({
     });
   },
 
-  updateUserUsedStudyCategoryList: function (id, data) {
-    console.log('updateUserUsedStudyCategoryList data:');
+  updateFavoritePKCategory: function (id, data) {
+    console.log('++++++> updateFavoritePKCategory id:' + id);
     console.log(data);
-    console.log('favoriteStudyList');
-    console.log(this.data.favoriteStudyList);
 
     var alreadyInFavoritePosIdx = -1;
-    for (var i = 0; i < this.data.favoriteStudyList.length; i++) {
-      var obj = this.data.favoriteStudyList[i];
-      if (obj.subId == (data.subId)) {
-        console.log('  find:' + id + ' has already exist!');
-        console.log(data);
+
+    console.log('favoritePKCategory:');
+    console.log(this.data.favoritePKCategory);
+
+    for (var i = 0; i < this.data.favoritePKCategory.subLevel.length; i++) {
+      var obj = this.data.favoritePKCategory.subLevel[i];
+      if (obj.id == (data.id)) {
         alreadyInFavoritePosIdx = i;
         break;
       }
@@ -265,31 +302,39 @@ Page({
 
     console.log('  alreadyInFavoritePosIdx:' + alreadyInFavoritePosIdx);
 
-    var list = [];
-    if (alreadyInFavoritePosIdx < 0) {
-      list.push(data);
-      for (var i in this.data.favoriteStudyList) {
-        list.push(this.data.favoriteStudyList[i]);
+    if (alreadyInFavoritePosIdx < 0) { //not in common at before.
+      if (this.data.favoritePKCategory.subLevel.length >= 6) {
+        this.data.favoritePKCategory.subLevel.splice(5, 1);
       }
-      this.data.favoriteStudyList = list;
-    } else if (alreadyInFavoritePosIdx == 0) {
-      //no need update.
-    } else {
+
+      var list = [];
       list.push(data);
-      for (var i in this.data.favoriteStudyList) {
-        if (i == alreadyInFavoritePosIdx) {
-          continue;
-        }
-        list.push(this.data.favoriteStudyList[i]);
+
+      for (var i in this.data.favoritePKCategory.subLevel) {
+        list.push(this.data.favoritePKCategory.subLevel[i]);
       }
-      this.data.favoriteStudyList = list;
+
+      this.data.favoritePKCategory.subLevel = list;
+    } else if (alreadyInFavoritePosIdx == 0) { //already stay at the latest position in common.
+      //no need move, evething is ok.
+    } else { //stay in common, not the latest one, move to the first position.
+      this.data.favoritePKCategory.subLevel.splice(alreadyInFavoritePosIdx, 1);
+
+      var list = [];
+      list.push(data);
+
+      for (var i in this.data.favoritePKCategory.subLevel) {
+        list.push(this.data.favoritePKCategory.subLevel[i]);
+      }
+
+      this.data.favoritePKCategory.subLevel = list;
     }
 
+    this.updateUserUsedPKCategoryList(id, data);
 
-    console.log(this.data.favoriteStudyList);
     wx.setStorage({
-      key: 'favoriteStudyList',
-      data: this.data.favoriteStudyList,
+      key: 'favoritePKCategorySubLevels',
+      data: this.data.favoritePKCategory.subLevel,
     });
   },
 
@@ -349,6 +394,99 @@ Page({
     }); 
   }, 
 
+  updateUserUsedStudyCategoryList: function (id, data) {
+    console.log('updateUserUsedStudyCategoryList data:');
+    console.log(data);
+    console.log('favoriteStudyList');
+    console.log(this.data.favoriteStudyList);
+
+    var alreadyInFavoritePosIdx = -1;
+    for (var i = 0; i < this.data.favoriteStudyList.length; i++) {
+      var obj = this.data.favoriteStudyList[i];
+      if (obj.subId == (data.subId)) {
+        console.log('  find:' + id + ' has already exist!');
+        console.log(data);
+        alreadyInFavoritePosIdx = i;
+        break;
+      }
+    }
+
+    console.log('  alreadyInFavoritePosIdx:' + alreadyInFavoritePosIdx);
+
+    var list = [];
+    if (alreadyInFavoritePosIdx < 0) {
+      list.push(data);
+      for (var i in this.data.favoriteStudyList) {
+        list.push(this.data.favoriteStudyList[i]);
+      }
+      this.data.favoriteStudyList = list;
+    } else if (alreadyInFavoritePosIdx == 0) {
+      //no need update.
+    } else {
+      list.push(data);
+      for (var i in this.data.favoriteStudyList) {
+        if (i == alreadyInFavoritePosIdx) {
+          continue;
+        }
+        list.push(this.data.favoriteStudyList[i]);
+      }
+      this.data.favoriteStudyList = list;
+    }
+
+
+    console.log(this.data.favoriteStudyList);
+    wx.setStorage({
+      key: 'favoriteStudyList',
+      data: this.data.favoriteStudyList,
+    });
+  },
+
+  updateUserUsedPKCategoryList: function (id, data) {
+    console.log('updateUserUsedPKCategoryList data:');
+    console.log(data);
+    console.log('favoritePKList');
+    console.log(this.data.favoritePKList);
+
+    var alreadyInFavoritePosIdx = -1;
+    for (var i = 0; i < this.data.favoritePKList.length; i++) {
+      var obj = this.data.favoritePKList[i];
+      if (obj.subId == (data.subId)) {
+        console.log('  find:' + id + ' has already exist!');
+        console.log(data);
+        alreadyInFavoritePosIdx = i;
+        break;
+      }
+    }
+
+    console.log('  alreadyInFavoritePosIdx:' + alreadyInFavoritePosIdx);
+
+    var list = [];
+    if (alreadyInFavoritePosIdx < 0) {
+      list.push(data);
+      for (var i in this.data.favoritePKList) {
+        list.push(this.data.favoritePKList[i]);
+      }
+      this.data.favoritePKList = list;
+    } else if (alreadyInFavoritePosIdx == 0) {
+      //no need update.
+    } else {
+      list.push(data);
+      for (var i in this.data.favoritePKList) {
+        if (i == alreadyInFavoritePosIdx) {
+          continue;
+        }
+        list.push(this.data.favoritePKList[i]);
+      }
+      this.data.favoritePKList = list;
+    }
+
+    console.log(this.data.favoritePKList);
+    wx.setStorage({
+      key: 'favoritePKList',
+      data: this.data.favoritePKList,
+    });
+  },
+
   updateUserUsedCategoryList: function (id, data) {
     console.log('updateUserUsedCategoryList data:');
     console.log(data);
@@ -395,6 +533,26 @@ Page({
     });
   },  
 
+  loadFavoriteCategory: function () {
+    console.log('loadFavoriteCategory');
+    var that = this;
+    wx.getStorage({
+      key: 'favoriteCategorySubLevels',
+      success: function (res) {
+        console.log("获取 favoriteCategorySubLevels 数据成功:");
+        that.data.favoriteCategory.subLevel = res.data;
+        console.log(that.data.favoriteCategory);
+
+        that.loadDataList();
+      },
+      fail: function (res) {
+        console.log("获取 favoriteCategorySubLevels 数据失败");
+        that.loadDataList();
+      }
+    });
+    console.log('loadFavoriteCategory end-----');
+  },
+
   loadFavoriteStudyCategory: function () {
     console.log('loadFavoriteStudyCategory');
     var that = this;
@@ -413,6 +571,26 @@ Page({
       }
     });
     console.log('loadFavoriteStudyCategory end-----');
+  },
+
+  loadFavoritePKCategory: function () {
+    console.log('loadFavoritePKCategory');
+    var that = this;
+    wx.getStorage({
+      key: 'favoritePKCategorySubLevels',
+      success: function (res) {
+        console.log("获取 favoritePKCategorySubLevels 数据成功:");
+        that.data.favoritePKCategory.subLevel = res.data;
+        console.log(that.data.favoritePKCategory);
+
+        that.loadPKDataList();
+      },
+      fail: function (res) {
+        console.log("获取 favoritePKCategorySubLevels 数据失败");
+        that.loadPKDataList();
+      }
+    });
+    console.log('loadFavoritePKCategory end-----');
   },
 
   loadStudyDataList: function () {
@@ -436,26 +614,27 @@ Page({
     console.log(this.data.categoryStudyTree);
   },
 
-  loadFavoriteCategory: function () {
-    console.log('loadFavoriteCategory');
-    var that = this;
-    wx.getStorage({
-      key: 'favoriteCategorySubLevels',
-      success: function (res) {
-        console.log("获取 favoriteCategorySubLevels 数据成功:");
-        that.data.favoriteCategory.subLevel = res.data;
-        console.log(that.data.favoriteCategory);
+  loadPKDataList: function () {
+    console.log('loadPKDataList');
+    this.data.categoryPKTree = [];
 
-        that.loadDataList();
-      },
-      fail: function (res) {
-        console.log("获取 favoriteCategorySubLevels 数据失败");
-        that.loadDataList();
-      }
+    if (this.data.favoritePKCategory.subLevel.length > 0) {
+      this.data.categoryPKTree.push(this.data.favoritePKCategory);
+    }
+    for (var i in app.globalData.categoryPKTree) {
+      this.data.categoryPKTree.push(app.globalData.categoryPKTree[i]);
+    }
+    this.setData({
+      favoritePKCategory: this.data.favoritePKCategory,
+      favoritePKList: this.data.favoritePKList,
+      categoryPKTree: this.data.categoryPKTree,
     });
-    console.log('loadFavoriteCategory end-----');
+
+    this.initData(topcategoryid, 2);
+    console.log('loadFavoritePKList  end --------- list');
+    console.log(this.data.categoryPKTree);
   },
- 
+
   loadDataList: function () {
     console.log('loadDataList');
     this.data.categoryTree = []; 
@@ -480,6 +659,19 @@ Page({
     console.log('findCategoryStudyItemById id:'+id);
     for (var i = 0; i < this.data.categoryStudyTree.length; i++) {
       var twoLevel = this.data.categoryStudyTree[i].subLevel;
+      for (var j = 0; j < twoLevel.length; j++) {
+        var _obj = twoLevel[j];
+        if (_obj.id == id) {
+          return _obj;
+        }
+      }
+    }
+  },
+
+  findCategoryPKItemById(id) {
+    console.log('findCategoryPKItemById id:' + id);
+    for (var i = 0; i < this.data.categoryPKTree.length; i++) {
+      var twoLevel = this.data.categoryPKTree[i].subLevel;
       for (var j = 0; j < twoLevel.length; j++) {
         var _obj = twoLevel[j];
         if (_obj.id == id) {
