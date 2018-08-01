@@ -182,7 +182,7 @@ Page({
             this.data.selectStudyCategory.title = item.title;
             this.data.selectStudyCategory.src = item.src;
             this.data.selectStudyCategory.subtitle = item.subtitle;
-            this.data.selectStudyCategory.subtitle1 = item.title;
+            this.data.selectStudyCategory.subtitle1 = item.subtitle1;
 
             this.updateFavoriteStudyCategory(item.id, this.data.selectStudyCategory);
 
@@ -234,7 +234,7 @@ Page({
             this.data.selectCategory.title = item.title;
             this.data.selectCategory.src = item.src;
             this.data.selectCategory.subtitle = item.subtitle;
-            this.data.selectCategory.subtitle1 = item.title;
+            this.data.selectCategory.subtitle1 = item.subtitle1;
 
             this.updateFavoriteCategory(item.id, this.data.selectCategory);
 

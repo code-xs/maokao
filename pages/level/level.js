@@ -68,15 +68,11 @@ Page({
     var that = this;
     var classes ;
     
-    console.log('initData 11111111111111');
     if(fpid == 4) {
-      console.log('initData 22222222222');
       classes = this.findCategoryStudyItemById(id);
     } else {
-      console.log('initData 333333333333');
       classes = this.findCategoryItemById(id);
     }
-    console.log('initData 4444444444444');
     
     console.log("classes:");
     console.log(classes);
