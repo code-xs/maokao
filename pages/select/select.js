@@ -70,26 +70,26 @@ Page({
       this.loadFavoriteStudyCategory();
     } else {
       this.setData({
-        frompageid: fpid,
+        frompageid: fpid, 
       });
       this.loadFavoriteCategory();
     }
-  },
-
+  }, 
+ 
   loadFavoriteCategory: function () {
-    console.log('loadFavoriteCategory');
+    console.log('loadFavoriteCategory'); 
     var that = this;
     wx.getStorage({
-      key: 'favoriteCategory',
+      key: 'favoriteCategorySubLevels',
       success: function (res) {
-        console.log("获取 favoriteCategory 数据成功:");
-        that.data.favoriteCategory.subLevel = res.data;
+        console.log("获取 favoriteCategorySubLevels 数据成功:");
+        that.data.favoriteCategory.subLevel= res.data;
         console.log(that.data.favoriteCategory);
 
         that.loadFavoriteList();
       },
       fail: function (res) {
-        console.log("获取 favoriteStudyCategory 数据失败");
+        console.log("获取 favoriteCategorySubLevels 数据失败");
         that.loadFavoriteList();
       }
     });
@@ -100,16 +100,16 @@ Page({
     console.log('loadFavoriteStudyCategory');
     var that = this;
     wx.getStorage({
-      key: 'favoriteStudyCategory',
+      key: 'favoriteStudyCategorySubLevels',
       success: function(res) {
-        console.log("获取 favoriteStudyCategory 数据成功:");
+        console.log("获取 favoriteStudyCategorySubLevels 数据成功:");
         that.data.favoriteStudyCategory.subLevel = res.data;
         console.log(that.data.favoriteStudyCategory);
 
         that.loadFavoriteStudyList();
       },
       fail: function(res) {
-        console.log("获取 favoriteStudyCategory 数据失败");
+        console.log("获取 favoriteStudyCategorySubLevels 数据失败");
         that.loadFavoriteStudyList();
       }
     });
@@ -123,9 +123,11 @@ Page({
     if (this.data.favoriteStudyCategory.subLevel.length > 0) {
       this.data.categoryStudyTree.push(this.data.favoriteStudyCategory);
     }
+
     for (var i in app.globalData.categoryStudyTree) {
       this.data.categoryStudyTree.push(app.globalData.categoryStudyTree[i]);
     }
+
     this.setData({
       favoriteStudyCategory: this.data.favoriteStudyCategory,
       favoriteStudyList: this.data.favoriteStudyList,
@@ -194,6 +196,9 @@ Page({
         var obj = this.findCategoryStudyItemById(e.target.id);
         var parentObj = this.findParentCategoryStudyById(e.target.id);
         if (obj.subLevel != null) {
+
+          needUpdateFavorite = true;
+
           wx.navigateTo({
             url: '../level/level' + '?id=' + obj.id + '&frompageid=' + this.data.frompageid
           })
@@ -245,6 +250,9 @@ Page({
         console.log('find obj:');
         console.log(obj);
         if (obj.subLevel != null) { 
+
+          needUpdateFavorite = true;
+
           wx.navigateTo({
             url: '../level/level' + '?id=' + obj.id + '&frompageid=' + this.data.frompageid
           })
@@ -288,20 +296,29 @@ Page({
   },  
 
   onHide:function() {
-    if (needUpdateFavorite) {
-      needUpdateFavorite = false;
-      if(this.data.frompageid == 4) {
-        this.loadFavoriteStudyList();
-      } else {
-        this.loadFavoriteList();
-      }
-    }
+    // if (needUpdateFavorite) {
+    //   needUpdateFavorite = false;
+    //   if(this.data.frompageid == 4) {
+    //     this.loadFavoriteStudyList();
+    //   } else {
+    //     this.loadFavoriteList();
+    //   }
+    // }
   },
 
   onShow: function() {
     console.log('onShow')
     console.log('this.data.favoriteStudyCategory');
     console.log(this.data.favoriteStudyCategory);
+
+    if (needUpdateFavorite) {
+      needUpdateFavorite = false; 
+      if (this.data.frompageid == 4) {
+        this.loadFavoriteStudyCategory();
+      } else {
+        this.loadFavoriteCategory();
+      }
+    } 
 
     if (this.data.oldLevel < app.scoreConvertLevel(app.globalData.totalScore)) {
       this.setData({
@@ -317,15 +334,14 @@ Page({
   showAbortExit: function() {
     wx.showModal({
       title: '个人挑战',
+      showCancel:false,   
       content: '你已放弃本次挑战!',
-      success: function(res) {
+      success: function(res) { 
         if (res.confirm) {
           console.log('confirm')
-        } else if (res.cancel) {
-          console.log('cancel')
-        }
-      }
-    })
+        } 
+      } 
+    }) 
   },
 
   updateFavoriteStudyCategory: function(id, data) {
@@ -381,7 +397,7 @@ Page({
     this.updateUserUsedStudyCategoryList(id, data);
 
     wx.setStorage({
-      key: 'favoriteStudyCategory',
+      key: 'favoriteStudyCategorySubLevels',
       data: this.data.favoriteStudyCategory.subLevel,
     });
   },
@@ -427,7 +443,7 @@ Page({
 
     console.log(this.data.favoriteStudyList);
     wx.setStorage({
-      key: 'categoryStudyList',
+      key: 'favoriteStudyList',
       data: this.data.favoriteStudyList,
     });
   },  
@@ -485,7 +501,7 @@ Page({
     this.updateUserUsedCategoryList(id, data);
 
     wx.setStorage({
-      key: 'favoriteCategory',
+      key: 'favoriteCategorySubLevels',
       data: this.data.favoriteCategory.subLevel,
     });
   },
@@ -531,7 +547,7 @@ Page({
 
     console.log(this.data.favoriteList);
     wx.setStorage({
-      key: 'categoryList',
+      key: 'favoriteList',
       data: this.data.favoriteList,
     });
   },  

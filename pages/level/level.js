@@ -1,4 +1,6 @@
 var app = getApp()
+var topcategoryid = -1;
+
 Page({
   data: {
     frompageid: 0,
@@ -8,20 +10,34 @@ Page({
     categoryTree: [],
     categoryStudyTree: [],
     selectClass:null,
-    selectLevel:null,
+    selectLevel:null, 
     isClass:true,
     TREE:null,
     favoriteList: [],
-    selectCateory: {
+    favoriteCategory: {
+      id: 0,
+      title: "常用",
+      src: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/select/category_idx_fav.png',
+      color: '#f49967',
+      subLevel: [],
+    },
+    selectCategory: {
       id: 0,
       title: "none",
       subId: 0,
       src: null,
       subtitle:"none",
-      subtitle1: "none",
+      subtitle1: "none", 
     },
     favoriteStudyList: [],
-    selectStudyCateory: {
+    favoriteStudyCategory: {
+      id: 0,
+      title: "常用",
+      src: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/select/category_idx_fav.png',
+      color: '#f49967',
+      subLevel: [],
+    },
+    selectStudyCategory: {
       id: 0,
       title: "none",
       subId: 0,
@@ -37,65 +53,47 @@ Page({
       backgroundColor: '#bf70d6',
     });
 
+    topcategoryid = option.id;
+
     if (option.frompageid == 4) {
       this.loadFavoriteStudyCategory();
     } else {
       this.loadFavoriteCategory();
     }
-
-    this.initData(option.id, option.frompageid);
+   
   },
+
   initData: function (id, fpid){
+    console.log('initData id:'+id+" fpid:"+fpid);
     var that = this;
     var classes ;
     
+    console.log('initData 11111111111111');
     if(fpid == 4) {
+      console.log('initData 22222222222');
       classes = this.findCategoryStudyItemById(id);
     } else {
+      console.log('initData 333333333333');
       classes = this.findCategoryItemById(id);
     }
+    console.log('initData 4444444444444');
     
     console.log("classes:");
     console.log(classes);
-    console.log('initData classes.length:' + classes.subLevel.length)
     for (var i = 0; i < classes.subLevel.length; i++) {
       var obj = classes.subLevel[i];
       this.data.CLASS.push(obj.title);
       this.data.CLASSID.push(obj.id);
     }
+
     this.setData({
       CLASS: this.data.CLASS,
       CLASSID: this.data.CLASSID,
       TREE:classes,
       frompageid: fpid,
     });
+
     console.log("CLASS:" + this.data.CLASS + ' class len:'+this.data.CLASS.length);
-    
-    if (fpid == 4) {
-      wx.getStorage({
-        key: 'favoriteStudyCateory',
-        success: function (res) {
-          console.log("获取 favoriteStudyCateory 数据成功:");
-          that.data.favoriteStudyList = res.data;
-          console.log(that.data.favoriteStudyList);
-        },
-        fail: function (res) {
-          console.log("获取 favoriteStudyCateory 数据失败");
-        }
-      });
-    } else {
-      wx.getStorage({
-        key: 'favoriteCateory',
-        success: function (res) {
-          console.log("获取 favoriteCateory 数据成功:");
-          that.data.favoriteList = res.data;
-          console.log(that.data.favoriteList);
-        },
-        fail: function (res) {
-          console.log("获取 favoriteCateory 数据失败");
-        }
-      });
-    }
   },
 
   resetData: function (value) {
@@ -153,40 +151,40 @@ Page({
     } 
 
     if (this.data.frompageid == 4) {
-      this.data.selectStudyCateory.id = (10000 + id);
-      this.data.selectStudyCateory.subId = id;
-      this.data.selectStudyCateory.title = this.data.TREE.title;
-      this.data.selectStudyCateory.src = this.data.TREE.src;
-      this.data.selectStudyCateory.subtitle = this.data.TREE.subtitle;
-      this.data.selectStudyCateory.subtitle1 = title;
+      this.data.selectStudyCategory.id = (10000 + id);
+      this.data.selectStudyCategory.subId = id;
+      this.data.selectStudyCategory.title = this.data.TREE.title;
+      this.data.selectStudyCategory.src = this.data.TREE.src;
+      this.data.selectStudyCategory.subtitle = this.data.TREE.subtitle;
+      this.data.selectStudyCategory.subtitle1 = title;
 
       console.log('  open study with param id:' + id);
-      console.log(this.data.selectStudyCateory);
+      console.log(this.data.selectStudyCategory);
 
-      this.updateFavoriteStudyCateory(id, this.data.selectStudyCateory);
+      this.updateFavoriteStudyCategory(id, this.data.selectStudyCategory);
 
       wx.redirectTo({
         url: '../study/study?id=' + id,
       })
     } else {
-      this.data.selectCateory.id = (10000 + id);
-      this.data.selectCateory.subId = id;
-      this.data.selectCateory.title = this.data.TREE.title;
-      this.data.selectCateory.src = this.data.TREE.src;
-      this.data.selectCateory.subtitle = this.data.TREE.subtitle;
-      this.data.selectCateory.subtitle1 = title;
+      this.data.selectCategory.id = (10000 + id);
+      this.data.selectCategory.subId = id;
+      this.data.selectCategory.title = this.data.TREE.title;
+      this.data.selectCategory.src = this.data.TREE.src;
+      this.data.selectCategory.subtitle = this.data.TREE.subtitle;
+      this.data.selectCategory.subtitle1 = title;
 
       console.log('  open challenge with param id:' + id);
-      console.log(this.data.selectCateory);
+      console.log(this.data.selectCategory);
 
-      this.updateFavoriteCateory(id, this.data.selectCateory);
+      this.updateFavoriteCategory(id, this.data.selectCategory);
 
       wx.redirectTo({
         url: '../challenge/challenge?id=' + id,
       })
     }
   },
-
+ 
   navigateBackFunc: function (level) {
     var pages = getCurrentPages()
     var prevPage = pages[pages.length - 2]  //上一个页面
@@ -199,7 +197,7 @@ Page({
   updateFavoriteStudyCategory: function (id, data) {
     console.log('++++++> updateFavoriteStudyCategory id:' + id);
     console.log(data);
-
+ 
     var alreadyInFavoritePosIdx = -1;
 
     console.log('favoriteStudyCategory:');
@@ -247,7 +245,7 @@ Page({
     this.updateUserUsedStudyCategoryList(id, data);
 
     wx.setStorage({
-      key: 'favoriteStudyCategory',
+      key: 'favoriteStudyCategorySubLevels',
       data: this.data.favoriteStudyCategory.subLevel,
     });
   },
@@ -294,7 +292,7 @@ Page({
 
     console.log(this.data.favoriteStudyList);
     wx.setStorage({
-      key: 'categoryStudyList',
+      key: 'favoriteStudyList',
       data: this.data.favoriteStudyList,
     });
   },
@@ -346,14 +344,14 @@ Page({
       this.data.favoriteCategory.subLevel = list;
 
     }
-
+ 
     this.updateUserUsedCategoryList(id, data);
 
     wx.setStorage({
-      key: 'favoriteCategory',
+      key: 'favoriteCategorySubLevels',
       data: this.data.favoriteCategory.subLevel,
-    });
-  },
+    }); 
+  }, 
 
   updateUserUsedCategoryList: function (id, data) {
     console.log('updateUserUsedCategoryList data:');
@@ -379,7 +377,7 @@ Page({
       list.push(data);
       for (var i in this.data.favoriteList) {
         list.push(this.data.favoriteList[i]);
-      }
+      } 
       this.data.favoriteList = list;
     } else if (alreadyInFavoritePosIdx == 0) {
       //no need update.
@@ -396,7 +394,7 @@ Page({
 
     console.log(this.data.favoriteList);
     wx.setStorage({
-      key: 'categoryList',
+      key: 'favoriteList',
       data: this.data.favoriteList,
     });
   },  
@@ -405,24 +403,24 @@ Page({
     console.log('loadFavoriteStudyCategory');
     var that = this;
     wx.getStorage({
-      key: 'favoriteStudyCategory',
+      key: 'favoriteStudyCategorySubLevels',
       success: function (res) {
-        console.log("获取 favoriteStudyCategory 数据成功:");
+        console.log("获取 favoriteStudyCategorySubLevels 数据成功:");
         that.data.favoriteStudyCategory.subLevel = res.data;
         console.log(that.data.favoriteStudyCategory);
 
-        that.loadFavoriteStudyList();
+        that.loadStudyDataList();
       },
       fail: function (res) {
-        console.log("获取 favoriteStudyCategory 数据失败");
-        that.loadFavoriteStudyList();
+        console.log("获取 favoriteStudyCategorySubLevels 数据失败");
+        that.loadStudyDataList();
       }
     });
     console.log('loadFavoriteStudyCategory end-----');
   },
 
-  loadFavoriteStudyList: function () {
-    console.log('loadFavoriteStudyList');
+  loadStudyDataList: function () {
+    console.log('loadStudyDataList');
     this.data.categoryStudyTree = [];
 
     if (this.data.favoriteStudyCategory.subLevel.length > 0) {
@@ -437,11 +435,53 @@ Page({
       categoryStudyTree: this.data.categoryStudyTree,
     });
 
+    this.initData(topcategoryid, 4);
     console.log('loadFavoriteStudyList  end --------- list');
     console.log(this.data.categoryStudyTree);
   },
 
+  loadFavoriteCategory: function () {
+    console.log('loadFavoriteCategory');
+    var that = this;
+    wx.getStorage({
+      key: 'favoriteCategorySubLevels',
+      success: function (res) {
+        console.log("获取 favoriteCategorySubLevels 数据成功:");
+        that.data.favoriteCategory.subLevel = res.data;
+        console.log(that.data.favoriteCategory);
+
+        that.loadDataList();
+      },
+      fail: function (res) {
+        console.log("获取 favoriteCategorySubLevels 数据失败");
+        that.loadDataList();
+      }
+    });
+    console.log('loadFavoriteCategory end-----');
+  },
+ 
+  loadDataList: function () {
+    console.log('loadDataList');
+    this.data.categoryTree = []; 
+
+    if (this.data.favoriteCategory.subLevel.length > 0) {
+      this.data.categoryTree.push(this.data.favoriteCategory);
+    }
+    for (var i in app.globalData.categoryTree) {
+      this.data.categoryTree.push(app.globalData.categoryTree[i]);
+    }
+    this.setData({
+      favoriteCategory: this.data.favoriteCategory,
+      favoriteList: this.data.favoriteList,
+      categoryTree: this.data.categoryTree,
+    });
+
+    this.initData(topcategoryid, 1);
+    console.log('loadFavoriteList  end --------- list');
+  },
+
   findCategoryStudyItemById(id) {
+    console.log('findCategoryStudyItemById id:'+id);
     for (var i = 0; i < this.data.categoryStudyTree.length; i++) {
       var twoLevel = this.data.categoryStudyTree[i].subLevel;
       for (var j = 0; j < twoLevel.length; j++) {
@@ -454,11 +494,14 @@ Page({
   },
 
   findCategoryItemById(id) {
+    console.log('findCategoryItemById id:' + id);
     for (var i = 0; i < this.data.categoryTree.length; i++) {
       var twoLevel = this.data.categoryTree[i].subLevel;
       for (var j = 0; j < twoLevel.length; j++) {
         var _obj = twoLevel[j];
         if (_obj.id == id) {
+          console.log('find _obj');
+          console.log(_obj);
           return _obj;
         }
       }
