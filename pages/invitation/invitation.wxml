@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="control">
   <view class="title" bindtap="onClickSelf"> {{invitationTitle}}</view>
-  <view class="ticker"  wx:if="{{showTicker}}"> 00:10</view>
+  <view class="ticker"  wx:if="{{showTicker}}"> 00:{{timeTickStr}}</view>
   <view class="score">
     <view class="group0">
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>

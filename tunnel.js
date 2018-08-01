@@ -15,7 +15,9 @@ var tunnel = {
   createTunnel:function(){
     if (this.tunnelServer.tunnelObj == null){
       var that = this;
-      var tunnel = new qcloud.Tunnel('https://199447.qcloud.la/tunnel');
+      var tunnel = new qcloud.Tunnel(config.service.tunnelUrl);
+      console.log('tunnel:')
+      console.log(tunnel)
       tunnel.on('connect', () => that.tunnelConnect());
       tunnel.on('close', () => that.tunnelDisconnect());
       tunnel.on('reconnecting', () => that.tunnelReconnecting());
