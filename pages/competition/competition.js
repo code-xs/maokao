@@ -3,6 +3,7 @@
 const app = getApp()
 var qcloud = require('../../vendor/wafer2-client-sdk/index');
 var config = require('../../config');
+var tunnelClass = require('../../tunnel');
 Page({
   data: {
     userInfo: {},
@@ -12,8 +13,6 @@ Page({
       score:100,
       selectAnswer:1,
     },
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
     empirical:999,
     ranking:0,
     progress:99,
@@ -22,8 +21,6 @@ Page({
     selfScore:0,
     friendScore: 0,
     levelV:0,
-    windowW:0,
-    windowH:0,
     score:13242,
     PAGE:0,
     ID:24,
@@ -60,7 +57,9 @@ Page({
     errorCateoryList: [],
     questionTotal: 30,
     questionIndex: 0,
-    showLoading: false,    
+    showLoading: false,
+    userInfoScore:0,
+    userInfo1Score:0,
     type1: [{
       'id': 11,
       'title': '前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
@@ -87,32 +86,10 @@ Page({
     })
   },
   onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
+    this.setData({
+      userInfo: app.globalData.userInfo,
+      userInfo1: app.globalData.userInfo1,
+    })
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
       backgroundColor: '#a753d6',
@@ -120,29 +97,16 @@ Page({
     wx.setNavigationBarTitle({
       title: "对战"
     })
-    var that = this;
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res);
-        that.setData({
-          windowW: res.windowWidth,
-          windowH: res.windowHeight,
-          screenWidth: res.windowWidth,
-        })
-      }
-    });
-    //this.initData();
-    this.requestQuestionList(this.data.PAGE, this.data.ID);
-    //this.startCountDown(2000);
+    //this.requestQuestionList(this.data.PAGE, this.data.ID);
+    this.data.tree = app.globalData.question;
+    console.log('tree:');
+    console.log(this.data.tree);
+    tunnelClass.setListenQuestion(this.onHandleQuestion)
+    //tunnelClass.listenQuestion(null);
+    tunnelClass.listenGetAnswer(this.onHandleGetAnswer);
+    this.initQuestionAndAnswer(this.data.curIndex);
   },
-  getUserInfo: function(e) {
-    console.log(' getUserInfo')
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  },
+
   cancelTimer: function () {
     if (this.data.timer != null) {
       console.log(' clearTimeout at first !!!');
@@ -216,7 +180,9 @@ Page({
     this.data.answerid = [];
     this.data.characterBgColor = [];
     this.data.character = [];
-    var section = this.data.tree[index];
+    var section = this.data.tree;
+    console.log(' section ' + index + ' data::');
+    console.log(this.data.tree);
     var type = section.type;
 
     this.data.character.push('../../images/ic_a.png');
@@ -237,8 +203,8 @@ Page({
       questionIndex: this.data.questionIndex,
     })
     this.data.questionIndex++;
-    this.startCountDown(section.timer * 10);
-    app.addChallengeCnt(1);
+    this.startCountDown(1000);
+    //app.addChallengeCnt(1);
   },
 
   onClickContext:function(){
@@ -263,19 +229,55 @@ Page({
   },
   onClickAnswer:function(e){
     console.log(' onClickAnswer:' + e.target.id);
-    this.data.showFragment++;
-    if (this.data.showFragment > 5) {
-      this.data.showFragment = 0;
-      this.setData({
-        showFailed: !this.data.showFailed
-      })
-      
-    }
-    this.setData({
-      showFragment: this.data.showFragment
-    })
-    this.initQuestionAndAnswer(this.data.showFragment);    
+    console.log(' call cancelTimer');
+    this.cancelTimer();
+    console.log(' call showAnswer');
+    this.showAnswer(e.target.id);
+    console.log(' this.data.tree.length:');
+    this.data.pendEvent = true;  
   },
+
+
+  checkAnswer: function (id) {
+    var question = this.data.tree;
+    if (question.answer == id)
+      return true;
+    else
+      return false;
+  },
+
+  showAnswer: function (id) {
+    var section = this.data.tree;
+    var ret = this.checkAnswer(id);
+    console.log(' showAnswer:' + id + ' ret is:' + ret);
+    if (ret) {
+      this.data.characterBgColor[id] = '#9be665';
+      this.data.continueRight++;
+      this.data.character[id] = '../../images/ic_aws_right.png';
+      this.data.userInfoScore += 100;
+    } else {
+      this.data.continueRight = 0;
+      this.data.characterBgColor[section.answer] = '#9be665';
+      this.data.character[section.answer] = '../../images/ic_aws_right.png';
+      if (id >= 0) {
+        this.data.characterBgColor[id] = '#F76F40';
+        this.data.character[id] = '../../images/ic_aws_error.png';
+      }
+    }
+    
+    var index = parseInt(section.answer) + 1;
+    this.setData({
+      characterBgColor: this.data.characterBgColor,
+      character: this.data.character,
+      answerIndex: index,
+      userInfoScore: this.data.userInfoScore
+    });
+    var that = this;
+    setTimeout(function () {
+      tunnelClass.uploadAnswer(id, that.data.userInfoScore);
+    }, 1000);
+  },
+
   onClickCloseModal:function(){
     console.log(' onClickCloseModal !');
     this.setData({
@@ -294,36 +296,22 @@ Page({
     }
   },
 
-  drawRuleText: function (ctx, x, y, cnt) {
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.setFontSize(20);
-    ctx.setFillStyle('#e853b8');
-    ctx.setTextAlign('center');
-    ctx.fillText(cnt, x, y);
+  onHandleQuestion: function (res) {
+    console.log('enter onHandleQuestion!')
+    console.log(res)
+    if ("title" in res.question){
+      this.data.tree = res.question;
+      this.initQuestionAndAnswer(this.data.curIndex);
+    }else{
+      this.setData({
+        showFailed: !this.data.showFailed,
+        showFragment:-1,
+      })
+    }
   },
-  
-  drawCirque: function (ctx, x, y) {
-    ctx.beginPath();
-    ctx.setStrokeStyle('#eec700');
-    ctx.arc(x, y, 30, 0, 2 * Math.PI);
-    ctx.stroke()
-  },
-  drawCircle: function (ctx, x, y) {
-    ctx.beginPath();
-    ctx.setFillStyle('#eec700');
-    ctx.arc(x, y, 40, 0, 2 * Math.PI);
-    ctx.fill()
-  },
-  onClickSelf:function(){
-    wx.navigateTo({
-      url: '../select/select' + '?lockLevel=' + (5) + '&maxLevel=' + 5
-    })
-  },
-  onClickFriend: function () {
 
-  },
-  onClickRanking: function () {
-
-  },
+  onHandleGetAnswer:function(res){
+    console.log('enter onHandleGetAnswer!')
+    console.log(res)
+  }
 })

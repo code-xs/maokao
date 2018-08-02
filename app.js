@@ -37,6 +37,8 @@ App({
 
   globalData: {
     userInfo: null,
+    userInfo1:null,
+    question:null,
     openId: null,
     userRanking: 99999,
     totalScore: 0,

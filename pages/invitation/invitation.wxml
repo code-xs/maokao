@@ -8,7 +8,7 @@
     </view>
     <view class="vs" bindtap="onClickVS"> VS </view>
     <view class="group0">
-      <image class="userinfo-avatar" src="https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avatar_default.jpg"></image>
+      <image class="userinfo-avatar" src="{{player2}}"></image>
     </view>
   </view>
   <button class="item0" open-type='share'>邀请好友</button>

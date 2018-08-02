@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp()
-var tunnel = require('../../tunnel');
+var tunnelClass = require('../../tunnel');
 var qcloud = require('../../vendor/wafer2-client-sdk/index');
 var config = require('../../config');
 Page({
@@ -14,7 +14,9 @@ Page({
     tunnel:null,
     timeTick:0,
     timeTickStr:'00',
-    timer:null
+    timer:null,
+    timeOut:30,
+    player2:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avatar_default.jpg"
   },
   //事件处理函数
   bindViewTap: function() {
@@ -31,7 +33,12 @@ Page({
   },
 
   initData:function(){
-    this.createTunnel();
+    var tunnel = tunnelClass.createTunnel();
+    this.data.tunnel = tunnel;
+    tunnelClass.listenMatchSuccess(this.onHandleMatchSuccess);
+    tunnelClass.setListenQuestion(this.onHandleQuestion)
+    tunnelClass.listenQuestion(null);
+    tunnel.open();
   },
 
   onClickSelf:function(){
@@ -50,9 +57,8 @@ Page({
       showTicker: !this.data.showTicker,
       invitationTitle: this.data.showTicker == false ? '已邀请,等待对方加入...' : '等待对方加入'
     });
+    tunnelClass.beginMatch();
     this.startTimeTick(1000)
-    this.connectTunnel();
-    this.listenMatchSuccess();
     /*
     wx.navigateTo({
       url: '../competition/competition'
@@ -73,7 +79,15 @@ Page({
           timeTick: that.data.timeTick + 1
         })
       }
-      that.startTimeTick(duration);
+      if (that.data.timeTick >= that.data.timeOut){
+        that.setData({
+          showTicker: !that.data.showTicker,
+          invitationTitle: '匹配超时,请重试!',
+          timeTick:0
+        });
+      }else{
+        that.startTimeTick(duration);
+      }
     }, duration);
   },
   cancelTimer: function () {
@@ -83,6 +97,10 @@ Page({
       this.data.timer = null;
     }
   },
+  matchTimeout:function(){
+
+  },
+
   onShareAppMessage: function (ops) {
     if (ops.from == 'button') {
       return {
@@ -109,52 +127,31 @@ Page({
     }
   },  
   onUnload:function(){
-    this.closeTunnel();
+    //tunnelClass.closeTunnel();
     this.cancelTimer();
   },
 
-  createTunnel:function(){
-    var tunnel = new qcloud.Tunnel(config.service.tunnelUrl);
-    tunnel.open();
-    this.data.tunnel = tunnel;
-    console.log('tunnel:')
-    console.log(tunnel)
-    tunnel.on('PING', () => {//PING-PONG机制:监听服务器PING
-      console.info("接收到PING")
-      tunnel.emit('PONG', {//给出回应
-        openId: app.globalData.openId
-      })
-      console.info("发出了PONG")
-    })
-  },
-  closeTunnel:function(){
-    if (this.data.tunnel) {
-      console.log('close tunnel !')
-      this.data.tunnel.close();
-      this.data.tunnel = null;
-    }
-  },
-  connectTunnel:function(){
-    this.data.tunnel.on('connect', () => {//监听信道连接
-      console.info("tunnelStatus = 'connect'")
-      app.globalData.tunnelStatus = 'connect' //改变信道状态为已连接
-      // if (that.tunnelConnectCallback) {//设置回调
-      //   that.tunnelConnectCallback()
-      // }
-      if (1) {//设置回调
-        this.data.tunnel.emit(' beginMatch ', {//发起匹配
-          openId: app.globalData.openId,
-          sortId: 2,
-          friendsFightingRoom: ""//匹配者含friendsFightingRoom则说明是好友之间的匹配
-        })
-      }
-    })
-  },
-  listenMatchSuccess:function(){
+  onHandleMatchSuccess:function(res){
     var that = this;
-    this.data.tunnel.on('matchSuccess', () => {//PING-PONG机制:监听服务器PING
-      console.info("接收到matchSucess")
-      this.cancelTimer();
-    })
+    app.globalData.userInfo1 = res.player2;
+    console.log(app.globalData.player2Info);
+    that.cancelTimer();
+    that.setData({
+      showTicker: !that.data.showTicker,
+      invitationTitle: '匹配成功!',
+      timeTick: 0,
+      player2: res.player2.avatarUrl
+    });
+  },
+
+  onHandleQuestion:function(res){
+    console.log('enter onHandleQuestion!')
+    console.log(res)
+    app.globalData.question = res.question;
+    this.data.timer = setTimeout(function () {
+      wx.redirectTo({
+        url: '../competition/competition'
+      })
+    }, 1000);
   }
 })

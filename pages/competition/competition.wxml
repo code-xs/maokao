@@ -15,8 +15,8 @@
               <view class="nametitle2">{{userInfo1.nickName}}</view>
             </view>
               <view class="score_layout">
-                <view class="score1">{{userInfo.score}}分</view>
-                <view class="score2">{{userInfo1.score}}分</view>
+                <view class="score1">{{userInfoScore}}分</view>
+                <view class="score2">{{userInfo1Score}}分</view>
               </view>
               <image class="vs-image" src="/images/win.png"></image>
             </view>
@@ -25,7 +25,7 @@
       </view>
       <view class="userimg">
         <view class="group0">
-          <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+          <image class="userinfo-avatar" src="{{userInfo1.avatarUrl}}" background-size="cover"></image>
         </view>
       </view>
   </view>
