@@ -202,7 +202,7 @@ Page({
       questionIndex: this.data.questionIndex,
     })
     this.data.questionIndex++;
-    this.startCountDown(1000);
+    this.startCountDown(section.timer*10);
     //app.addChallengeCnt(1);
   },
 
@@ -245,7 +245,7 @@ Page({
       return false;
   },
 
-  updateAnswerBgOnly(answer){
+  updateAnswerBgOnly(answer, self){
     var ret = false;
     if (answer >= 0){
       ret = this.checkAnswer(answer);
@@ -255,7 +255,7 @@ Page({
         this.data.character[answer] = '../../images/ic_aws_right.png';
       } else {
         if (answer >= 0) {
-          this.data.characterBgColor[answer] = '#F76F40';
+          this.data.characterBgColor[answer] = self ? '#F76F40':'#101661';
           this.data.character[answer] = '../../images/ic_aws_error.png';
         }
       }
@@ -265,7 +265,7 @@ Page({
 
   showAnswer: function (id) {
     var section = this.data.tree;
-    var ret = this.updateAnswerBgOnly(id);
+    var ret = this.updateAnswerBgOnly(id, true);
     if(ret){
       this.data.continueRight++;
       this.data.userInfoScore += 100;
@@ -293,7 +293,7 @@ Page({
   startCountDown:function(duration){
     var that = this;
     if (that.data.progress > 0){
-      setTimeout(function () {
+      this.data.timer = setTimeout(function () {
         that.setData({
           progress : that.data.progress - 1
         })
@@ -308,12 +308,12 @@ Page({
     console.log('enter onHandleQuestion!')
     console.log(res)
     if ("title" in res.question){
-      var ret = this.updateAnswerBgOnly(res.choicePlayer2[1]);
+      var ret = this.updateAnswerBgOnly(res.choicePlayer2[1], false);
       if (ret) {
         this.data.userInfo1Score += res.choicePlayer2[2];
       }
       if (res.choicePlayer2[1] != this.data.tree.answer){
-        this.updateAnswerBgOnly(this.data.tree.answer);
+        this.updateAnswerBgOnly(this.data.tree.answer, false);
       }
       var index = parseInt(res.choicePlayer2[1]) + 1;
       this.setData({
@@ -329,10 +329,15 @@ Page({
         that.initQuestionAndAnswer(that.data.curIndex);
       }, 2000);
     }else{
-      this.setData({
-        showFailed: !this.data.showFailed,
-        showFragment:-1,
-      })
+      this.cancelTimer();
+      var that = this
+      setTimeout(function () {
+        that.setData({
+          showFailed: !that.data.showFailed,
+          showFragment: -1,
+        })
+      }, 1000);
+      tunnelClass.fightingResult(true);
     }
   },
 

@@ -41,6 +41,12 @@ var tunnel = {
     })
   },
 
+  fightingResult:function(finish){
+    this.tunnelServer.tunnelObj.emit('fightingResult', {//通知服务器关闭房间
+      isfinish: finish,
+    })
+  },
+
   listenMatchSuccess: function (cb) {
     var that = this;
     this.tunnelServer.tunnelObj.on('matchNotice', (res) => {//PING-PONG机制:监听服务器PING
