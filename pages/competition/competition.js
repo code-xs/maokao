@@ -47,7 +47,6 @@ Page({
     gameOver: false,
     timer: null,
     pendindDuration: 1000,
-    answerIndex: -1,
     allowShareMax: 2,
     curShareTick: 0,
     characterBgColor: [],
@@ -55,11 +54,12 @@ Page({
     continueRight: 0,
     continueMaxRight: 0,
     errorCateoryList: [],
-    questionTotal: 30,
+    questionTotal: 5,
     questionIndex: 0,
     showLoading: false,
     userInfoScore:0,
     userInfo1Score:0,
+    userInfo1Answer: 0,
     type1: [{
       'id': 11,
       'title': '前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
@@ -195,7 +195,6 @@ Page({
       question: section,
       answerid: this.data.answerid,
       showFragment: type,
-      answerIndex: -1,
       progress: 100,
       empiricalV: "第" + section.index + "题",
       characterBgColor: this.data.characterBgColor,
@@ -246,36 +245,43 @@ Page({
       return false;
   },
 
-  showAnswer: function (id) {
-    var section = this.data.tree;
-    var ret = this.checkAnswer(id);
-    console.log(' showAnswer:' + id + ' ret is:' + ret);
-    if (ret) {
-      this.data.characterBgColor[id] = '#9be665';
-      this.data.continueRight++;
-      this.data.character[id] = '../../images/ic_aws_right.png';
-      this.data.userInfoScore += 100;
-    } else {
-      this.data.continueRight = 0;
-      this.data.characterBgColor[section.answer] = '#9be665';
-      this.data.character[section.answer] = '../../images/ic_aws_right.png';
-      if (id >= 0) {
-        this.data.characterBgColor[id] = '#F76F40';
-        this.data.character[id] = '../../images/ic_aws_error.png';
+  updateAnswerBgOnly(answer){
+    var ret = false;
+    if (answer >= 0){
+      ret = this.checkAnswer(answer);
+      console.log(' showAnswer:' + answer + ' ret is:' + ret);
+      if (ret) {
+        this.data.characterBgColor[answer] = '#9be665';
+        this.data.character[answer] = '../../images/ic_aws_right.png';
+      } else {
+        if (answer >= 0) {
+          this.data.characterBgColor[answer] = '#F76F40';
+          this.data.character[answer] = '../../images/ic_aws_error.png';
+        }
       }
     }
-    
-    var index = parseInt(section.answer) + 1;
+    return ret;
+  },
+
+  showAnswer: function (id) {
+    var section = this.data.tree;
+    var ret = this.updateAnswerBgOnly(id);
+    if(ret){
+      this.data.continueRight++;
+      this.data.userInfoScore += 100;
+    }else{
+      this.data.continueRight = 0;
+    }
+
     this.setData({
       characterBgColor: this.data.characterBgColor,
       character: this.data.character,
-      answerIndex: index,
       userInfoScore: this.data.userInfoScore
     });
     var that = this;
     setTimeout(function () {
       tunnelClass.uploadAnswer(id, that.data.userInfoScore);
-    }, 1000);
+    }, section.timer*10);
   },
 
   onClickCloseModal:function(){
@@ -293,6 +299,8 @@ Page({
         })
         that.startCountDown(duration);
       }, duration);
+    }else{
+      this.showAnswer(-1);
     }
   },
 
@@ -300,8 +308,26 @@ Page({
     console.log('enter onHandleQuestion!')
     console.log(res)
     if ("title" in res.question){
+      var ret = this.updateAnswerBgOnly(res.choicePlayer2[1]);
+      if (ret) {
+        this.data.userInfo1Score += res.choicePlayer2[2];
+      }
+      if (res.choicePlayer2[1] != this.data.tree.answer){
+        this.updateAnswerBgOnly(this.data.tree.answer);
+      }
+      var index = parseInt(res.choicePlayer2[1]) + 1;
+      this.setData({
+        characterBgColor: this.data.characterBgColor,
+        character: this.data.character,
+        answerIndex: index,
+        userInfo1Score: this.data.userInfo1Score,
+        userInfo1Answer: res.choicePlayer2[1],
+      });
       this.data.tree = res.question;
-      this.initQuestionAndAnswer(this.data.curIndex);
+      var that = this;
+      setTimeout(function () {
+        that.initQuestionAndAnswer(that.data.curIndex);
+      }, 2000);
     }else{
       this.setData({
         showFailed: !this.data.showFailed,

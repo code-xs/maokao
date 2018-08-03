@@ -33,10 +33,10 @@ var tunnel = {
     return this.tunnelServer.tunnelObj;
   },
 
-  beginMatch: function () {
+  beginMatch: function (id) {
     this.tunnelServer.tunnelObj.emit('beginMatch', {//发起匹配
       openId: app.globalData.openId,
-      sortId: 24,
+      sortId: id,
       friendsFightingRoom: ""//匹配者含friendsFightingRoom则说明是好友之间的匹配
     })
   },

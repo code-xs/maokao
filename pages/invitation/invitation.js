@@ -16,6 +16,7 @@ Page({
     timeTickStr:'00',
     timer:null,
     timeOut:30,
+    categoryID:-1,
     player2:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avatar_default.jpg"
   },
   //事件处理函数
@@ -26,6 +27,7 @@ Page({
   },
   onLoad: function (option) {
     console.log('onLoad option.id' + option.id+' frompageid:' + option.frompageid)
+    this.data.categoryID = option.id;
     this.setData({
       userInfo: app.globalData.userInfo,
     })
@@ -57,7 +59,7 @@ Page({
       showTicker: !this.data.showTicker,
       invitationTitle: this.data.showTicker == false ? '已邀请,等待对方加入...' : '等待对方加入'
     });
-    tunnelClass.beginMatch();
+    tunnelClass.beginMatch(this.data.categoryID);
     this.startTimeTick(1000)
     /*
     wx.navigateTo({
