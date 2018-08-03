@@ -5,20 +5,22 @@
       <view bindtap="onClickCategoryRanking" class="{{ rankingType == 3?'rankingitem-active':'rankingitem'}}">科目排名</view>
   </view>
   <view class="list_bg" style='background: rgba(0, 0, 0, 0.65);'>
-    <view class="" style='height:140rpx;  border-radius: 50rpx 50rpx 0rpx 0rpx;'>
-      <view class="{{ rankingType == 3?'cateogryItem':'categoryItemHide'}}">
+    <view class="list_top_ranking" >
+
+      <view class="{{ rankingType == 3?'categoryItem':'categoryItemHide'}}">
         <view class="choose_category">选择科目</view>
         <view class="selectItem" bindtap="onClickSelectCategory">
           <view class="categoryRanking">{{categoryTitle}}</view>
           <image class="arrow" mode="widthFix"src='/images/ic_dialog_popup.png'></image>
         </view>
-        
       </view>
+
       <view class="{{rankingType == 3?'myRankingItem':'myRankingItemSingle'}}">
         <view class="myRanking">我的排名</view>
         <view class="myRanking_number">{{myRanking}}</view>
       </view>
     </view>
+
     <scroll-view class="{{rankingType == 3?'scrollview_layout_category':'scrollview_layout_world'}}" scroll-y="true" upper-threshold="10"  lower-threshold="10" bindscrolltoupper="onScrolltoupper" bindscrolltolower="onScrolltolower">
       <view class="list" wx:for="{{datalist}}" wx:for-item="i" wx:key="id">
         <view class="item" style='background: rgba(35, 30, 41, 0.5);'>
