@@ -154,7 +154,7 @@ Page({
       rankingType: 2,
       //datalist: this.data.friendlist,
       myRanking: app.globalData.userRanking,
-      categoryList: app.globalData.commonList,
+      //categoryList: app.globalData.commonList,
     });
     if (app.globalData.commonList.length > 0){
       var tmptitle = '';
@@ -172,7 +172,28 @@ Page({
   },
 
   initData:function(){
+    loadFavoriteCategory();
+  },
 
+  loadFavoriteCategory: function () {
+    console.log('loadFavoriteCategory');
+    var that = this;
+    wx.getStorage({
+      key: 'favoriteCategorySubLevels',
+      success: function (res) {
+        console.log("获取 favoriteCategorySubLevels 数据成功:");
+        that.data.favoriteCategorySubLevels = res.data;
+        console.log(that.data.favoriteCategorySubLevels);
+        that.setData({
+          categoryList: that.data.favoriteCategorySubLevels,
+        });
+      },
+
+      fail: function (res) {
+        console.log("获取 favoriteCategorySubLevels 数据失败");
+      }
+    });
+    console.log('loadFavoriteCategory end-----');
   },
 
   drawRuleText: function (ctx, x, y, cnt) {
