@@ -52,6 +52,7 @@ Page({
     characterBgColor: [],
     hearts: [],
     continueRight: 0,
+    continueRight1:0,
     continueMaxRight: 0,
     errorCateoryList: [],
     questionTotal: 5,
@@ -310,7 +311,10 @@ Page({
     if ("title" in res.question){
       var ret = this.updateAnswerBgOnly(res.choicePlayer2[1], false);
       if (ret) {
+        this.data.continueRight1 ++;
         this.data.userInfo1Score += res.choicePlayer2[2];
+      }else{
+        this.data.continueRight1 = 0;
       }
       if (res.choicePlayer2[1] != this.data.tree.answer){
         this.updateAnswerBgOnly(this.data.tree.answer, false);
@@ -335,14 +339,48 @@ Page({
         that.setData({
           showFailed: !that.data.showFailed,
           showFragment: -1,
+          continueRight: that.data.continueRight,
+          continueRight1: that.data.continueRight1,
         })
       }, 1000);
       tunnelClass.fightingResult(true);
+      app.updateMaxScore(this.data.userInfoScore);
     }
   },
 
   onHandleGetAnswer:function(res){
     console.log('enter onHandleGetAnswer!')
     console.log(res)
-  }
+  },
+
+  onClickAgain: function () {
+    console.log(' onClickAgain !!!');
+  },
+  onShareAppMessage: function (ops) {
+    var that = this;
+    if (ops.from == 'button') {
+      return {
+        title: '[有人@我]免费全面的考题等你挑战',
+        path: 'pages/home/home',
+        success: function (res) {
+          console.log("转发成功:" + JSON.stringify(res));
+          app.getShareTicket(res)
+        },
+        fail: function (res) {
+          console.log("转发失败:" + JSON.stringify(res));
+        }
+      }
+    } else {
+      return {
+        title: '[有人@我]免费全面的考题等你挑战',
+        path: 'pages/home/home',
+        success: function (res) {
+          console.log("转发成功:" + JSON.stringify(res));
+        },
+        fail: function (res) {
+          console.log("转发失败:" + JSON.stringify(res));
+        }
+      }
+    }
+  },
 })

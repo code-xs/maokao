@@ -159,21 +159,25 @@
   
   <view class="{{ showFailed? 'failed':'failedhide'}}">
     <view class="result_layout">
-      <view class="user1result">连续答对60题</view>
+      <view class="user1result">连续答对{{continueRight}}题</view>
       <view class="space"></view>
-      <view class="user2result">连续答对60题</view>
+      <view class="user2result">连续答对{{continueRight1}}题</view>
     </view>
     <view class="result_layout">
-      <view class="achievement1">连续答对60题</view>
+      <view class="achievement1">{{continueRight}}连胜</view>
       <view class="space"></view>
-      <view class="achievement2">连续答对60题</view>
+      <view class="achievement2">{{continueRight1}}连胜</view>
     </view>
-    <image class="resultImg" mode="top" src="/images/bg.png"></image>
-    <view class="centerText">经验+10分</view>
+    <image class="resultImg" mode="withFix" src="/images/pk_success.png"></image>
+    <view class="centerText">积分+{{userInfoScore}}</view>
     <view class="line"></view>
-    <view class="retryError">回顾本场错误题目</view>
-    <view class="item1" bindtap="onClickInvitation"> 再次挑战</view>
-    <view class="item1" bindtap="onClickRandom"> 炫耀战绩</view>
+    <view class="retryError">回顾本场对战</view>
+    <view class="showScore">
+      <image class="item1" mode="widthFix" bindtap="onClickAgain" src="/images/again1.png"></image>
+      <button class="invite_friends" open-type="share">
+        <image class="shareBt" mode="widthFix" src='/images/again3.png'></image>
+      </button>
+    </view>
   </view>
 
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>

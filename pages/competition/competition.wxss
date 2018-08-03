@@ -289,11 +289,10 @@ input-holder {
 }
 
 .failed{
-  margin: 5rpx;
+  margin: 0rpx;
 }
 .failedhide{
   display: none;
-  margin: 5rpx;
 }
 .space{
   flex:1;
@@ -301,7 +300,6 @@ input-holder {
 
 .user1result{
   flex:1;
-  margin-top: 20rpx;
   background: #f9f000;
   padding-top: 20rpx;
   padding-bottom: 20rpx;
@@ -383,15 +381,18 @@ input-holder {
 }
 
 .resultImg{
-  width: 100%;
+  margin-left: 20%;
+  width: 60%;
   margin-top: 30rpx;
-  height: 150rpx;  
+  height: 200rpx;  
 }
 .centerText{
   width: 100%;
   margin-top: 50rpx;
   margin-bottom: 20rpx;
-  text-align: center;  
+  text-align: center;
+  font-size: 1.4rem;
+  color: #f0f0f0;
 }
 .retryError{
   width: 100%;
@@ -400,21 +401,6 @@ input-holder {
   font-size: 0.8rem; 
   text-decoration:underline; 
 }
-.item1{
-    background:#285872;
-    color:aliceblue;
-    margin-left: 30%;
-    margin-right: 30%;
-    margin-top: 50rpx;
-    min-height: 50rpx;
-    padding: 20rpx;
-    text-align: center;
-    border-radius: 30rpx;
-    font-size: 1.2rem;
-    justify-content: center;
-}
-
-
 
 /* new .achievement1*/
 
