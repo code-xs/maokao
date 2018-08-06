@@ -32,7 +32,7 @@
             <view class="level">等级:{{datalist[index].level}}</view>
           </view>
           <view class="rate-title">积分:</view>
-          <view class="rate">{{datalist[index].total_score}}</view>
+          <view class="rate">{{rankingType == 3 ? datalist[index].score : datalist[index].total_score}}</view>
         </view>
       </view>
     </scroll-view>

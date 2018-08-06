@@ -295,7 +295,7 @@ Page({
         'Content-Type': 'application/json'
       },
       data: {//这里写你要请求的参数
-        openId: app.globalData.openId,
+        openid: app.globalData.openId,
         page_index: index,
       },
       success: (response) => {
@@ -343,6 +343,7 @@ Page({
     });
   },
   getCategoryRankingList: function (index, id) {
+    console.log('getCategoryRankingList index:' + index + ' id:' + id + ' app.globalData.openId:' + app.globalData.openId);
     var that = this;
     qcloud.request({
       url: config.service.getRankingList,
@@ -350,7 +351,7 @@ Page({
         'Content-Type': 'application/json'
       },
       data: {//这里写你要请求的参数
-        openId: app.globalData.openId,
+        openid: app.globalData.openId, 
         page_index: index,
         category_id:id,
       },
@@ -358,19 +359,21 @@ Page({
         console.log('请求成功  getCategoryRankingList statusCode:' + response.statusCode);
         if (response.statusCode == 200) {
           console.log(response.data);
-          for (var i = 0; i < response.data.data.length; i++) {
-            response.data.data[i].total_score = response.data.data[i].score;
-          }
+          // for (var i = 0; i < response.data.data.ranklist.length; i++) {
+          //   response.data.data[i].total_score = response.data.data.ranklist[i].score;
+          // }
           if (that.data.page_index == 0) {
             this.setData({
-              datalist: response.data.data,
+              datalist: response.data.data.ranklist,
+              myRanking: response.data.data.rank,
             });
           } else {
-            for (var i = 0; i < response.data.data.length; i++) {
-              this.data.datalist.push(response.data.data[i]);
+            for (var i = 0; i < response.data.data.ranklist.length; i++) {
+              this.data.datalist.push(response.data.data.ranklist[i]);
             }
             this.setData({
               datalist: this.data.datalist,
+              myRanking: response.data.data.rank,
               loading: false,
             });
           }
