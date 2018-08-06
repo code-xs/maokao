@@ -584,3 +584,10 @@ color: #fdaf01;
   position: fixed;
   /*background: #dd00ff;*/
 }
+
+.loading-image{
+  border: 1rpx #fdaf01 solid;
+  z-index: 9002;
+  overflow: hidden;
+  position: fixed;
+}

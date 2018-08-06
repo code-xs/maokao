@@ -52,8 +52,10 @@
       </view>
     </scroll-view>
   </view>  <!-- abort dialog -->
-  <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{loading}}">
-  </view>
-  <image class="modal-image" mode="widthFix" src="/images/loading.gif" wx:if="{{loading}}"></image>
+  <!--view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{loading}}">
+  </view-->
+  <!--image class="modal-image" mode="widthFix" src="/images/loading.gif" wx:if="{{loading}}"></image-->
+  <loading class="loading-image" hidden="{{!loading}}">正在加载</loading>
+
 </view>
  

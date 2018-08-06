@@ -334,6 +334,11 @@ Page({
       },
       fail: function (err) {
         console.log('请求 LevelRule 失败', err);
+        if(this.data.loading) {
+          this.setData({
+            loading: false,
+          });
+        }
       }
     });
   },
@@ -366,6 +371,7 @@ Page({
             }
             this.setData({
               datalist: this.data.datalist,
+              loading: false,
             });
           }
 
@@ -373,6 +379,11 @@ Page({
       },
       fail: function (err) {
         console.log('请求 LevelRule 失败', err);
+        if (this.data.loading) {
+          this.setData({
+            loading: false,
+          });
+        }
       }
     });
   },  
