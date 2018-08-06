@@ -40,7 +40,7 @@ App({
     userInfo1:null,
     question:null,
     openId: null,
-    userRanking: 99999,
+    userRanking: 0000,
     totalScore: 0,
     total: 10000,
     level: 0,
