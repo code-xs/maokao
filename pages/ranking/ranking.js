@@ -149,30 +149,18 @@ Page({
       }
     });
     this.initData();
-    console.log(app.globalData.commonList);
     this.setData({
       rankingType: 2,
       //datalist: this.data.friendlist,
       myRanking: app.globalData.userRanking,
       //categoryList: app.globalData.commonList,
     });
-    if (app.globalData.commonList.length > 0){
-      var tmptitle = '';
-      if (app.globalData.commonList[0].title == app.globalData.commonList[0].subtitle1) {
-        tmptitle = app.globalData.commonList[0].title;
-        } else {
-        tmptitle = app.globalData.commonList[0].title + app.globalData.commonList[0].subtitle1;
-        }
-      this.setData({
-        categoryTitle : tmptitle,
-        categoryID: app.globalData.commonList[0].subId
-      });
-    }
+    
     this.getWorldRankingList(0);
   },
 
   initData:function(){
-    loadFavoriteCategory();
+    this.loadFavoriteCategory();
   },
 
   loadFavoriteCategory: function () {
@@ -184,6 +172,20 @@ Page({
         console.log("获取 favoriteCategorySubLevels 数据成功:");
         that.data.favoriteCategorySubLevels = res.data;
         console.log(that.data.favoriteCategorySubLevels);
+
+        if (that.data.favoriteCategorySubLevels.length > 0) {
+          var tmptitle = '';
+          if (that.data.favoriteCategorySubLevels[0].title == that.data.favoriteCategorySubLevels[0].subtitle1) {
+            tmptitle = that.data.favoriteCategorySubLevels[0].title;
+          } else {
+            tmptitle = that.data.favoriteCategorySubLevels[0].title + that.data.favoriteCategorySubLevels[0].subtitle1;
+          }
+          that.setData({
+            categoryTitle: tmptitle,
+            categoryID: that.data.favoriteCategorySubLevels[0].subId
+          });
+        }
+
         that.setData({
           categoryList: that.data.favoriteCategorySubLevels,
         });
@@ -229,7 +231,7 @@ Page({
       return;
     }
     this.setData({
-      rankingType: 2,
+      rankingType: 2, 
       page_index: 0,
     });
     this.getWorldRankingList(0);
