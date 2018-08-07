@@ -4,13 +4,21 @@
   <view class="ticker"  wx:if="{{showTicker}}"> 00:{{timeTickStr}}</view>
   <view class="score">
     <view class="group0">
-      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <view class="avatar_layout">
+        <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      </view>
+      <view class="nametitle">{{userInfo.nickName}}</view>
     </view>
-    <view class="vs" bindtap="onClickVS"> VS </view>
+    <image  class="vs" src="../../images/vs.png" mode="withFix"></image>
     <view class="group0">
-      <image class="userinfo-avatar" src="{{player2}}"></image>
+      <view class="avatar_layout">
+        <image class="userinfo-avatar" src="{{player2}}" background-size="cover"></image>
+      </view>
+      <view class="nametitle">{{player2Name}}</view>
     </view>
   </view>
   <button class="item0" open-type='share'>邀请好友</button>
   <view class="item" bindtap="onClickRandom"> 随机匹配</view>
+  <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showMatch}}"></view>
+  <image class="modal-image" mode="widthFix" src="{{countDownImages[countDownIndex]}}" wx:if="{{showMatch}}"></image>
 </view>

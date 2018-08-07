@@ -17,7 +17,10 @@ Page({
     timer:null,
     timeOut:30,
     categoryID:-1,
-    player2:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avatar_default.jpg"
+    showMatch:false,
+    countDownImages: ["/images/3.png", "/images/2.png", "/images/1.png", "/images/go.png"],
+    countDownIndex:0,
+    player2Name: '未知',    player2:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avatar_default.jpg"
   },
   //事件处理函数
   bindViewTap: function() {
@@ -27,10 +30,15 @@ Page({
   },
   onLoad: function (option) {
     console.log('onLoad option.id' + option.id+' frompageid:' + option.frompageid)
+    console.log(this.data.countDownImages)
     this.data.categoryID = option.id;
     this.setData({
       userInfo: app.globalData.userInfo,
     })
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: '#735cd9',
+    });
     this.initData();  
   },
 
@@ -51,13 +59,13 @@ Page({
   onClickInvitation: function () {
     this.setData({
       showTicker: !this.data.showTicker,
-      invitationTitle: this.data.showTicker==false? '已邀请,等待对方加入...' : '等待对方加入'
+      invitationTitle: this.data.showTicker==false? '即将开始...' : '等待对方加入'
     });
   },
   onClickRandom: function () {
     this.setData({
       showTicker: !this.data.showTicker,
-      invitationTitle: this.data.showTicker == false ? '已邀请,等待对方加入...' : '等待对方加入'
+      invitationTitle: this.data.showTicker == false ? '即将开始...' : '等待对方加入'
     });
     tunnelClass.beginMatch(this.data.categoryID);
     this.startTimeTick(1000)
@@ -87,6 +95,7 @@ Page({
           invitationTitle: '匹配超时,请重试!',
           timeTick:0
         });
+        that.showCountDown(0);
       }else{
         that.startTimeTick(duration);
       }
@@ -144,6 +153,24 @@ Page({
       timeTick: 0,
       player2: res.player2.avatarUrl
     });
+  },
+
+  showCountDown:function(index){
+    if (index < this.data.countDownImages.length){
+      var that = this;
+      that.setData({
+        showMatch:true,
+        countDownIndex:index
+      });
+      this.data.timer = setTimeout(function () {
+        that.showCountDown(++index);
+      }, 1000);
+    }else{
+      this.setData({
+        showMatch: false,
+        countDownIndex: 0
+      });
+    }
   },
 
   onHandleQuestion:function(res){
