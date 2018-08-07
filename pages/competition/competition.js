@@ -46,6 +46,8 @@ Page({
     redCnt: 5,
     gameOver: false,
     timer: null,
+    categoryID: -1,
+    frompageID: -1,
     pendindDuration: 1000,
     allowShareMax: 2,
     curShareTick: 0,
@@ -86,7 +88,7 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
+  onLoad: function (option) {
     this.setData({
       userInfo: app.globalData.userInfo,
       userInfo1: app.globalData.userInfo1,
@@ -100,6 +102,8 @@ Page({
     })
     //this.requestQuestionList(this.data.PAGE, this.data.ID);
     this.data.tree = app.globalData.question;
+    this.data.categoryID = option.id;
+    this.data.frompageID = option.frompageid;
     console.log('tree:');
     console.log(this.data.tree);
     tunnelClass.setListenQuestion(this.onHandleQuestion)
@@ -371,7 +375,7 @@ Page({
   onClickAgain: function () {
     console.log(' onClickAgain !!!');
     wx.redirectTo({
-      url: '../invitation/invitation'
+      url: '../invitation/invitation? id = ' + this.data.categoryID + ' & frompageid=' + this.data.frompageID,
     })
   },
   onShareAppMessage: function (ops) {

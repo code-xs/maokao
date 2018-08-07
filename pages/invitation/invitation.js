@@ -17,6 +17,7 @@ Page({
     timer:null,
     timeOut:20,
     categoryID:-1,
+    frompageID:-1,
     showMatch:false,
     countDownImages: ["/images/3.png", "/images/2.png", "/images/1.png", "/images/go.png"],
     countDownIndex:0,
@@ -32,6 +33,7 @@ Page({
     console.log('onLoad option.id' + option.id+' frompageid:' + option.frompageid)
     console.log(this.data.countDownImages)
     this.data.categoryID = option.id;
+    this.data.frompageID = option.frompageid;
     this.setData({
       userInfo: app.globalData.userInfo,
     })
@@ -124,7 +126,9 @@ Page({
           that.initData();
         } else {
           console.log('confirm cancel')
-
+          wx.navigateBack({
+            delta: -1
+          });
         }
       }
     })
@@ -190,7 +194,7 @@ Page({
       });
       this.data.timer = setTimeout(function () {
         wx.redirectTo({
-          url: '../competition/competition'
+          url: '../competition/competition? id = ' + this.data.categoryID + ' & frompageid=' + this.data.frompageID,
         })
       }, 10);
     }
