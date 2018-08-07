@@ -17,7 +17,7 @@
 
       <view class="{{rankingType == 3?'myRankingItem':'myRankingItemSingle'}}">
         <view class="myRanking">我的排名</view>
-        <view class="myRanking_number">{{myRanking}}</view>
+        <view class="myRanking_number">{{rankingType == 3 ? myCategoryRanking : myGlobalRanking}}</view>
       </view>
     </view>
 
@@ -45,9 +45,11 @@
   <view class="categoryList" wx:if="{{showCategoryList}}">
     <image class="dialog_close" bindtap="onSelectDialogClose" src="/images/ic_dialog_white_close.png"></image>
     <scroll-view scroll-y="true" bindscrolltolower="onScrolltolowerCategory">
+      <view class="list_layout">
       <view class="list" wx:for="{{categoryList}}" wx:for-item="i" wx:key="id">
         <view class="categoryText" data-idx="{{index}}" id="{{categoryList[index].subId}}" bindtap="onSelectCategory" >
         {{categoryList[index].title == categoryList[index].subtitle1 ? categoryList[index].subtitle1 : categoryList[index].title + categoryList[index].subtitle1}}
+        </view>
         </view>
       </view>
     </scroll-view>
