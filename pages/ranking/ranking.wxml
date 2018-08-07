@@ -14,7 +14,7 @@
           <image class="arrow" mode="widthFix"src='/images/ic_dialog_popup.png'></image>
         </view>
       </view>
-
+ 
       <view class="{{rankingType == 3?'myRankingItem':'myRankingItemSingle'}}">
         <view class="myRanking">我的排名</view>
         <view class="myRanking_number">{{rankingType == 3 ? myCategoryRanking : myGlobalRanking}}</view>
@@ -44,7 +44,7 @@
 
   <view class="categoryList" wx:if="{{showCategoryList}}">
     <image class="dialog_close" bindtap="onSelectDialogClose" src="/images/ic_dialog_white_close.png"></image>
-    <scroll-view scroll-y="true" bindscrolltolower="onScrolltolowerCategory">
+    <scroll-view class="category_scrollview" scroll-y="true" upper-threshold="10"  lower-threshold="10" bindscrolltolower="onScrolltolowerCategory">
       <view class="list_layout">
       <view class="list" wx:for="{{categoryList}}" wx:for-item="i" wx:key="id">
         <view class="categoryText" data-idx="{{index}}" id="{{categoryList[index].subId}}" bindtap="onSelectCategory" >

@@ -1,6 +1,10 @@
 const app = getApp()
 var qcloud = require('../../vendor/wafer2-client-sdk/index');
 var config = require('../../config');
+var tmpFCSubLevels = [];
+var tmpFCChallengeSubLevels = [];
+var tmpFCPKSubLevels = [];
+
 Page({
   data: {
     motto: 'MKWZ',
@@ -26,7 +30,7 @@ Page({
     myCategoryRanking:0,
     myGlobalRanking:0,
     showCategoryList:false,
-    categoryTitle:'暂无科目',
+    categoryTitle:'暂无已挑战项',
     categoryList:[],
     loading:false,
     list: [{ title: "题目1", content: "内容1" },
@@ -167,36 +171,101 @@ Page({
   loadFavoriteCategory: function () {
     console.log('loadFavoriteCategory');
     var that = this;
+   
     wx.getStorage({
       key: 'favoriteCategorySubLevels',
       success: function (res) {
         console.log("获取 favoriteCategorySubLevels 数据成功:");
-        that.data.favoriteCategorySubLevels = res.data;
-        console.log(that.data.favoriteCategorySubLevels);
+        tmpFCChallengeSubLevels = res.data;
+        console.log(tmpFCChallengeSubLevels);
+        
+        wx.getStorage({
+          key: 'favoritePKCategorySubLevels',
+          success: function (res) {
+            console.log("获取 favoritePKCategorySubLevels 数据成功:");
+            tmpFCPKSubLevels = res.data;
+            console.log(tmpFCPKSubLevels);
+            that.loadAllFavoriteCategories();
+          },
 
-        if (that.data.favoriteCategorySubLevels.length > 0) {
-          var tmptitle = '';
-          if (that.data.favoriteCategorySubLevels[0].title == that.data.favoriteCategorySubLevels[0].subtitle1) {
-            tmptitle = that.data.favoriteCategorySubLevels[0].title;
-          } else {
-            tmptitle = that.data.favoriteCategorySubLevels[0].title + that.data.favoriteCategorySubLevels[0].subtitle1;
+          fail: function (res) {
+            console.log("获取 favoritePKCategorySubLevels 数据失败");
+            that.loadAllFavoriteCategories();
           }
-          that.setData({
-            categoryTitle: tmptitle,
-            categoryID: that.data.favoriteCategorySubLevels[0].subId
-          });
-        }
-
-        that.setData({
-          categoryList: that.data.favoriteCategorySubLevels,
         });
       },
 
       fail: function (res) {
         console.log("获取 favoriteCategorySubLevels 数据失败");
-      }
+
+        wx.getStorage({
+          key: 'favoritePKCategorySubLevels',
+          success: function (res) {
+            console.log("获取 favoritePKCategorySubLevels 数据成功:");
+            tmpFCPKSubLevels = res.data;
+            console.log(tmpFCPKSubLevels);
+            that.loadAllFavoriteCategories();
+          },
+
+          fail: function (res) {
+            console.log("获取 favoritePKCategorySubLevels 数据失败");
+            that.loadAllFavoriteCategories();
+          }
+        });
+      }  
     });
+
     console.log('loadFavoriteCategory end-----');
+  },
+
+  loadAllFavoriteCategories: function() {
+    console.log('loadAllFavoriteCategories');
+    var that = this;
+
+    if(tmpFCPKSubLevels.length == 0 && tmpFCChallengeSubLevels.length == 0) { //00
+      that.data.favoriteCategorySubLevels = [];
+    } else if (tmpFCPKSubLevels.length == 0 && tmpFCChallengeSubLevels.length != 0) {//01
+      that.data.favoriteCategorySubLevels = tmpFCChallengeSubLevels;
+    } else if (tmpFCPKSubLevels.length != 0 && tmpFCChallengeSubLevels.length == 0) {//10
+      that.data.favoriteCategorySubLevels = tmpFCPKSubLevels;
+    } else if (tmpFCPKSubLevels.length != 0 && tmpFCChallengeSubLevels.length != 0) {//11
+      that.data.favoriteCategorySubLevels = tmpFCChallengeSubLevels;
+      for (var i = 0; i < tmpFCPKSubLevels.length; i++) {
+        var pkcategory = tmpFCPKSubLevels[i];
+        var alreayexsit = false;
+        for (var j = 0; j < tmpFCChallengeSubLevels.length; j++) {
+          var cllcategory = tmpFCChallengeSubLevels[j];
+          if (pkcategory.subId == cllcategory.subId) {
+            alreayexsit = true;
+            break;
+          }
+        }   
+        if (!alreayexsit) {
+          that.data.favoriteCategorySubLevels.push(pkcategory);
+          console.log('add :'+ pkcategory);
+        } else {
+          console.log('already exsit, ignore.');
+        }
+      }
+    } 
+
+    if (that.data.favoriteCategorySubLevels.length > 0) {
+      var tmptitle = '';
+      if (that.data.favoriteCategorySubLevels[0].title == that.data.favoriteCategorySubLevels[0].subtitle1) {
+        tmptitle = that.data.favoriteCategorySubLevels[0].title;
+      } else {
+        tmptitle = that.data.favoriteCategorySubLevels[0].title + that.data.favoriteCategorySubLevels[0].subtitle1;
+      }
+      that.setData({
+        categoryTitle: tmptitle,
+        categoryID: that.data.favoriteCategorySubLevels[0].subId
+      });
+    }
+
+    that.setData({
+      categoryList: that.data.favoriteCategorySubLevels,
+    });
+
   },
 
   drawRuleText: function (ctx, x, y, cnt) {
@@ -283,6 +352,10 @@ Page({
   },
 
   onClickSelectCategory:function(e){
+    if(this.data.categoryList.length == 0) {
+      return;
+    }
+
     this.setData({
       showCategoryList: !this.data.showCategoryList,
     });
@@ -419,6 +492,7 @@ Page({
     this.setData({
       showCategoryList: false,
     });
-    this.getCategoryRankingList(0, this.data.categoryID);
+
+    //this.getCategoryRankingList(0, this.data.categoryID);
   },
 })
