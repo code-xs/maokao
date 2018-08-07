@@ -63,6 +63,7 @@ Page({
     userInfoScore:0,
     userInfo1Score:0,
     userInfo1Answer: 0,
+    runawayNotice:false,
     type1: [{
       'id': 11,
       'title': '前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
@@ -335,7 +336,11 @@ Page({
       this.data.tree = res.question;
       var that = this;
       setTimeout(function () {
-        that.initQuestionAndAnswer(that.data.curIndex);
+        if(that.data.runawayNotice){
+          this.stopPK();
+        }else{
+          that.initQuestionAndAnswer(that.data.curIndex);
+        }
       }, 2000);
     }else{
       tunnelClass.fightingResult(true);
@@ -345,6 +350,7 @@ Page({
   stopPK:function(){
     this.cancelTimer();
     var that = this
+    that.data.runawayNotice = false;
     setTimeout(function () {
       that.setData({
         showFailed: !that.data.showFailed,
@@ -365,6 +371,7 @@ Page({
   onHandleRunawayNotice:function(res){
     console.log('enter onHandleRunawayNotice!')
     console.log(res)
+    this.data.runawayNotice = true;
     this.stopPK();
   },
 
