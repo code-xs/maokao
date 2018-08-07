@@ -23,7 +23,8 @@ Page({
     idxbgcolorlist:[],
     page_index:0,
     categoryID:0,
-    myRanking:100,
+    myCategoryRanking:0,
+    myGlobalRanking:0,
     showCategoryList:false,
     categoryTitle:'暂无科目',
     categoryList:[],
@@ -152,7 +153,7 @@ Page({
     this.setData({
       rankingType: 2,
       //datalist: this.data.friendlist,
-      myRanking: app.globalData.userRanking,
+      myGlobalRanking: app.globalData.userRanking,
       //categoryList: app.globalData.commonList,
     });
     
@@ -365,7 +366,7 @@ Page({
           if (that.data.page_index == 0) {
             this.setData({
               datalist: response.data.data.ranklist,
-              myRanking: response.data.data.rank,
+              myCategoryRanking: response.data.data.rank,
             });
           } else {
             for (var i = 0; i < response.data.data.ranklist.length; i++) {
@@ -373,7 +374,7 @@ Page({
             }
             this.setData({
               datalist: this.data.datalist,
-              myRanking: response.data.data.rank,
+              myCategoryRanking: response.data.data.rank,
               loading: false,
             });
           }
