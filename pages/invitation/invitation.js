@@ -15,7 +15,7 @@ Page({
     timeTick:0,
     timeTickStr:'00',
     timer:null,
-    timeOut:30,
+    timeOut:20,
     categoryID:-1,
     showMatch:false,
     countDownImages: ["/images/3.png", "/images/2.png", "/images/1.png", "/images/go.png"],
@@ -44,12 +44,20 @@ Page({
   },
 
   initData:function(){
+    this.setData({
+      timeTick:0,
+      timeTickStr: '00',
+      showTicker: !this.data.showTicker,
+      invitationTitle: this.data.showTicker == false ? '即将开始...' : '等待对方加入'
+    });
     var tunnel = tunnelClass.createTunnel();
     this.data.tunnel = tunnel;
     tunnelClass.listenMatchSuccess(this.onHandleMatchSuccess);
     tunnelClass.setListenQuestion(this.onHandleQuestion)
     tunnelClass.listenQuestion(null);
     tunnel.open();
+    tunnelClass.beginMatch(this.data.categoryID);
+    this.startTimeTick(1000)
   },
 
   onClickSelf:function(){
@@ -64,12 +72,7 @@ Page({
     });
   },
   onClickRandom: function () {
-    this.setData({
-      showTicker: !this.data.showTicker,
-      invitationTitle: this.data.showTicker == false ? '即将开始...' : '等待对方加入'
-    });
-    tunnelClass.beginMatch(this.data.categoryID);
-    this.startTimeTick(1000)
+
     /*
     wx.navigateTo({
       url: '../competition/competition'
@@ -91,11 +94,13 @@ Page({
         })
       }
       if (that.data.timeTick >= that.data.timeOut){
+        tunnelClass.closeTunnel();
         that.setData({
           showTicker: !that.data.showTicker,
           invitationTitle: '匹配超时,请重试!',
           timeTick:0
         });
+        that.showRetry();
       }else{
         that.startTimeTick(duration);
       }
@@ -108,8 +113,21 @@ Page({
       this.data.timer = null;
     }
   },
-  matchTimeout:function(){
+  showRetry: function () {
+    var that = this;
+    wx.showModal({
+      title: '随机匹配',
+      content: '是否再次匹配',
+      success: function (res) {
+        if (res.confirm) {
+          console.log('confirm')
+          that.initData();
+        } else {
+          console.log('confirm cancel')
 
+        }
+      }
+    })
   },
 
   onShareAppMessage: function (ops) {

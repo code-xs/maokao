@@ -229,7 +229,7 @@ Page({
   preventTouchMove: function () {
     console.log(' preventTouchMove !');
   },
-  
+
   onClickAnswer:function(e){
     console.log(' onClickAnswer:' + e.target.id);
     console.log(' call cancelTimer');
@@ -338,6 +338,7 @@ Page({
         that.initQuestionAndAnswer(that.data.curIndex);
       }, 2000);
     }else{
+      tunnelClass.fightingResult(true);
       this.stopPK();
     }
   },
@@ -352,7 +353,7 @@ Page({
         continueRight1: that.data.continueRight1,
       })
     }, 1000);
-    tunnelClass.fightingResult(true);
+    tunnelClass.closeTunnel();
     app.updateMaxScore(this.data.userInfoScore);
   },
 
