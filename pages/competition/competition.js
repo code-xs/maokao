@@ -287,9 +287,7 @@ Page({
       userInfoScore: this.data.userInfoScore
     });
     var that = this;
-    setTimeout(function () {
-      tunnelClass.uploadAnswer(id, that.data.userInfoScore);
-    }, section.timer*10);
+    tunnelClass.uploadAnswer(id, that.data.userInfoScore);
   },
 
   onClickCloseModal:function(){
@@ -300,8 +298,6 @@ Page({
   },
   startCountDown:function(duration){
     var that = this;
-    console.log('duration:')    
-    console.log(duration)
     if (that.data.progress > 0){
       this.data.timer = setTimeout(function () {
         that.setData({
@@ -373,9 +369,10 @@ Page({
   },
 
   onClickAgain: function () {
-    console.log(' onClickAgain !!!');
+    console.log(' onClickAgain !!! ID:' + this.data.categoryID);
+
     wx.redirectTo({
-      url: '../invitation/invitation? id = ' + this.data.categoryID + ' & frompageid=' + this.data.frompageID,
+      url: '../invitation/invitation?id=' + this.data.categoryID + '&frompageid=' + this.data.frompageID,
     })
   },
   onShareAppMessage: function (ops) {

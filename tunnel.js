@@ -34,6 +34,7 @@ var tunnel = {
   },
 
   beginMatch: function (id) {
+    console.log('beginMatch, openId:' + app.globalData.openId+',id:'+id);
     this.tunnelServer.tunnelObj.emit('beginMatch', {//发起匹配
       openId: app.globalData.openId,
       sortId: id,

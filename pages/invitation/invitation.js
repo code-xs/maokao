@@ -178,8 +178,8 @@ Page({
   },
 
   showCountDown:function(index){
+    var that = this;
     if (index < this.data.countDownImages.length){
-      var that = this;
       that.setData({
         showMatch:true,
         countDownIndex:index
@@ -194,7 +194,7 @@ Page({
       });
       this.data.timer = setTimeout(function () {
         wx.redirectTo({
-          url: '../competition/competition? id = ' + this.data.categoryID + ' & frompageid=' + this.data.frompageID,
+          url: '../competition/competition?id=' + that.data.categoryID + '&frompageid=' + that.data.frompageID,
         })
       }, 10);
     }
