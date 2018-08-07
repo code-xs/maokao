@@ -28,8 +28,12 @@ page {
 }
 
 .topbanner {
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30rpx;
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
@@ -40,6 +44,27 @@ page {
   margin-top: 30rpx;
   margin-bottom: 6rpx;
   color: rgba(255,255,255, 1.0);
+}
+
+.question_type_image {
+  width: 120rpx;
+  height: 46rpx;
+  margin-left: 30rpx;
+  background-size: 100% 100%;
+}
+
+.topbanner_right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 30rpx;
+}
+
+.question_list_image {
+  width: 32rpx;
+  height: 36rpx;
+  margin-right: 16rpx;
+  background-size: 100% 100%;
 }
 
 .question_bottom_line {
@@ -817,6 +842,8 @@ input-holder {
   /*background: #e0a3ff;*/
 }
 
+::-webkit-scrollbar{ width: 0; height: 0; color: transparent; }
+
 .invite_friends {
   flex: 2;
   background-repeat: no-repeat;
@@ -834,24 +861,13 @@ button::after {
   direction: row;
 }
 
-.subject_index_left {
-  color: #fff;
-  font-size: 1.5rem;
-  margin-left: 20rpx;
-}
-
 .subject_index {
-  color: #ffc15c;
-  font-size: 1.5rem;
-}
-
-.subject_index_right {
-  color: #fff;
-  font-size: 1.5rem;
+  color: #ffffff;
+  font-size: 1.3rem;
 }
 
 .scrollview_layout {
-  height: 84vh;
+  height: 100vh;
 }
 
 .analytics {
@@ -878,4 +894,51 @@ button::after {
   margin-left: 20rpx;
   margin-right: 20rpx;
   margin-top:20rpx;
+}
+
+.op_bottom_layout {
+  display: flex;
+  flex-direction: row;
+  bottom: 0%;
+  left: 0;  
+  width: 100%;
+  z-index: 8000;
+  overflow: hidden;
+  position: fixed;
+  background-color: #674caf;
+}
+
+.op_bottom_prev {
+  display: flex;
+  flex: 1;
+  font-size: 0.9rem;
+  color: #F0F0F0;
+  margin-left: 32rpx;
+  margin-top: 32rpx;
+  margin-right: 32rpx;
+  margin-bottom: 32rpx;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: #A165FF;
+  border-radius: 8rpx 8rpx 8rpx 8rpx;
+}
+
+.op_bottom_next {
+  display: flex;
+  flex: 1;
+  font-size: 0.9rem;
+  color: #F0F0F0;
+  margin-top: 32rpx;
+  margin-right: 32rpx;
+  margin-bottom: 32rpx;
+  align-items: center;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  justify-content: center;
+  width: 100%;
+  border-radius: 8rpx 8rpx 8rpx 8rpx;
+  background-color: #A165FF;
 }

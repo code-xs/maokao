@@ -1,17 +1,18 @@
 <!--index.wxml-->
 <view class="control" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
+
   <view class="topbanner">
-    <view class="question_type">单选题</view>
-     <view class="question_bottom_line"></view>
+      <view class="question_type_image" style="background-image:url(https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/study/qtype_singlechoice.png)" > </view>
+      <view class="topbanner_right">
+       <view class="question_list_image" style="background-image:url(https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/study/ic_list.png)" > </view>
+       <view class="subject_index">{{questionIndex+1}}/{{questionTotal}}</view>
+       </view>
   </view>
 
-  <scroll-view class="scrollview_layout" scroll-y="true">
+<scroll-view class="scrollview_layout" scroll-y="true">
     <!-- template 1 -->
     <view class="{{ showFragment == 1? 'type1':'type1hide'}}">
       <view class="context">
-        <span class="subject_index_left">(</span>
-        <span class="subject_index">{{questionIndex+1}}</span>
-        <span class="subject_index_right">/{{questionTotal}})</span>
         {{question.title}}
       </view>
 
@@ -37,9 +38,6 @@
     <!-- template 2 -->
     <view class="{{ showFragment == 2? 'type2':'type2hide'}}">
       <view class="context">
-        <span class="subject_index_left">(</span>
-        <span class="subject_index">{{questionIndex+1}}</span>
-        <span class="subject_index_right">/{{questionTotal}})</span>
         {{question.title}}
       </view>
 
@@ -66,9 +64,6 @@
     <!-- template 3 -->
     <view class="{{ showFragment == 3? 'type3':'type3hide'}}">
       <view class="context">
-        <span class="subject_index_left">(</span>
-        <span class="subject_index">{{questionIndex+1}}</span>
-        <span class="subject_index_right">/{{questionTotal}})</span>
         {{question.title}}
       </view>
 
@@ -85,9 +80,6 @@
     <!-- template 4 -->
     <view class="{{ showFragment == 4? 'type1':'type1hide'}}">
       <view class="context">
-        <span class="subject_index_left">(</span>
-        <span class="subject_index">{{questionIndex+1}}</span>
-        <span class="subject_index_right">/{{questionTotal}})</span>
         {{question.title}}
       </view>
       <view class="item4">
@@ -112,9 +104,6 @@
     <!-- template 5 -->
     <view class="{{ showFragment == 5? 'type5':'type5hide'}}">
         <view class="context">
-          <span class="subject_index_left">(</span>
-          <span class="subject_index">{{questionIndex+1}}</span>
-          <span class="subject_index_right">/{{questionTotal}})</span>
           {{question.title}}
         </view>
 
@@ -134,9 +123,6 @@
     <!-- template 6 -->
     <view class="{{ showFragment == 6? 'type6':'type6hide'}}">
         <view class="context">
-          <span class="subject_index_left">(</span>
-          <span class="subject_index">{{questionIndex+1}}</span>
-          <span class="subject_index_right">/{{questionTotal}})</span>
           {{question.title}}
         </view>
 
@@ -151,6 +137,11 @@
     </view>
        
   </scroll-view>
+
+  <view class="op_bottom_layout">
+     <view class="op_bottom_prev" bindtap="onClickPrev">上一题</view>
+     <view class="op_bottom_next" bindtap="onClickNext">下一题</view>
+  </view>
  
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{gameOver}}">
   </view>
@@ -168,5 +159,6 @@
       </button>
     </view>
   </view>
+
 
 </view>

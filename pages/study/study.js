@@ -317,7 +317,7 @@ Page({
     });
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
-      backgroundColor: '#735cd9',
+      backgroundColor: '#AA7CDD',
     });
     wx.setNavigationBarTitle({
       title: "个人练习"
@@ -511,6 +511,19 @@ Page({
     }
   },
 
+  loadPrev: function(delay) {
+    console.log('loadPrev delay:' + delay);
+    if (this.showChallengeResult(false))
+      return;
+
+    if (this.data.curIndex == 0) {
+      this.data.curIndex = this.data.tree.length - 1;
+    } else {
+      this.data.curIndex--;
+    }
+
+    this.initQuestionAndAnswer(this.data.curIndex);
+  },
 
   onClickCloseModal: function () {
     console.log(' onClickCloseModal !');
@@ -659,7 +672,6 @@ Page({
     this.loadNext(200);
   },
 
-
   /*
 
 var touchDot = 0;//触摸时的原点
@@ -702,7 +714,7 @@ var interval = "";// 记录/清理时间记录
       this.loadNext(10);
     } else if (touchDown - touchUp > 20 && touchDown - touchUp <= 250 && time < 5) {
       console.log('向左滑动');
-      this.loadNext(10);
+      this.loadPrev(10);
     } else {
       console.log('ignore slide');
     }
@@ -711,12 +723,21 @@ var interval = "";// 记录/清理时间记录
     time = 0;
   },  
 
-
-  onShow: function () {
+  onShow: function() {
     console.log('study ------------->  onShow')
     console.log('this.globalData.commonStudyCategory');
     console.log(app.globalData.commonStudyCategory);
     console.log('study ------------->  onShow end')
+  }, 
+
+  onClickPrev : function() {
+    console.log('onClickPrev');
+    this.loadPrev(10);
+  },
+
+  onClickNext: function () {
+    console.log('onClickNext');
+    this.loadNext(10);
   }
 
 })
