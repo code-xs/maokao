@@ -149,30 +149,53 @@ Page({
       }
     });
     this.initData();
-    console.log(app.globalData.commonList);
     this.setData({
       rankingType: 2,
       //datalist: this.data.friendlist,
       myRanking: app.globalData.userRanking,
-      categoryList: app.globalData.commonList,
+      //categoryList: app.globalData.commonList,
     });
-    if (app.globalData.commonList.length > 0){
-      var tmptitle = '';
-      if (app.globalData.commonList[0].title == app.globalData.commonList[0].subtitle1) {
-        tmptitle = app.globalData.commonList[0].title;
-        } else {
-        tmptitle = app.globalData.commonList[0].title + app.globalData.commonList[0].subtitle1;
-        }
-      this.setData({
-        categoryTitle : tmptitle,
-        categoryID: app.globalData.commonList[0].subId
-      });
-    }
+    
     this.getWorldRankingList(0);
   },
 
   initData:function(){
+    this.loadFavoriteCategory();
+  },
 
+  loadFavoriteCategory: function () {
+    console.log('loadFavoriteCategory');
+    var that = this;
+    wx.getStorage({
+      key: 'favoriteCategorySubLevels',
+      success: function (res) {
+        console.log("获取 favoriteCategorySubLevels 数据成功:");
+        that.data.favoriteCategorySubLevels = res.data;
+        console.log(that.data.favoriteCategorySubLevels);
+
+        if (that.data.favoriteCategorySubLevels.length > 0) {
+          var tmptitle = '';
+          if (that.data.favoriteCategorySubLevels[0].title == that.data.favoriteCategorySubLevels[0].subtitle1) {
+            tmptitle = that.data.favoriteCategorySubLevels[0].title;
+          } else {
+            tmptitle = that.data.favoriteCategorySubLevels[0].title + that.data.favoriteCategorySubLevels[0].subtitle1;
+          }
+          that.setData({
+            categoryTitle: tmptitle,
+            categoryID: that.data.favoriteCategorySubLevels[0].subId
+          });
+        }
+
+        that.setData({
+          categoryList: that.data.favoriteCategorySubLevels,
+        });
+      },
+
+      fail: function (res) {
+        console.log("获取 favoriteCategorySubLevels 数据失败");
+      }
+    });
+    console.log('loadFavoriteCategory end-----');
   },
 
   drawRuleText: function (ctx, x, y, cnt) {
@@ -208,7 +231,7 @@ Page({
       return;
     }
     this.setData({
-      rankingType: 2,
+      rankingType: 2, 
       page_index: 0,
     });
     this.getWorldRankingList(0);
@@ -272,7 +295,7 @@ Page({
         'Content-Type': 'application/json'
       },
       data: {//这里写你要请求的参数
-        openId: app.globalData.openId,
+        openid: app.globalData.openId,
         page_index: index,
       },
       success: (response) => {
@@ -311,10 +334,16 @@ Page({
       },
       fail: function (err) {
         console.log('请求 LevelRule 失败', err);
+        if(this.data.loading) {
+          this.setData({
+            loading: false,
+          });
+        }
       }
     });
   },
   getCategoryRankingList: function (index, id) {
+    console.log('getCategoryRankingList index:' + index + ' id:' + id + ' app.globalData.openId:' + app.globalData.openId);
     var that = this;
     qcloud.request({
       url: config.service.getRankingList,
@@ -322,7 +351,7 @@ Page({
         'Content-Type': 'application/json'
       },
       data: {//这里写你要请求的参数
-        openId: app.globalData.openId,
+        openid: app.globalData.openId, 
         page_index: index,
         category_id:id,
       },
@@ -330,19 +359,22 @@ Page({
         console.log('请求成功  getCategoryRankingList statusCode:' + response.statusCode);
         if (response.statusCode == 200) {
           console.log(response.data);
-          for (var i = 0; i < response.data.data.length; i++) {
-            response.data.data[i].total_score = response.data.data[i].score;
-          }
+          // for (var i = 0; i < response.data.data.ranklist.length; i++) {
+          //   response.data.data[i].total_score = response.data.data.ranklist[i].score;
+          // }
           if (that.data.page_index == 0) {
             this.setData({
-              datalist: response.data.data,
+              datalist: response.data.data.ranklist,
+              myRanking: response.data.data.rank,
             });
           } else {
-            for (var i = 0; i < response.data.data.length; i++) {
-              this.data.datalist.push(response.data.data[i]);
+            for (var i = 0; i < response.data.data.ranklist.length; i++) {
+              this.data.datalist.push(response.data.data.ranklist[i]);
             }
             this.setData({
               datalist: this.data.datalist,
+              myRanking: response.data.data.rank,
+              loading: false,
             });
           }
 
@@ -350,6 +382,11 @@ Page({
       },
       fail: function (err) {
         console.log('请求 LevelRule 失败', err);
+        if (this.data.loading) {
+          this.setData({
+            loading: false,
+          });
+        }
       }
     });
   },  
