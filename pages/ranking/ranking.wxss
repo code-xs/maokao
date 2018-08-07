@@ -585,7 +585,7 @@ color: #fdaf01;
   overflow: hidden;
   position: fixed;
   /*background: #dd00ff;*/
-}
+} 
 
 .loading-image{
   border: 1rpx #fdaf01 solid;
