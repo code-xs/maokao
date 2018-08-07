@@ -105,6 +105,7 @@ Page({
     tunnelClass.setListenQuestion(this.onHandleQuestion)
     //tunnelClass.listenQuestion(null);
     tunnelClass.listenGetAnswer(this.onHandleGetAnswer);
+    tunnelClass.listenRunawayNotice(this.onHandleRunawayNotice)
     this.initQuestionAndAnswer(this.data.curIndex);
   },
 
@@ -115,6 +116,7 @@ Page({
       this.data.timer = null;
     }
   },
+
   initData:function(){    
     this.setData({
       empirical: 999,
@@ -227,6 +229,7 @@ Page({
   preventTouchMove: function () {
     console.log(' preventTouchMove !');
   },
+  
   onClickAnswer:function(e){
     console.log(' onClickAnswer:' + e.target.id);
     console.log(' call cancelTimer');
@@ -293,6 +296,8 @@ Page({
   },
   startCountDown:function(duration){
     var that = this;
+    console.log('duration:')    
+    console.log(duration)
     if (that.data.progress > 0){
       this.data.timer = setTimeout(function () {
         that.setData({
@@ -333,19 +338,22 @@ Page({
         that.initQuestionAndAnswer(that.data.curIndex);
       }, 2000);
     }else{
-      this.cancelTimer();
-      var that = this
-      setTimeout(function () {
-        that.setData({
-          showFailed: !that.data.showFailed,
-          showFragment: -1,
-          continueRight: that.data.continueRight,
-          continueRight1: that.data.continueRight1,
-        })
-      }, 1000);
-      tunnelClass.fightingResult(true);
-      app.updateMaxScore(this.data.userInfoScore);
+      this.stopPK();
     }
+  },
+  stopPK:function(){
+    this.cancelTimer();
+    var that = this
+    setTimeout(function () {
+      that.setData({
+        showFailed: !that.data.showFailed,
+        showFragment: -1,
+        continueRight: that.data.continueRight,
+        continueRight1: that.data.continueRight1,
+      })
+    }, 1000);
+    tunnelClass.fightingResult(true);
+    app.updateMaxScore(this.data.userInfoScore);
   },
 
   onHandleGetAnswer:function(res){
@@ -353,8 +361,17 @@ Page({
     console.log(res)
   },
 
+  onHandleRunawayNotice:function(res){
+    console.log('enter onHandleRunawayNotice!')
+    console.log(res)
+    this.stopPK();
+  },
+
   onClickAgain: function () {
     console.log(' onClickAgain !!!');
+    wx.redirectTo({
+      url: '../invitation/invitation'
+    })
   },
   onShareAppMessage: function (ops) {
     var that = this;

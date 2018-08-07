@@ -20,7 +20,7 @@ Page({
     showMatch:false,
     countDownImages: ["/images/3.png", "/images/2.png", "/images/1.png", "/images/go.png"],
     countDownIndex:0,
-    player2Name: '未知',    player2:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avatar_default.jpg"
+    player2Name: 'MKING',    player2:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avatar_default.jpg"
   },
   //事件处理函数
   bindViewTap: function() {
@@ -40,6 +40,7 @@ Page({
       backgroundColor: '#735cd9',
     });
     this.initData();  
+    this.onClickRandom();
   },
 
   initData:function(){
@@ -95,7 +96,6 @@ Page({
           invitationTitle: '匹配超时,请重试!',
           timeTick:0
         });
-        that.showCountDown(0);
       }else{
         that.startTimeTick(duration);
       }
@@ -138,7 +138,6 @@ Page({
     }
   },  
   onUnload:function(){
-    //tunnelClass.closeTunnel();
     this.cancelTimer();
   },
 
@@ -151,7 +150,8 @@ Page({
       showTicker: !that.data.showTicker,
       invitationTitle: '匹配成功!',
       timeTick: 0,
-      player2: res.player2.avatarUrl
+      player2: res.player2.avatarUrl,
+      player2Name: res.player2.nickName
     });
   },
 
@@ -170,6 +170,11 @@ Page({
         showMatch: false,
         countDownIndex: 0
       });
+      this.data.timer = setTimeout(function () {
+        wx.redirectTo({
+          url: '../competition/competition'
+        })
+      }, 10);
     }
   },
 
@@ -177,10 +182,6 @@ Page({
     console.log('enter onHandleQuestion!')
     console.log(res)
     app.globalData.question = res.question;
-    this.data.timer = setTimeout(function () {
-      wx.redirectTo({
-        url: '../competition/competition'
-      })
-    }, 1000);
+    this.showCountDown(0);
   }
 })

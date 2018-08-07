@@ -17,8 +17,6 @@
       <view class="nametitle">{{player2Name}}</view>
     </view>
   </view>
-  <button class="item0" open-type='share'>邀请好友</button>
-  <view class="item" bindtap="onClickRandom"> 随机匹配</view>
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showMatch}}"></view>
   <image class="modal-image" mode="widthFix" src="{{countDownImages[countDownIndex]}}" wx:if="{{showMatch}}"></image>
 </view>
