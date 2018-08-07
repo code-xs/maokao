@@ -106,6 +106,14 @@ var tunnel = {
     })
   },
 
+  listenRunawayNotice:function(cb){
+    this.tunnelServer.tunnelObj.on('runawayNotice', (res) => {
+      console.log('receive runawayNotice:')
+      console.log(res)
+      cb(res);
+    })
+  },
+
   sendMessage:function(type, who){
     tunnel.emit('speak', { word: type, who: { nickName: who } });
   },
