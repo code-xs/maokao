@@ -241,20 +241,42 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
   },
 
   onClickButton:function(id){
+    if (app.globalData.userInfo == null || app.globalData.openId == null){
+      this.showDisable('用户信息异常,请稍后再试');
+      return ;
+    }
     if(id==0){
       this.onClickMain();
     }else if(id==1){
-      this.onClickSelf();
+      if (app.globalData.categoryTree == null){
+        this.showDisable('科目数据异常,请稍后再试');
+      }else{
+        this.onClickSelf();
+      }
     }else if(id == 2) {
-      this.onClickPK();
+      if (app.globalData.categoryPKTree == null) {
+        this.showDisable('科目数据异常,请稍后再试');
+      } else {
+        this.onClickPK();
+      }
     }else if(id == 3) {
       this.onClickRanking();
     } else if (id == 4) {
-      this.onClickStudy();
+      if (app.globalData.categoryStudyTree == null) {
+        this.showDisable('科目数据异常,请稍后再试');
+      } else {
+        this.onClickStudy();
+      }
     }
   },
   onShow: function (options) {
     //this.getUserInfoFun()
+  },
+
+  showDisable:function(str){
+    wx.showToast({
+      title: str,
+    })
   },
   //分享
   onShareAppMessage: function (res) {
