@@ -167,7 +167,13 @@ Page({
 
   onHandleMatchSuccess:function(res){
     var that = this;
-    app.globalData.userInfo1 = res.player2;
+    if (res.player2.openId == app.globalData.openId){
+      app.globalData.userInfo1 = res.player1;
+    }else{
+      app.globalData.userInfo1 = res.player2;
+    }
+    console.log('app.globalData.userInfo1:');
+    console.log(app.globalData.userInfo1);
     console.log(app.globalData.player2Info);
     that.cancelTimer();
     that.setData({
