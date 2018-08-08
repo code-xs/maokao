@@ -239,6 +239,10 @@ Page({
     console.log(' onClickAnswer:' + e.target.id);
     console.log(' call cancelTimer');
     this.cancelTimer();
+    if (this.data.runawayNotice) {
+      console.log(' call runawayNotice !');
+      return ;
+    }    
     console.log(' call showAnswer');
     this.showAnswer(e.target.id);
     console.log(' this.data.tree.length:');
@@ -290,7 +294,11 @@ Page({
     var that = this;
     tunnelClass.uploadAnswer(id, that.data.userInfoScore);
   },
-
+  showRunaway: function (str) {
+    wx.showToast({
+      title: str,
+    })
+  },
   onClickCloseModal:function(){
     console.log(' onClickCloseModal !');
     this.setData({
@@ -336,9 +344,8 @@ Page({
       this.data.tree = res.question;
       var that = this;
       setTimeout(function () {
-        if(that.data.runawayNotice){
-          this.stopPK();
-        }else{
+        console.log(' runawayNotice:' + that.data.runawayNotice)
+        if(!that.data.runawayNotice){
           that.initQuestionAndAnswer(that.data.curIndex);
         }
       }, 2000);
@@ -350,7 +357,6 @@ Page({
   stopPK:function(){
     this.cancelTimer();
     var that = this
-    that.data.runawayNotice = false;
     setTimeout(function () {
       that.setData({
         showFailed: !that.data.showFailed,
@@ -373,6 +379,7 @@ Page({
     console.log(res)
     this.data.runawayNotice = true;
     this.stopPK();
+    this.showRunaway('对方已逃跑')
   },
 
   onClickAgain: function () {
@@ -381,6 +388,11 @@ Page({
     wx.redirectTo({
       url: '../invitation/invitation?id=' + this.data.categoryID + '&frompageid=' + this.data.frompageID,
     })
+  },
+  onUnload:function(){
+    console.log('onUnload!!!')
+    this.cancelTimer();
+    tunnelClass.closeTunnel();
   },
   onShareAppMessage: function (ops) {
     var that = this;
