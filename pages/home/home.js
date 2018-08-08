@@ -261,7 +261,7 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
     let that = this
     return {
       title: '[有人@我]免费全面的考题等你挑战',
-      imageUrl: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home_rank.png',
+      imageUrl: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/share/share_invite_logo.png',
       path: 'pages/home/home',
       success: function (res) {
         //getSystemInfo是为了获取当前设备信息，判断是android还是ios，如果是android

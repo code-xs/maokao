@@ -1,11 +1,11 @@
 <!--index.wxml-->
-<view class="control" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
-
+<!--view class="control" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd"-->
+<view class="control">
   <view class="topbanner">
       <view class="question_type_image" style="background-image:url(https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/study/qtype_singlechoice.png)" > </view>
       <view class="topbanner_right">
        <view class="question_list_image" style="background-image:url(https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/study/ic_list.png)" > </view>
-       <view class="subject_index">{{questionIndex+1}}/{{questionTotal}}</view>
+       <view class="subject_index">{{curIndex+1}}/{{MAX_Q_COUNT}}</view>
        </view>
   </view>
 
@@ -146,14 +146,14 @@
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{gameOver}}">
   </view>
   <view class="failed" wx:if="{{gameOver}}">
-    <image class="gameover" mode="widthFix" src="/images/gameover.png"></image>
+    <image class="gameover" mode="widthFix" src="/images/label_study_over.png"></image>
     <view class="warp">
       <image mode="widthFix" src="/images/result-bg.png" background-size="cover"></image>
       <text class="">最多连续答对{{continueMaxRight}}题</text>
     </view>
     <!--view class="retryError">回顾本场错误题目</view-->
     <view class="showScore">
-      <image class="item1" mode="widthFix" bindtap="onClickAgain" src="/images/again1.png"></image>
+      <image class="item1" mode="widthFix" bindtap="onClickAgain" src="/images/btn_study_again.png"></image>
       <button class="invite_friends" open-type="share">
         <image class="shareBt" mode="widthFix" src='/images/again3.png'></image>
       </button>

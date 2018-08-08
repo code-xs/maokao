@@ -188,7 +188,6 @@ Page({
     type3imagesH: 200,
     levelNum: 9999,
     showFragment: 1,
-    curIndex: 0,
     oldLevel: 0,
     showModal: false,
     pendEvent: false,
@@ -201,8 +200,9 @@ Page({
     continueRight: 0,
     continueMaxRight: 0,
     errorCateoryList: [],
-    questionTotal: 30,
-    questionIndex: 0,
+    MAX_Q_COUNT: 30,
+    total_question_count: 0,
+    curIndex: 0,
     levelRules: [{
       'title': '新手',
       'levels': [{
@@ -288,6 +288,7 @@ Page({
 
   onLoad: function (option) {
     this.data.ID = option.id;
+    this.data.PAGE = 0;
     console.log(' get select id:' + this.data.ID)
     console.log(' get app.globalData.userInfo:' + app.globalData.userInfo)
     
@@ -322,7 +323,11 @@ Page({
     wx.setNavigationBarTitle({
       title: "个人练习"
     })
-    this.requestQuestionList(this.data.PAGE, this.data.ID);
+
+    this.init();
+  },
+  init: function() {
+    this.loadDataFromServer(this.data.PAGE, this.data.ID);
   },
   getUserInfo: function (e) {
     console.log(' getUserInfo')
@@ -332,7 +337,8 @@ Page({
       hasUserInfo: true
     })
   },
-  requestQuestionList: function (page, id) {
+  loadDataFromServer: function (page, id) {
+    console.log('loadDataFromServer page:' + page + ' id:'+id);
     var that = this;
     qcloud.request({
       url: config.service.requestQuestionList,
@@ -350,7 +356,20 @@ Page({
         if(DEBUG) {
           that.data.tree = datatreeDebug;
         } else {
-          that.data.tree = response.data.data;
+          var newtree = [];
+          if(page > 0 && that.data.tree.length > 0) {
+            for(var i = 0; i < that.data.tree.length; i++) {
+              newtree.push(that.data.tree[i]);
+            }
+
+            for (var i = 0; i < response.data.data.length; i++) {
+              newtree.push(response.data.data[i]);
+            }
+
+            that.data.tree = newtree;
+          } else {
+            that.data.tree = response.data.data;
+          }
         }
 
         if (that.data.tree == null || that.data.tree.length == 0) {
@@ -361,11 +380,7 @@ Page({
           this.cancelTimer();
           this.saveCacheData(); 
         } else {
-          if (that.data.PAGE == 0) {
-            that.initData();
-          } else {
-            that.initQuestionAndAnswer(that.data.curIndex);
-          } 
+            that.setCurrentQuestionData(that.data.curIndex);
         }
         console.log(that.data.tree);
       },
@@ -374,26 +389,25 @@ Page({
       }
     });
   },
-  initData: function () {
-    this.initQuestionAndAnswer(this.data.curIndex);
-  },
 
-  initQuestionAndAnswer(index) {
+  setCurrentQuestionData(index) {
+    console.log('setCurrentQuestionData index:'+index);
+    var section = this.data.tree[index];
+    var type = section.type;
+
     this.data.pendEvent = false;
- 
     this.data.answer = [];
     this.data.question = [];
     this.data.answerid = [];
     this.data.characterBgColor = [];
     this.data.character = [];
-    var section = this.data.tree[index];
-    var type = section.type;
-
+   
     this.data.character.push('../../images/ic_a.png');
     this.data.character.push('../../images/ic_b.png');
     this.data.character.push('../../images/ic_c.png');
     this.data.character.push('../../images/ic_d.png');
-    console.log(' section ' + index + ' data.type:' + section.type + ' analysis:' + section.analysis); 
+    console.log(' section index:' + index + ' section type:' + section.type + ' analysis:' + section.analysis); 
+   
     this.setData({
       answer: this.data.answer,
       question: section,
@@ -405,9 +419,14 @@ Page({
       empiricalV: "第" + section.index + "题",
       characterBgColor: this.data.characterBgColor,
       character: this.data.character,
-      questionIndex: this.data.questionIndex,
+      curIndex:this.data.curIndex,
+      total_question_count: this.data.total_question_count,
     })
-    this.data.questionIndex++;
+
+    if (this.data.curIndex == this.data.total_question_count - 1) {
+      this.data.total_question_count++;
+    }
+    
     app.addChallengeCnt(1);
   },
 
@@ -443,7 +462,9 @@ Page({
   showAnswer: function (id) {
     var section = this.data.tree[this.data.curIndex];
     var ret = this.checkAnswer(id);
-    console.log('onClickAnswer:' + id + ' ret is:' + ret);
+
+    console.log('showAnswer:' + id + ' ret is:' + ret);
+
     if (ret) {
       this.data.characterBgColor[id] = '#9be665';
       this.data.continueRight++;
@@ -455,12 +476,14 @@ Page({
           continueMaxRight: this.data.continueRight,
         })
       }
+
       this.data.errorCateoryList.push(section);
       console.log('errorCateoryList:')
       console.log(this.data.errorCateoryList)
       this.data.continueRight = 0;
       this.data.characterBgColor[section.answer] = '#9be665';
       this.data.character[section.answer] = '/images/ic_aws_right.png';
+
       if (id >= 0) {
         this.data.characterBgColor[id] = '#F76F40';
         this.data.character[id] = '/images/ic_aws_error.png';
@@ -495,18 +518,26 @@ Page({
     this.data.pendEvent = true;
   },
 
-  loadNext: function (delay) {
+  loadNext: function (delay) { 
     console.log('loadNext delay:' + delay);
     if (this.showChallengeResult(false))
       return;
 
+    if(this.data.curIndex >= this.data.MAX_Q_COUNT - 1) {
+      //study done.
+      this.showChallengeResult(true);
+      return;
+    }
+
     if (this.data.curIndex >= this.data.tree.length - 1) {
-      this.data.curIndex = 0;
-      this.requestQuestionList(++this.data.PAGE, this.data.ID);
+      this.data.curIndex++;
+      this.data.PAGE += 1;
+      this.loadDataFromServer(this.data.PAGE, this.data.ID);
     } else {
       var that = this;
+      this.data.curIndex++;
       setTimeout(function () {
-        that.initQuestionAndAnswer(++that.data.curIndex);
+        that.setCurrentQuestionData(that.data.curIndex);
       }, delay);
     }
   },
@@ -517,12 +548,17 @@ Page({
       return;
 
     if (this.data.curIndex == 0) {
+      //study 0.
+      return;
+    }
+
+    if (this.data.curIndex == 0) {
       this.data.curIndex = this.data.tree.length - 1;
     } else {
       this.data.curIndex--;
     }
 
-    this.initQuestionAndAnswer(this.data.curIndex);
+    this.setCurrentQuestionData(this.data.curIndex);
   },
 
   onClickCloseModal: function () {
@@ -531,7 +567,7 @@ Page({
   },
 
   showChallengeResult: function (force) {
-    if (force || this.data.questionIndex >= this.data.questionTotal) {
+    if (force || this.data.total_question_count >= this.data.MAX_Q_COUNT) {
       this.data.pendEvent = true;
       var that = this;
       this.cancelTimer();
@@ -628,9 +664,9 @@ Page({
       return {
         title: '[有人@我]免费全面的考题等你挑战',
         path: 'pages/home/home',
+        imageUrl: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/share/share_invite_logo.png',
         success: function (res) {
           console.log("转发成功:" + JSON.stringify(res));
-          that.reLoadData();
         },
         fail: function (res) {
           console.log("转发失败:" + JSON.stringify(res));
@@ -640,6 +676,7 @@ Page({
       return {
         title: '[有人@我]免费全面的考题等你挑战',
         path: 'pages/home/home',
+        imageUrl: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/share/share_invite_logo.png',
         success: function (res) {
           console.log("转发成功:" + JSON.stringify(res));
         },
@@ -653,12 +690,12 @@ Page({
     if (this.data.gameOver) {
       this.setData({
         gameOver: false,
-        questionIndex: 0,
+        total_question_count: 0,
         continueMaxRight: 0,
       })
       this.data.PAGE = 0;
       this.data.curIndex = 0;
-      this.requestQuestionList(this.data.PAGE, this.data.ID);
+      this.loadDataFromServer(this.data.PAGE, this.data.ID);
     } else if (this.data.showModal) {
       this.retryAgain();
     }
@@ -681,47 +718,47 @@ var interval = "";// 记录/清理时间记录
   */
 
   // 触摸开始事件  
-  touchStart: function (e) {
-    console.log("touchStart----:");
-    touchDown = e.touches[0].pageX; // 获取触摸时的原点  
-    touchUp = 0;
-    time = 0;
-    // 使用js计时器记录时间    
-    intervalId = setInterval(function () {
-      time++;
-      console.log("set interval time :" + time);
-    }, 100);
-  },
-  // 触摸移动事件  
-  touchMove: function (e) {
-    touchUp = e.touches[0].pageX;
-  }, 
-  // 触摸结束事件      
-  touchEnd: function (e) {
-    console.log("touchEnd----" );
+  // touchStart: function (e) {
+  //   console.log("touchStart----:");
+  //   touchDown = e.touches[0].pageX; // 获取触摸时的原点  
+  //   touchUp = 0;
+  //   time = 0;
+  //   // 使用js计时器记录时间    
+  //   intervalId = setInterval(function () {
+  //     time++;
+  //     console.log("set interval time :" + time);
+  //   }, 100);
+  // },
+  // // 触摸移动事件  
+  // touchMove: function (e) {
+  //   touchUp = e.touches[0].pageX;
+  // }, 
+  // // 触摸结束事件      
+  // touchEnd: function (e) {
+  //   console.log("touchEnd----" );
     
-    if(touchUp == 0) {
-      clearInterval(intervalId); // 清除setInterval  
-      time = 0;
-      return;
-    }
+  //   if(touchUp == 0) {
+  //     clearInterval(intervalId); // 清除setInterval  
+  //     time = 0;
+  //     return;
+  //   }
 
-    var touchDelta = touchDown - touchUp;
-    console.log("touchDown:" + touchDown + " touchUp:" + touchUp + " time:" + time + " touchDelta:" + touchDelta);
+  //   var touchDelta = touchDown - touchUp;
+  //   console.log("touchDown:" + touchDown + " touchUp:" + touchUp + " time:" + time + " touchDelta:" + touchDelta);
 
-    if (touchUp - touchDown > 20 && touchUp - touchDown <= 250 && time < 5) {
-      console.log('向右滑动');
-      this.loadNext(10);
-    } else if (touchDown - touchUp > 20 && touchDown - touchUp <= 250 && time < 5) {
-      console.log('向左滑动');
-      this.loadPrev(10);
-    } else {
-      console.log('ignore slide');
-    }
+  //   if (touchUp - touchDown > 20 && touchUp - touchDown <= 250 && time < 5) {
+  //     console.log('向右滑动');
+  //     this.loadNext(10);
+  //   } else if (touchDown - touchUp > 20 && touchDown - touchUp <= 250 && time < 5) {
+  //     console.log('向左滑动');
+  //     this.loadPrev(10);
+  //   } else {
+  //     console.log('ignore slide');
+  //   }
 
-    clearInterval(intervalId); // 清除setInterval  
-    time = 0;
-  },  
+  //   clearInterval(intervalId); // 清除setInterval  
+  //   time = 0;
+  // },  
 
   onShow: function() {
     console.log('study ------------->  onShow')

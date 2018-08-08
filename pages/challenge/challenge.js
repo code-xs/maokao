@@ -649,6 +649,7 @@ Page({
       return {
         title: '[有人@我]免费全面的考题等你挑战',
         path: 'pages/home/home',
+        imageUrl: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/share/share_invite_logo.png',
         success: function (res) {
           console.log("转发成功:" + JSON.stringify(res));
           app.getShareTicket(res)
@@ -662,6 +663,7 @@ Page({
       return {
         title: '[有人@我]免费全面的考题等你挑战',
         path: 'pages/home/home',
+        imageUrl: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/share/share_invite_logo.png',
         success: function (res) {
           console.log("转发成功:" + JSON.stringify(res));
         },
