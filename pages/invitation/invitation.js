@@ -174,24 +174,26 @@ Page({
     }
     console.log('app.globalData.userInfo1:');
     console.log(app.globalData.userInfo1);
-    console.log(app.globalData.player2Info);
+    //console.log(app.globalData.player2Info);
     that.cancelTimer();
     that.setData({
       showTicker: !that.data.showTicker,
       invitationTitle: '匹配成功!',
       timeTick: 0,
-      player2: res.player2.avatarUrl,
-      player2Name: res.player2.nickName
+      player2: app.globalData.userInfo1.avatarUrl,
+      player2Name: app.globalData.userInfo1.nickName
     });
   },
 
   showCountDown:function(index){
     var that = this;
+    console.log('showCountDown index:' + index);
     if (index < this.data.countDownImages.length){
       that.setData({
         showMatch:true,
         countDownIndex:index
       });
+      console.log('index:'+index);
       this.data.timer = setTimeout(function () {
         that.showCountDown(++index);
       }, 1000);

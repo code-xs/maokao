@@ -38,7 +38,7 @@ var tunnel = {
     this.tunnelServer.tunnelObj.emit('beginMatch', {//发起匹配
       openId: app.globalData.openId,
       sortId: id,
-      friendsFightingRoom: ""//匹配者含friendsFightingRoom则说明是好友之间的匹配
+      //friendsFightingRoom: null//匹配者含friendsFightingRoom则说明是好友之间的匹配
     })
   },
 
