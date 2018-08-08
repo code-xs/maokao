@@ -490,7 +490,7 @@ Page({
       }
     } 
 
-    if(section.analysis != "[]") {
+    if (section.analysis != "[]" && section.analysis != "") {
       this.data.showAnalytics = true;
     } else {
       this.data.showAnalytics = false;
