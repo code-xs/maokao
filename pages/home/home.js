@@ -169,9 +169,10 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
     })
   },
   onClickPK: function() {
-    wx.navigateTo({
-      url: '../select/select?frompageid=2',
-    })
+    this.showNotOK();
+    // wx.navigateTo({
+    //   url: '../select/select?frompageid=2',
+    // })
   },
   onClickMain:function(){
     wx.navigateTo({
@@ -249,13 +250,13 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
       this.onClickMain();
     }else if(id==1){
       if (app.globalData.categoryTree == null){
-        this.showDisable('科目数据异常,请稍后再试');
+        this.showDisable('正在加载数据,请稍后再试');
       }else{
         this.onClickSelf();
       }
     }else if(id == 2) {
       if (app.globalData.categoryPKTree == null) {
-        this.showDisable('科目数据异常,请稍后再试');
+        this.showDisable('正在加载数据,请稍后再试');
       } else {
         this.onClickPK();
       }
@@ -263,7 +264,7 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
       this.onClickRanking();
     } else if (id == 4) {
       if (app.globalData.categoryStudyTree == null) {
-        this.showDisable('科目数据异常,请稍后再试');
+        this.showDisable('正在加载数据,请稍后再试');
       } else {
         this.onClickStudy();
       }
@@ -293,5 +294,14 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
         app.getShareTicket(res)
       }
     }
+  },
+  showNotOK: function () {
+    wx.showModal({
+      title: '啊噢',
+      showCancel: false,
+      content: '此功能尚未开通,敬请期待！',
+      success: function (res) {
+      }
+    })
   },
 })
