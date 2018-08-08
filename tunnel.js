@@ -45,6 +45,7 @@ var tunnel = {
   fightingResult:function(finish){
     this.tunnelServer.tunnelObj.emit('fightingResult', {//通知服务器关闭房间
       isfinish: finish,
+      openId: app.globalData.openId,
     })
   },
 
@@ -80,14 +81,18 @@ var tunnel = {
   },
 
   uploadAnswer: function (answer, score){
-    this.tunnelServer.tunnelObj.emit('answer', {//发起匹配
-      roomName: app.globalData.userInfo1.roomName,
-      choice: {
-        openId: app.globalData.openId,
-        userChoose: answer,
-        scoreMyself: score,
-      }
-    })
+    if (this.tunnelServer.tunnelObj != null) {
+      this.tunnelServer.tunnelObj.emit('answer', {//发起匹配
+        roomName: app.globalData.userInfo1.roomName,
+        choice: {
+          openId: app.globalData.openId,
+          userChoose: answer,
+          scoreMyself: score,
+        }
+      })
+    }else{
+      console.log(' tunnel is close! answer:'+answer+', score:'+score);
+    }
   },
 
   closeTunnel: function () {
