@@ -6,7 +6,7 @@ var qcloud = require('../../vendor/wafer2-client-sdk/index');
 
 // 引入配置
 var config = require('../../config');
-var isGoShipping = false;
+var isGoShipping = true;
 
 Page({
   data: {
@@ -170,7 +170,8 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
     })
   },
   onClickPK: function() {
-    if(this.isGoShipping) {
+    console.log('onClickPK this.isGoShipping'+this.isGoShipping);
+    if(isGoShipping) {
       this.showNotOK();
     } else {
         wx.navigateTo({
