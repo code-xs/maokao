@@ -9,7 +9,7 @@
       </view>
       <view class="nametitle">{{userInfo.nickName}}</view>
     </view>
-    <image  class="vs" src="../../images/vs.png" mode="withFix"></image>
+    <image  class="vs" src="/images/vs.png" mode="withFix"></image>
     <view class="group0">
       <view class="avatar_layout">
         <image class="userinfo-avatar" src="{{player2}}" background-size="cover"></image>

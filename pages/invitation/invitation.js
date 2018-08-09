@@ -39,7 +39,7 @@ Page({
     })
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
-      backgroundColor: '#735cd9',
+      backgroundColor: '#bb6cd5',
     });
     this.initData();  
     this.onClickRandom();
@@ -50,7 +50,7 @@ Page({
       timeTick:0,
       timeTickStr: '00',
       showTicker: !this.data.showTicker,
-      invitationTitle: this.data.showTicker == false ? '即将开始...' : '等待对方加入'
+      invitationTitle: this.data.showTicker == false ? '比赛即将开始...' : '等待对方加入'
     });
     var tunnel = tunnelClass.createTunnel();
     this.data.tunnel = tunnel;

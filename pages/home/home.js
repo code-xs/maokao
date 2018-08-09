@@ -6,7 +6,7 @@ var qcloud = require('../../vendor/wafer2-client-sdk/index');
 
 // 引入配置
 var config = require('../../config');
-var isGoShipping = true;
+var isGoShipping = false;
 
 Page({
   data: {
@@ -248,33 +248,33 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
   },
 
   onClickButton:function(id){
-    if (app.globalData.userInfo == null || app.globalData.openId == null){
-      this.showToast('用户信息异常,请稍后再试');
-      return ;
-    }
+    // if (app.globalData.userInfo == null || app.globalData.openId == null){
+    //   this.showToast('用户信息异常,请稍后再试');
+    //   return ;
+    // }
     
     if(id==0){
       this.onClickMain();
     }else if(id==1){
-      if (app.globalData.categoryTree == null){
-        this.showToast('正在加载数据,请稍后再试');
-      }else{
+      // if (app.globalData.categoryTree == null){
+      //   this.showToast('正在加载数据,请稍后再试');
+      // }else{
         this.onClickSelf();
-      }
+      // }
     }else if(id == 2) {
-      if (app.globalData.categoryPKTree == null) {
-        this.showToast('正在加载数据,请稍后再试');
-      } else {
+      // if (app.globalData.categoryPKTree == null) {
+      //   this.showToast('正在加载数据,请稍后再试');
+      // } else {
         this.onClickPK();  
-      }
+      // }
     }else if(id == 3) {
       this.onClickRanking();
     } else if (id == 4) { 
-      if (app.globalData.categoryStudyTree == null) {
-        this.showToast('正在加载数据,请稍后再试');
-      } else {
+      // if (app.globalData.categoryStudyTree == null) {
+      //   this.showToast('正在加载数据,请稍后再试');
+      // } else {
         this.onClickStudy();
-      }
+      // }
     }
   },
   onShow: function (options) {
