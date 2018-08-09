@@ -901,7 +901,6 @@ button::after {
   flex-direction: row;
   bottom: 0%;
   height: 11vh;
-  border: 1rpx #ff3429 solid;
   left: 0;  
   width: 100%;
   z-index: 8000;
