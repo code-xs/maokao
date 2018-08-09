@@ -181,8 +181,6 @@ Page({
   },
 
   initQuestionAndAnswer(index) {
-    this.data.pendEvent = false;
-
     this.data.answer = [];
     this.data.question = [];
     this.data.answerid = [];
@@ -210,6 +208,7 @@ Page({
       questionIndex: this.data.questionIndex,
     })
     this.data.questionIndex++;
+    this.data.pendEvent = false;
     this.startCountDown(section.timer*10);
     //app.addChallengeCnt(1);
   },
@@ -237,7 +236,11 @@ Page({
 
   onClickAnswer:function(e){
     console.log(' onClickAnswer:' + e.target.id);
-    console.log(' call cancelTimer');
+    if (this.data.pendEvent){
+      console.log(' pendingEvent !!!');
+      return;
+    }
+    this.data.pendEvent = true;  
     this.cancelTimer();
     if (this.data.runawayNotice) {
       console.log(' call runawayNotice !');
@@ -246,7 +249,6 @@ Page({
     console.log(' call showAnswer');
     this.showAnswer(e.target.id);
     console.log(' this.data.tree.length:');
-    this.data.pendEvent = true;  
   },
 
 
