@@ -77,14 +77,15 @@ page {
 }
 
 .avatar_layout { 
-  width: 170rpx;
-  height: 170rpx; 
+  width: 180rpx;
+  height: 180rpx; 
   display: flex;
   justify-content:center;
   align-items: center; 
   background-size: 100% 100%;
   background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/my/bg_me_avatar.png');
 }
+
 .sub_group{  
   flex-direction: row;
 }  
@@ -147,11 +148,10 @@ page {
   height: 100rpx;
   z-index: 9002;
   margin-left: 40%;
-  top: 30%;
+  top: 50%;
   left: 0;
   overflow: hidden;
   position: fixed;
-  /*background: #dd00ff;*/
 }
 
 .buttonsStyle{
