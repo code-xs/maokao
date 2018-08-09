@@ -2,9 +2,9 @@
 <!--view class="control" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd"-->
 <view class="control">
   <view class="topbanner">
-      <view class="question_type_image" style="background-image:url(https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/study/qtype_singlechoice.png)" > </view>
+      <image class="question_type_image" src="/images/qtype_singlechoice.png" mode="widthFix"> </image>
       <view class="topbanner_right">
-       <view class="question_list_image" style="background-image:url(https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/study/ic_list.png)" > </view>
+       <image class="question_list_image" src="/images/ic_list.png" mode="widthFix" > </image>
        <view class="subject_index">{{curIndex+1}}/{{MAX_Q_COUNT}}</view>
        </view>
   </view>

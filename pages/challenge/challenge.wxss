@@ -848,3 +848,9 @@ button::after {
 .scrollview_layout {
   height: 84vh;
 }
+
+.loading-image{
+  z-index: 9002;
+  overflow: hidden;
+  position: fixed;
+}

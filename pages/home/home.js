@@ -252,6 +252,7 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
       this.showDisable('用户信息异常,请稍后再试');
       return ;
     }
+    
     if(id==0){
       this.onClickMain();
     }else if(id==1){

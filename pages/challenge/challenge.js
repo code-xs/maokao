@@ -280,7 +280,7 @@ Page({
       backgroundColor: '#735cd9',
     });
     wx.setNavigationBarTitle({
-      title: "个人挑战"
+      title: "实战模拟"
     })
     this.requestQuestionList(this.data.PAGE, this.data.ID);
   },

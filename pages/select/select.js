@@ -68,7 +68,7 @@ Page({
 
     if (option.frompageid == 4) {
       wx.setNavigationBarTitle({
-        title: "个人练习"
+        title: "题库练习"
       })
     } else if (option.frompageid == 2) {
       wx.setNavigationBarTitle({
@@ -76,7 +76,7 @@ Page({
       })
     } else {
       wx.setNavigationBarTitle({
-        title: "个人挑战"
+        title: "实战模拟"
       })
     }
 
