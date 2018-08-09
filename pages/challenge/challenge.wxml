@@ -180,7 +180,7 @@
     <button class="modal-subtitle3" bindtap="onClickUpgradeOk">确定</button>
   </view>
   <!-- dialog upgrade end-->
-
+ 
   <!-- dialog fail -->
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showModal}}">
   </view>
@@ -196,6 +196,7 @@
   <image class="modal-image" mode="widthFix" src="/images/fail.png" wx:if="{{showModal}}"></image>
   <!-- fail end -->
   
-  <image class="modal-loading" mode="widthFix" src="/images/loading.gif" wx:if="{{showLoading}}"></image>
+  <!--image class="modal-loading" mode="widthFix" src="/images/loading.gif" wx:if="{{showLoading}}"></image-->
+  <loading class="loading-image" hidden="{{showLoading}}">正在加载</loading>
 
 </view>

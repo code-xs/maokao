@@ -321,7 +321,7 @@ Page({
       backgroundColor: '#AA7CDD',
     });
     wx.setNavigationBarTitle({
-      title: "个人练习"
+      title: "题库练习"
     })
 
     this.init();

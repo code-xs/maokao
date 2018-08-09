@@ -99,7 +99,7 @@ Page({
       backgroundColor: '#a753d6',
     });
     wx.setNavigationBarTitle({
-      title: "对战"
+      title: "好友对战"
     })
     //this.requestQuestionList(this.data.PAGE, this.data.ID);
     this.data.tree = app.globalData.question;
