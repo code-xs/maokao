@@ -184,6 +184,7 @@ Page({
     question: [],
     answerid: [],
     character: [],
+    question_type: 1,
     type3imagesW: 300,
     type3imagesH: 200,
     levelNum: 9999,
@@ -318,7 +319,7 @@ Page({
     });
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
-      backgroundColor: '#AA7CDD',
+      backgroundColor: '#b382dd',
     });
     wx.setNavigationBarTitle({
       title: "题库练习"
@@ -411,6 +412,7 @@ Page({
     this.setData({
       answer: this.data.answer,
       question: section,
+      question_type: section.question_type,
       answerid: this.data.answerid,
       showFragment: type,
       answerIndex: -1,

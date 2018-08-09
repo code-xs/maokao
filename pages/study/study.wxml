@@ -2,7 +2,7 @@
 <!--view class="control" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd"-->
 <view class="control">
   <view class="topbanner">
-      <image class="question_type_image" src="/images/qtype_singlechoice.png" mode="widthFix"> </image>
+      <image class="question_type_image" src="{{ question_type == 2 ?  '/images/qtype_qanda.png' : '/images/qtype_singlechoice.png'}}" mode="widthFix"> </image>
       <view class="topbanner_right">
        <image class="question_list_image" src="/images/ic_list.png" mode="widthFix" > </image>
        <view class="subject_index">{{curIndex+1}}/{{MAX_Q_COUNT}}</view>

@@ -249,7 +249,7 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
 
   onClickButton:function(id){
     if (app.globalData.userInfo == null || app.globalData.openId == null){
-      this.showDisable('用户信息异常,请稍后再试');
+      this.showToast('用户信息异常,请稍后再试');
       return ;
     }
     
@@ -257,21 +257,21 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
       this.onClickMain();
     }else if(id==1){
       if (app.globalData.categoryTree == null){
-        this.showDisable('正在加载数据,请稍后再试');
+        this.showToast('正在加载数据,请稍后再试');
       }else{
         this.onClickSelf();
       }
     }else if(id == 2) {
       if (app.globalData.categoryPKTree == null) {
-        this.showDisable('正在加载数据,请稍后再试');
+        this.showToast('正在加载数据,请稍后再试');
       } else {
-        this.onClickPK();
+        this.onClickPK();  
       }
     }else if(id == 3) {
       this.onClickRanking();
-    } else if (id == 4) {
+    } else if (id == 4) { 
       if (app.globalData.categoryStudyTree == null) {
-        this.showDisable('正在加载数据,请稍后再试');
+        this.showToast('正在加载数据,请稍后再试');
       } else {
         this.onClickStudy();
       }
@@ -281,9 +281,10 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
     //this.getUserInfoFun()
   },
 
-  showDisable:function(str){
+  showToast:function(str){
     wx.showToast({
       title: str,
+      icon: 'none',
     })
   },
   //分享
