@@ -1,12 +1,12 @@
 //index.js
-//获取应用实例
+//获取应用实例  
 const app = getApp()
 // 引入 QCloud 小程序增强 SDK
 var qcloud = require('../../vendor/wafer2-client-sdk/index');
 
 // 引入配置
 var config = require('../../config');
-var isGoShipping = false;
+var isGoShipping = true;
 
 Page({
   data: {

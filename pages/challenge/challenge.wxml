@@ -197,6 +197,6 @@
   <!-- fail end -->
   
   <!--image class="modal-loading" mode="widthFix" src="/images/loading.gif" wx:if="{{showLoading}}"></image-->
-  <loading class="loading-image" hidden="{{showLoading}}">正在加载</loading>
+  <loading class="loading-image" hidden="{{!showLoading}}">正在加载</loading>
 
 </view>
