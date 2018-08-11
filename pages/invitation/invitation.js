@@ -19,6 +19,7 @@ Page({
     categoryID:-1,
     frompageID:-1,
     showMatch:false,
+    enterPKPage:false,
     countDownImages: ["/images/3.png", "/images/2.png", "/images/1.png", "/images/go.png"],
     countDownIndex:0,
     player2Name: 'MKING',    player2:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avatar_default.jpg"
@@ -206,6 +207,7 @@ Page({
         wx.redirectTo({
           url: '../competition/competition?id=' + that.data.categoryID + '&frompageid=' + that.data.frompageID,
         })
+        that.data.enterPKPage = true;
       }, 10);
     }
   },
@@ -215,5 +217,12 @@ Page({
     console.log(res)
     app.globalData.question = res.question;
     this.showCountDown(0);
-  }
+  },
+  onUnload: function () {
+    console.log("==onUnload== , enterPkPage:" + this.data.enterPKPage);
+    if(!this.data.enterPKPage){
+      this.cancelTimer();
+      tunnelClass.closeTunnel();
+    }
+  },
 })

@@ -325,23 +325,24 @@ Page({
     console.log('enter onHandleQuestion!')
     console.log(res)
     if ("title" in res.question){
-      var ret = this.updateAnswerBgOnly(res.choicePlayer2[1], false);
+      var choicePlayer2 = res.choicePlayer1[0] == app.globalData.openId ? res.choicePlayer2 : res.choicePlayer1;
+      var ret = this.updateAnswerBgOnly(choicePlayer2[1], false);
       if (ret) {
         this.data.continueRight1 ++;
-        this.data.userInfo1Score += res.choicePlayer2[2];
+        this.data.userInfo1Score += 100;
       }else{
         this.data.continueRight1 = 0;
       }
-      if (res.choicePlayer2[1] != this.data.tree.answer){
+      if (choicePlayer2[1] != this.data.tree.answer){
         this.updateAnswerBgOnly(this.data.tree.answer, false);
       }
-      var index = parseInt(res.choicePlayer2[1]) + 1;
+      var index = parseInt(choicePlayer2[1]) + 1;
       this.setData({
         characterBgColor: this.data.characterBgColor,
         character: this.data.character,
         answerIndex: index,
         userInfo1Score: this.data.userInfo1Score,
-        userInfo1Answer: res.choicePlayer2[1],
+        userInfo1Answer: choicePlayer2[1],
       });
       this.data.tree = res.question;
       var that = this;

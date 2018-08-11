@@ -164,9 +164,9 @@
       <view class="user2result">连续答对{{continueRight1}}题</view>
     </view>
     <view class="result_layout">
-      <view class="achievement1">{{continueRight}}连胜</view>
+      <view class="{{continueRight >=0? 'achievement1':'achievement1hide'}}">{{continueRight}}连胜</view>
       <view class="space"></view>
-      <view class="achievement2">{{continueRight1}}连胜</view>
+      <view class="{{continueRight1 >=0? 'achievement2':'achievement2hide'}}">{{continueRight1}}连胜</view>
     </view>
     <image class="resultImg" mode="withFix" src="/images/pk_success.png"></image>
     <view class="centerText">积分+{{userInfoScore}}</view>
