@@ -96,7 +96,7 @@ Page({
     })
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
-      backgroundColor: '#a753d6',
+      backgroundColor: '#b382dd',
     });
     wx.setNavigationBarTitle({
       title: "好友对战"
