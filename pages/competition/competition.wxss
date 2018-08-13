@@ -425,7 +425,7 @@ input-holder {
   margin-left: 20%;
   width: 60%;
   margin-top: 30rpx;
-  height: 200rpx;
+  height: 240rpx;
 }
 
 .centerText {
