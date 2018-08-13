@@ -3,7 +3,6 @@
  */
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
-// var host = 'https://r5lkfvll.qcloud.la';
 //var host = 'https://uwfsgfrn.qcloud.la';
 var host = 'https://280142242.mokao100.cn';
 
