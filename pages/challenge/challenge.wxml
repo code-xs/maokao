@@ -162,7 +162,7 @@
     <!--view class="retryError">回顾本场错误题目</view-->
     <view class="showScore">
       <image class="item1" mode="widthFix" bindtap="onClickAgain" src="/images/again1.png"></image>
-      <button class="invite_friends" open-type="share">
+      <button class="invite_friends" id="share_gameover" open-type="share">
         <image class="shareBt" mode="widthFix" src='/images/again3.png'></image>
       </button>
     </view>

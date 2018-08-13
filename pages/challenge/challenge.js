@@ -646,6 +646,8 @@ Page({
   onShareAppMessage: function (ops) {
     var that = this;
     if (ops.from == 'button') {
+      console.log('share target id:' + ops.target.id);
+
       return {
         title: '[有人@我]免费全面的考题等你挑战',
         path: 'pages/home/home',
@@ -653,7 +655,10 @@ Page({
         success: function (res) {
           console.log("转发成功:" + JSON.stringify(res));
           app.getShareTicket(res)
-          that.reLoadData();
+
+          if (ops.target.id != 'share_gameover') {
+            that.reLoadData();
+          }
         },
         fail: function (res) {
           console.log("转发失败:" + JSON.stringify(res));
