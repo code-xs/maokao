@@ -135,7 +135,7 @@ page {
     margin-left: 20%;
     margin-right: 20%;
     margin-top: 30rpx;
-    padding:5rpx 20rpx 5rpx 20rpx;
+    padding:5rpx 20rpx 5rpx 20rpx; 
     text-align: center;
     /*border-radius: 20% 40% 1% 80%;*/
     border-radius:50rpx;
@@ -143,12 +143,12 @@ page {
     box-shadow:6rpx 6rpx 6rpx 6rpx #151515
 }
 
-.modal-image {
+.modal-image { 
   width: 20%;
   height: 100rpx;
   z-index: 9002;
   margin-left: 40%;
-  top: 50%;
+  top: 40%;
   left: 0;
   overflow: hidden;
   position: fixed;

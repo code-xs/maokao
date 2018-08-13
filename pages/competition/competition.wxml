@@ -1,33 +1,28 @@
 <!--index.wxml-->
 <view class="control">
-  <view class="root">
-      <view class="userimg">
+  <view class="vs_topbanner">
+      <image class="vs_topbanner_bg" mode="widthFix" src="/images/bg_topbanner_vs.png"></image>
+      <view class="userimg-left">
           <view class="group0">
             <image class="userinfo-avatar"  src="{{userInfo.avatarUrl}}" background-size="cover"></image>
           </view>
+          <view class="userleft_info">
+           <view class="nametitle_left">{{userInfo.nickName}}</view>
+           <view class="score_left">{{userInfoScore}}分</view>
+           </view>
       </view>
-      <view class="user">
-        <view class="userdata">
-          <view class="group">
-            <view class="name_layout">
-              <view class="nametitle">{{userInfo.nickName}}</view>
-              <view class="questionIndex">第{{questionIndex+1}}题</view>
-              <view class="nametitle2">{{userInfo1.nickName}}</view>
-            </view>
-              <view class="score_layout">
-                <view class="score1">{{userInfoScore}}分</view>
-                <view class="score2">{{userInfo1Score}}分</view>
-              </view>
-              <image class="vs-image" src="/images/win.png"></image>
-            </view>
-        </view>
-        <progress class= "progress" percent="{{progress}}"/>
-      </view>
-      <view class="userimg">
+        
+      <view class="userimg-right">
         <view class="group0">
           <image class="userinfo-avatar" src="{{userInfo1.avatarUrl}}" background-size="cover"></image>
         </view>
+         <view class="userright_info">
+           <view class="nametitle_right">{{userInfo1.nickName}}</view>
+           <view class="score_right">{{userInfo1Score}}分</view>
+           </view>
       </view>
+
+      <progress class= "progress" color="#F7D535" percent="{{progress}}"/>
   </view>
 
   <scroll-view class="scrollview_layout" scroll-y="true">
@@ -170,8 +165,8 @@
     </view>
     <image class="resultImg" mode="withFix" src="/images/pk_success.png"></image>
     <view class="centerText">积分+{{userInfoScore}}</view>
-    <view class="line"></view>
-    <view class="retryError">回顾本场对战</view>
+    <!--view class="line"></view>
+    <view class="retryError">回顾本场对战</view-->
     <view class="showScore">
       <image class="item1" mode="widthFix" bindtap="onClickAgain" src="/images/again1.png"></image>
       <button class="invite_friends" open-type="share">

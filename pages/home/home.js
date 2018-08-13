@@ -6,7 +6,7 @@ var qcloud = require('../../vendor/wafer2-client-sdk/index');
 
 // 引入配置
 var config = require('../../config');
-var isGoShipping = true;
+var isGoShipping = false;
 
 Page({
   data: {
@@ -20,7 +20,7 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     empirical:0,
     level:0,
-    ranking:0,
+    ranking:0, 
     progress:50,
     Height:150,
     empiricalV:0,
