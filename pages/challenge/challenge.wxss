@@ -539,7 +539,7 @@ page {
 .ranking {
   font-size: 1.5rem;
   margin-left: 10rpx;
-  color: #f8bb39;
+  color: #FFD36D;
   margin-top: 0rpx;
 }
 
