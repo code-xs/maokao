@@ -421,7 +421,7 @@ Page({
   onShow: function() {
     console.log('onShow')
 
-    if (needUpdateFavorite) {
+    if (needUpdateFavorite) { 
       needUpdateFavorite = false; 
       if (this.data.frompageid == 4) {
         this.loadFavoriteStudyCategory();
@@ -432,13 +432,15 @@ Page({
       }
     } 
 
-    if (this.data.oldLevel < app.scoreConvertLevel(app.globalData.totalScore)) {
-      this.setData({
-        showUpgradeModal: true,
-      })
-    } else if (app.globalData.abortExit) {
-      this.showAbortExit();
+    if (app.globalData.abortExit) {
       app.globalData.abortExit = false;
+      if (this.data.oldLevel < app.scoreConvertLevel(app.globalData.totalScore)) {
+        this.setData({
+          showUpgradeModal: true,
+        })
+      } else {
+        this.showAbortExit();
+      }
     }
 
     console.log('onShow end ----------')

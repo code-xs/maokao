@@ -43,7 +43,7 @@ App({
     userRanking: 0,
     totalScore: 0,
     total: 10000,
-    level: 0,
+    level: 1,
     categoryTree: null,
     categoryStudyTree: null,
     categoryPKTree: null,
@@ -75,7 +75,7 @@ App({
   getUserInfo: function() {
     // 获取用户信息
     console.log('getUserInfo!')
-    wx.getSetting({
+    wx.getSetting({ 
       success: res => {
         if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
@@ -157,9 +157,8 @@ App({
         openId: that.globalData.openId,
       },
       success: (response) => {
-        console.log('请求成功 statusCode:' + response.statusCode);
+        console.log('getLevelRule 请求成功 statusCode:' + response.statusCode);
         if (response.statusCode == 200) {
-          console.log(response.data.data);
           that.globalData.rule = response.data.data;
           console.log(that.globalData.rule);
         }
@@ -227,31 +226,39 @@ App({
     return 1;
   },
   scoreConvertLevel: function(score) {
-    var level = 0;
+    console.log('scoreConvertLevel==> score:' + score);
+    var level = 1;
     if (this.globalData.rule != null && this.globalData.rule.length > 0) {
       for (var i = 0; i < this.globalData.rule.length; i++) {
         var levels = this.globalData.rule[i];
         for (var j = 0; j < levels.levels.length; j++) {
           var data = levels.levels[j];
           if (score <= data.score) {
-            return data.level - 1;
+             level = data.level - 1;
+             if (level <= 0) level = 1;
+             return level;
           }
         }
       }
     }
+
     return level;
   },
   addChallengeCnt: function(num) {
     this.globalData.achievementDetail.totalChallenge += num;
     console.log('update achievementDetail:' + this.globalData.achievementDetail.totalChallenge);
   },
+
   updateWinningStreak: function(num) {
     if (this.globalData.achievementDetail.winningStreak < num)
       this.globalData.achievementDetail.winningStreak = num;
   },
+
   updateMaxScore: function(score) {
+    console.log('updateMaxScore score:'+score);
     if (this.globalData.achievementDetail.maxScore < score)
       this.globalData.achievementDetail.maxScore = score;
+
     if (score > 0) {
       this.globalData.totalScore += score;
       if (this.globalData.updateScoreInfoCallBack != null) {

@@ -151,8 +151,8 @@ Page({
     ranking:0,
     progress:99,
     Height:150,
-    empiricalV:0,
-    levelV:0,
+    empiricalV:1,
+    levelV:1,
     score:13242,
     score1:0,
     typeScore:0,
@@ -435,13 +435,16 @@ Page({
     var section = this.data.tree[this.data.curIndex];
     var ret = this.checkAnswer(id);
     console.log(' showAnswer:' + id + ' ret is:' + ret);    
+
     if (ret) {
       this.data.characterBgColor[id] = '#9be665';
-      this.data.continueRight ++;
-      var score = parseInt(this.data.progress/10)*2;
+      this.data.continueRight++;
+
+      var score = parseInt(this.data.progress / 10) * 2;
       if (score <= 0)
         score = 1;
       console.log(' score:' + score);    
+
       this.data.score += score;
       this.data.score1 += score;
       this.data.character[id] = '../../images/ic_aws_right.png';
@@ -605,7 +608,7 @@ Page({
   },
 
   cancelTimer:function(){
-    if (this.data.timer != null) {
+    if (this.data.timer != null) {   
       console.log(' clearTimeout at first !!!');
       clearTimeout(this.data.timer);
       this.data.timer = null;
@@ -613,12 +616,15 @@ Page({
   },
 
   saveCacheData:function(){
-    if (this.data.score1 > 0){
+    console.log('saveCacheData score1:' + this.data.score1 + ' score:' + this.data.score);
+
+    if (this.data.score1 > 0) {
       app.updateMaxScore(this.data.score1);   
       app.uploadScoreInfo(this.data.ID, this.data.score1);
-      this.data.score1 = 0;
+      this.data.score1 = 0;   
     }
-    if (this.data.continueRight >0){
+
+    if (this.data.continueRight > 0){
       app.updateWinningStreak(this.data.continueRight);
       if (this.data.continueRight > this.data.continueMaxRight){
         this.setData({
@@ -687,20 +693,20 @@ Page({
         curShareTick:0,
       })
       this.data.PAGE = 0;
-      this.data.redCnt = 5;
+      this.data.redCnt = 5;  
       this.data.curIndex = 0;
       this.requestQuestionList(this.data.PAGE, this.data.ID);    
     }else if (this.data.showModal) {
       this.data.curShareTick += 1;
-      this.retryAgain();
+      this.retryAgain();   
     }
   },
-
+   
   retryAgain:function(){
     this.data.redCnt = 5;
     this.initHearts(this.data.redCnt);
     this.setData({
-      showModal: false,
+      showModal: false,   
     });
     this.data.pendEvent = false;
     this.loadNext(200);

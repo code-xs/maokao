@@ -19,12 +19,12 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     empirical:0,
-    level:0,
+    level:1,
     ranking:0, 
-    progress:50,
+    progress:0,
     Height:150,
     empiricalV:0,
-    levelV:0,
+    levelV:1,
     windowW:0,
     windowH:0,
     challenge:-1,
@@ -102,20 +102,23 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-  },
+  }, 
 
   updateScoreInfo:function(data){
     var level = app.scoreConvertLevel(app.globalData.totalScore);
-    var scoreGap = app.getNextLevelScoreGap(app.globalData.totalScore, level+1);
+    var pscoreGap = app.getNextLevelScoreGap(app.globalData.totalScore, level+1);
+    var pprogress = (app.globalData.totalScore / ((app.globalData.totalScore + pscoreGap) * 1.0) * 100);
+    console.log('------------------>  updateScoreInfo :' + data + ' pscoreGap:' + pscoreGap + ' pprogress:' + pprogress);
+
     this.setData({
-      empirical: 0,
-      level: 0,
-      ranking: 0,
-      empiricalV: this.data.empirical,
+      empirical: 0, 
+      level: 1,
+      ranking: 0, 
       levelV: level,
-      scoreGap: scoreGap,
+      scoreGap: pscoreGap,
       userRanking: app.globalData.userRanking,
       empiricalV: app.globalData.totalScore,
+      progress: (app.globalData.totalScore / ((app.globalData.totalScore + pscoreGap) * 1.0) * 100),
     });    
   },
 
@@ -123,14 +126,17 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
     console.log('initData:')
     console.log(app.globalData)
     var level = app.scoreConvertLevel(app.globalData.totalScore);
+    var pprogress = (app.globalData.totalScore / ((app.globalData.totalScore + this.data.scoreGap) * 1.0) * 100);
+    console.log('------------------>  initData scoreGap:' + this.data.scoreGap + ' pprogress:' + pprogress);
+
     this.setData({
       empirical: 0,
-      level: 0,
+      level: 1,
       ranking: 0,
-      empiricalV: this.data.empirical,
       levelV: level,
       userRanking: app.globalData.userRanking,
       empiricalV: app.globalData.totalScore,
+      progress: (app.globalData.totalScore / ((app.globalData.totalScore + this.data.scoreGap) * 1.0) * 100),
     });
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
