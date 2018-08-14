@@ -67,7 +67,7 @@ Page({
     console.log('onLoad option.id:' + option.id+' frompageid:' + option.frompageid)
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
-      backgroundColor: '#bf70d6',
+      backgroundColor: '#7d49c7',
     });
 
     topcategoryid = option.id;
