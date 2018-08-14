@@ -12,9 +12,7 @@
 <scroll-view class="scrollview_layout" scroll-y="true">
     <!-- template 1 -->
     <view class="{{ showFragment == 1? 'type1':'type1hide'}}">
-      <view class="context">
-        {{question.title}}
-      </view>
+      <text class="context">{{question.title}}</text>
 
       <view class="item0">
         <image class="answerIndex" id="{{question.answers[0].id}}" bindtap="onClickAnswer" src="{{character[0]}}" mode="widthFix"> </image>
@@ -37,9 +35,7 @@
 
     <!-- template 2 -->
     <view class="{{ showFragment == 2? 'type2':'type2hide'}}">
-      <view class="context">
-        {{question.title}}
-      </view>
+      <text class="context">{{question.title}}</text>
 
       <image class="type2image" mode="top" src="{{question.title2}}"> </image>
       <view class="item2">
@@ -63,9 +59,7 @@
 
     <!-- template 3 -->
     <view class="{{ showFragment == 3? 'type3':'type3hide'}}">
-      <view class="context">
-        {{question.title}}
-      </view>
+      <text class="context">{{question.title}}</text>
 
       <view class="imageanswer_layout">
         <view class="answeritem" wx:for="{{question.answers_img}}" wx:for-item="i" wx:key="id">
@@ -79,9 +73,8 @@
 
     <!-- template 4 -->
     <view class="{{ showFragment == 4? 'type1':'type1hide'}}">
-      <view class="context">
-        {{question.title}}
-      </view>
+      <text class="context">{{question.title}}</text>
+      
       <view class="item4">
         <image class="answerIndex" id="{{question.answers[0].id}}" bindtap="onClickAnswer" src="{{character[0]}}" mode="widthFix"> </image>
         <view class="answer" id="{{question.answers[0].id}}" style="color:{{characterBgColor[0]}}" bindtap="onClickAnswer"> {{question.answers[0].answer}}</view>
@@ -103,9 +96,7 @@
 
     <!-- template 5 -->
     <view class="{{ showFragment == 5? 'type5':'type5hide'}}">
-        <view class="context">
-          {{question.title}}
-        </view>
+        <text class="context">{{question.title}}</text>
 
         <image class="type2image" mode="top" src="{{question.title2}}"> </image>
         
@@ -122,12 +113,10 @@
 
     <!-- template 6 -->
     <view class="{{ showFragment == 6? 'type6':'type6hide'}}">
-        <view class="context">
-          {{question.title}}
-        </view>
+        <text class="context">{{question.title}}</text>
 
         <view class="answer_label">参考答案:</view>
-        <view class="answer_content"> {{question.answer}} </view>
+        <text class="answer_content"> {{question.answer}} </text>
     </view>
     <!-- template 6 end -->
 
@@ -136,7 +125,7 @@
         <view class="analytics_content"> {{question.analysis}} </view>
     </view>
        
-  </scroll-view>
+</scroll-view>
 
   <view class="op_bottom_layout">
      <view class="op_bottom_prev" bindtap="onClickPrev">上一题</view>

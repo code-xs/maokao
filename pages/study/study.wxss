@@ -124,6 +124,8 @@ page {
 .type2 {
   margin: 5rpx;
   align-items: center;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
   padding-top: 20rpx;
   padding-bottom: 30rpx;
 }
@@ -180,15 +182,16 @@ page {
 .answer_label {
   color: #FFF;
   font-size: 1.0rem;
-  margin-left: 20rpx;
+  margin-left: 0rpx;
   margin-right: 20rpx;
   margin-top:20rpx;
+  margin-bottom: 10rpx;
 }
 
 .answer_content {
   color: #FFF;
   font-size: 0.9rem;
-  margin-left: 20rpx;
+  margin-left: 0rpx;
   margin-right: 20rpx;
   margin-top:20rpx;
 }
@@ -471,8 +474,9 @@ page {
 
 .context {
   color: #fff;
-  margin-left: 20rpx;
+  margin-left: 0rpx;
   margin-right: 10rpx;
+  margin-top: 10rpx;
   margin-bottom: 30rpx;
   word-break: break-all;
   font-size: 1.1rem;
