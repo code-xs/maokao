@@ -311,6 +311,22 @@ input-holder {
   flex: 1;
 }
 
+.user1resulthide {
+  flex: 1;
+  margin-top: 20rpx;
+  background: linear-gradient(to right, #9055f0, #b66ded);
+  border: 1px #bc86f1 solid;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  padding-right: 20rpx;
+  color: #fff;
+  font-size: 0.8rem;
+  text-align: right;
+  border-top-right-radius: 30rpx;
+  border-bottom-right-radius: 30rpx;
+  opacity: 0.0;
+}
+
 .user1result {
   flex: 1;
   margin-top: 20rpx;
@@ -338,6 +354,21 @@ input-holder {
   font-size: 0.8rem;
   border-top-left-radius: 30rpx;
   border-bottom-left-radius: 30rpx;
+}
+
+.user2resulthide {
+  flex: 1;
+  margin-top: 20rpx;
+  background: linear-gradient(to right, #b66ded, #9055f0);
+  border: 1px #bc86f1 solid;
+  padding-left: 20rpx;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  color: #fff;
+  font-size: 0.8rem;
+  border-top-left-radius: 30rpx;
+  border-bottom-left-radius: 30rpx;
+  opacity: 0.0;
 }
 
 .achievement1hide {

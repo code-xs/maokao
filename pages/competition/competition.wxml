@@ -154,16 +154,16 @@
   
   <view class="{{ showFailed? 'failed':'failedhide'}}">
     <view class="result_layout">
-      <view class="user1result">连续答对{{continueRight}}题</view>
+      <view class="{{ continueRight>1? 'user1result':'user1resulthide'}}">连续答对{{continueRight}}题</view>
       <view class="space"></view>
-      <view class="user2result">连续答对{{continueRight1}}题</view>
+      <view class="{{ continueRight1>1? 'user2result':'user2resulthide'}}">连续答对{{continueRight1}}题</view>
     </view>
     <view class="result_layout">
-      <view class="{{continueRight >=0? 'achievement1':'achievement1hide'}}">{{continueRight}}连胜</view>
+      <view class="{{continueRight >0? 'achievement1':'achievement1hide'}}">{{continueRight}}连胜</view>
       <view class="space"></view>
-      <view class="{{continueRight1 >=0? 'achievement2':'achievement2hide'}}">{{continueRight1}}连胜</view>
+      <view class="{{continueRight1 >0? 'achievement2':'achievement2hide'}}">{{continueRight1}}连胜</view>
     </view>
-    <image class="resultImg" mode="withFix" src="/images/pk_success.png"></image>
+    <image class="resultImg" mode="withFix" src="{{pkResultImage}}"></image>
     <view class="centerText">积分+{{userInfoScore}}</view>
     <!--view class="line"></view>
     <view class="retryError">回顾本场对战</view-->

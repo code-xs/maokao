@@ -55,6 +55,8 @@ Page({
     hearts: [],
     continueRight: 0,
     continueRight1:0,
+    continue0:0,
+    continue1:0,
     continueMaxRight: 0,
     errorCateoryList: [],
     questionTotal: 5,
@@ -64,6 +66,8 @@ Page({
     userInfo1Score:0,
     userInfo1Answer: 0,
     runawayNotice:false,
+    continueWin:0,
+    pkResultImage:"/images/pk_success.png",
     type1: [{
       'id': 11,
       'title': '前段时间小程序上线后就弃坑了,回到网页开发去了,最近又有新项目,再次入坑,难免需要一些demo来重新熟悉,在这个过程中,发现demo中很少有人使用flex布局',
@@ -282,10 +286,13 @@ Page({
     var section = this.data.tree;
     var ret = this.updateAnswerBgOnly(id, true);
     if(ret){
-      this.data.continueRight++;
+      this.data.continue0++;
       this.data.userInfoScore += 100;
     }else{
-      this.data.continueRight = 0;
+      if (this.data.continueRight < this.data.continue0) {
+        this.data.continueRight = this.data.continue0;
+      }
+      this.data.continue0 = 0;
     }
 
     this.setData({
@@ -328,10 +335,13 @@ Page({
       var choicePlayer2 = res.choicePlayer1[0] == app.globalData.openId ? res.choicePlayer2 : res.choicePlayer1;
       var ret = this.updateAnswerBgOnly(choicePlayer2[1], false);
       if (ret) {
-        this.data.continueRight1 ++;
+        this.data.continue1 ++;
         this.data.userInfo1Score += 100;
       }else{
-        this.data.continueRight1 = 0;
+        if(this.data.continueRight1 < this.data.continue1){
+          this.data.continueRight1 = this.data.continue1;
+        }
+        this.data.continue1 = 0;
       }
       if (choicePlayer2[1] != this.data.tree.answer){
         this.updateAnswerBgOnly(this.data.tree.answer, false);
@@ -360,16 +370,27 @@ Page({
   stopPK:function(){
     this.cancelTimer();
     var that = this
+    console.log(' userInfo:' + that.data.userInfoScore)
+    console.log(' userInfo1:' + that.data.userInfo1Score)
+    var pkImage = that.data.userInfoScore > that.data.userInfo1Score ? '/images/pk_success.png' : '/images/pk_failed.png';
+    if (this.data.continueRight1 < this.data.continue1) {
+      this.data.continueRight1 = this.data.continue1;
+    }
+    if (this.data.continueRight < this.data.continue0) {
+      this.data.continueRight = this.data.continue0;
+    }
     setTimeout(function () {
       that.setData({
         showFailed: !that.data.showFailed,
         showFragment: -1,
         continueRight: that.data.continueRight,
         continueRight1: that.data.continueRight1,
+        pkResultImage: pkImage,
       })
     }, 1000);
     tunnelClass.closeTunnel();
     app.updateMaxScore(this.data.userInfoScore);
+    app.uploadScoreInfo(this.data.categoryID, this.data.userInfoScore);
   },
 
   onHandleGetAnswer:function(res){
