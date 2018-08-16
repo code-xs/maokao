@@ -378,6 +378,7 @@ Page({
       app.saveContinueWinToStorage(this.data.continueWin1);
     }else{
       this.data.continueWin2 += 1;
+      this.data.continueWin1 = 0;
       app.saveContinueWinToStorage(0);
     }
 
