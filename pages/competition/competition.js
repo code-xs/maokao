@@ -51,7 +51,7 @@ Page({
     characterBgColor: [],
     hearts: [],
     continueRight: 0,
-    continueRight1:0,
+    continueRight2:0,
     continue1:0,
     continue2:0,
     continueWin1:0,
@@ -59,8 +59,8 @@ Page({
     questionTotal: 5,
     questionIndex: 0,
     showLoading: false,
-    userInfoScore:0,
     userInfo1Score:0,
+    userInfo2Score:0,
     userInfo1Answer: 0,
     runawayNotice:false,
     continueWin:0,
@@ -285,7 +285,7 @@ Page({
     var ret = this.updateAnswerBgOnly(id, true);
     if(ret){
       this.data.continue1++;
-      this.data.userInfoScore += 100;
+      this.data.userInfo1Score += 100;
     }else{
       if (this.data.continueRight < this.data.continue1) {
         this.data.continueRight = this.data.continue1;
@@ -296,10 +296,10 @@ Page({
     this.setData({
       characterBgColor: this.data.characterBgColor,
       character: this.data.character,
-      userInfoScore: this.data.userInfoScore
+      userInfo1Score: this.data.userInfo1Score
     });
     var that = this;
-    tunnelClass.uploadAnswer(id, that.data.userInfoScore);
+    tunnelClass.uploadAnswer(id, that.data.userInfo1Score);
   },
   showRunaway: function (str) {
     wx.showToast({
@@ -329,34 +329,36 @@ Page({
   onHandleQuestion: function (res) {
     console.log('enter onHandleQuestion!')
     console.log(res)
-    if ("title" in res.question){
-      var choicePlayer2 = res.choicePlayer1[0] == app.globalData.openId ? res.choicePlayer2 : res.choicePlayer1;
-      var ret = this.updateAnswerBgOnly(choicePlayer2[1], false);
-      if (ret) {
-        this.data.continue2 ++;
-        this.data.userInfo1Score += 100;
-      }else{
-        if(this.data.continueRight1 < this.data.continue2){
-          this.data.continueRight1 = this.data.continue2;
-        }
-        this.data.continue2 = 0;
+    
+    var choicePlayer2 = res.choicePlayer1[0] == app.globalData.openId ? res.choicePlayer2 : res.choicePlayer1;
+    var ret = this.updateAnswerBgOnly(choicePlayer2[1], false);
+    if (ret) {
+      this.data.continue2 ++;
+      this.data.userInfo2Score += 100;
+    }else{
+      if(this.data.continueRight2 < this.data.continue2){
+        this.data.continueRight2 = this.data.continue2;
       }
-      if (choicePlayer2[1] != this.data.tree.answer){
-        this.updateAnswerBgOnly(this.data.tree.answer, false);
-      }
-      var index = parseInt(choicePlayer2[1]) + 1;
-      this.setData({
-        characterBgColor: this.data.characterBgColor,
-        character: this.data.character,
-        answerIndex: index,
-        userInfo1Score: this.data.userInfo1Score,
-        userInfo1Answer: choicePlayer2[1],
-      });
+      this.data.continue2 = 0;
+    }
+    if (choicePlayer2[1] != this.data.tree.answer){
+      this.updateAnswerBgOnly(this.data.tree.answer, false);
+    }
+    var index = parseInt(choicePlayer2[1]) + 1;
+    this.setData({
+      characterBgColor: this.data.characterBgColor,
+      character: this.data.character,
+      answerIndex: index,
+      userInfo2Score: this.data.userInfo2Score,
+      userInfo1Answer: choicePlayer2[1],
+    });
+
+    if ("title" in res.question) {
       this.data.tree = res.question;
       var that = this;
       setTimeout(function () {
         console.log(' runawayNotice:' + that.data.runawayNotice)
-        if(!that.data.runawayNotice){
+        if (!that.data.runawayNotice) {
           that.initQuestionAndAnswer(that.data.curIndex);
         }
       }, 2000);
@@ -368,18 +370,19 @@ Page({
   stopPK:function(){
     this.cancelTimer();
     var that = this
-    console.log(' userInfo:' + that.data.userInfoScore)
-    console.log(' userInfo1:' + that.data.userInfo1Score)
-    var pkImage = that.data.userInfoScore > that.data.userInfo1Score ? '/images/pk_success.png' : '/images/pk_failed.png';
-    if (that.data.userInfoScore > that.data.userInfo1Score){
+    console.log(' userInfo:' + that.data.userInfo1Score)
+    console.log(' userInfo1:' + that.data.userInfo2Score)
+    var pkImage = that.data.userInfo1Score > that.data.userInfo2Score ? '/images/pk_success.png' : '/images/pk_failed.png';
+    if (that.data.userInfo1Score > that.data.userInfo2Score){
       this.data.continueWin1 += 1;
       app.saveContinueWinToStorage(this.data.continueWin1);
     }else{
       this.data.continueWin2 += 1;
+      app.saveContinueWinToStorage(0);
     }
 
-    if (this.data.continueRight1 < this.data.continue2) {
-      this.data.continueRight1 = this.data.continue2;
+    if (this.data.continueRight2 < this.data.continue2) {
+      this.data.continueRight2 = this.data.continue2;
     }
     if (this.data.continueRight < this.data.continue1) {
       this.data.continueRight = this.data.continue1;
@@ -389,15 +392,15 @@ Page({
         showFailed: !that.data.showFailed,
         showFragment: -1,
         continueRight: that.data.continueRight,
-        continueRight1: that.data.continueRight1,
+        continueRight2: that.data.continueRight2,
         pkResultImage: pkImage,
         continueWin1: that.data.continueWin1,
         continueWin2: that.data.continueWin2,
       })
     }, 1000);
     tunnelClass.closeTunnel();
-    app.updateMaxScore(this.data.userInfoScore);
-    app.uploadScoreInfo(this.data.categoryID, this.data.userInfoScore);
+    app.updateMaxScore(this.data.userInfo1Score);
+    app.uploadScoreInfo(this.data.categoryID, this.data.userInfo1Score);
   },
 
   onHandleGetAnswer:function(res){

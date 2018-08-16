@@ -8,7 +8,7 @@
           </view>
           <view class="userleft_info">
            <view class="nametitle_left">{{userInfo.nickName}}</view>
-           <view class="score_left">{{userInfoScore}}分</view>
+           <view class="score_left">{{userInfo1Score}}分</view>
            </view>
       </view>
         
@@ -18,7 +18,7 @@
         </view>
          <view class="userright_info">
            <view class="nametitle_right">{{userInfo1.nickName}}</view>
-           <view class="score_right">{{userInfo1Score}}分</view>
+           <view class="score_right">{{userInfo2Score}}分</view>
            </view>
       </view>
 
@@ -156,7 +156,7 @@
     <view class="result_layout">
       <view class="{{ continueRight>1? 'user1result':'user1resulthide'}}">连续答对{{continueRight}}题</view>
       <view class="space"></view>
-      <view class="{{ continueRight1>1? 'user2result':'user2resulthide'}}">连续答对{{continueRight1}}题</view>
+      <view class="{{ continueRight2>1? 'user2result':'user2resulthide'}}">连续答对{{continueRight2}}题</view>
     </view>
     <view class="result_layout">
       <view class="{{continueWin1 >0? 'achievement1':'achievement1hide'}}">{{continueWin1}}连胜</view>
@@ -164,7 +164,7 @@
       <view class="{{continueWin2 >0? 'achievement2':'achievement2hide'}}">{{continueWin2}}连胜</view>
     </view>
     <image class="resultImg" mode="withFix" src="{{pkResultImage}}"></image>
-    <view class="centerText">积分+{{userInfoScore}}</view>
+    <view class="centerText">积分+{{userInfo1Score}}</view>
     <!--view class="line"></view>
     <view class="retryError">回顾本场对战</view-->
     <view class="showScore">
