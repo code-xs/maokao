@@ -159,9 +159,9 @@
       <view class="{{ continueRight1>1? 'user2result':'user2resulthide'}}">连续答对{{continueRight1}}题</view>
     </view>
     <view class="result_layout">
-      <view class="{{continueRight >0? 'achievement1':'achievement1hide'}}">{{continueRight}}连胜</view>
+      <view class="{{continueWin1 >0? 'achievement1':'achievement1hide'}}">{{continueWin1}}连胜</view>
       <view class="space"></view>
-      <view class="{{continueRight1 >0? 'achievement2':'achievement2hide'}}">{{continueRight1}}连胜</view>
+      <view class="{{continueWin2 >0? 'achievement2':'achievement2hide'}}">{{continueWin2}}连胜</view>
     </view>
     <image class="resultImg" mode="withFix" src="{{pkResultImage}}"></image>
     <view class="centerText">积分+{{userInfoScore}}</view>
