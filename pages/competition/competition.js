@@ -55,7 +55,7 @@ Page({
     continue1:0,
     continue2:0,
     continueWin1:0,
-    continueWin2: 4,
+    continueWin2: 0,
     questionTotal: 5,
     questionIndex: 0,
     showLoading: false,
