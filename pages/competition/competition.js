@@ -31,9 +31,6 @@ Page({
     question: [],
     answerid: [],
     character: [],    
-    type3imagesW:300,
-    type3imagesH:200,
-    showFragment:3,
     showModal:false,
     showFailed:false,
     levelNum: 9999,
@@ -55,10 +52,10 @@ Page({
     hearts: [],
     continueRight: 0,
     continueRight1:0,
-    continue0:0,
     continue1:0,
-    continueMaxRight: 0,
-    errorCateoryList: [],
+    continue2:0,
+    continueWin1:0,
+    continueWin2: 4,
     questionTotal: 5,
     questionIndex: 0,
     showLoading: false,
@@ -107,6 +104,7 @@ Page({
     })
     //this.requestQuestionList(this.data.PAGE, this.data.ID);
     this.data.tree = app.globalData.question;
+    this.data.continueWin1 = app.globalData.continueWinCount;
     this.data.categoryID = option.id;
     this.data.frompageID = option.frompageid;
     console.log('tree:');
@@ -286,13 +284,13 @@ Page({
     var section = this.data.tree;
     var ret = this.updateAnswerBgOnly(id, true);
     if(ret){
-      this.data.continue0++;
+      this.data.continue1++;
       this.data.userInfoScore += 100;
     }else{
-      if (this.data.continueRight < this.data.continue0) {
-        this.data.continueRight = this.data.continue0;
+      if (this.data.continueRight < this.data.continue1) {
+        this.data.continueRight = this.data.continue1;
       }
-      this.data.continue0 = 0;
+      this.data.continue1 = 0;
     }
 
     this.setData({
@@ -335,13 +333,13 @@ Page({
       var choicePlayer2 = res.choicePlayer1[0] == app.globalData.openId ? res.choicePlayer2 : res.choicePlayer1;
       var ret = this.updateAnswerBgOnly(choicePlayer2[1], false);
       if (ret) {
-        this.data.continue1 ++;
+        this.data.continue2 ++;
         this.data.userInfo1Score += 100;
       }else{
-        if(this.data.continueRight1 < this.data.continue1){
-          this.data.continueRight1 = this.data.continue1;
+        if(this.data.continueRight1 < this.data.continue2){
+          this.data.continueRight1 = this.data.continue2;
         }
-        this.data.continue1 = 0;
+        this.data.continue2 = 0;
       }
       if (choicePlayer2[1] != this.data.tree.answer){
         this.updateAnswerBgOnly(this.data.tree.answer, false);
@@ -373,11 +371,18 @@ Page({
     console.log(' userInfo:' + that.data.userInfoScore)
     console.log(' userInfo1:' + that.data.userInfo1Score)
     var pkImage = that.data.userInfoScore > that.data.userInfo1Score ? '/images/pk_success.png' : '/images/pk_failed.png';
-    if (this.data.continueRight1 < this.data.continue1) {
-      this.data.continueRight1 = this.data.continue1;
+    if (that.data.userInfoScore > that.data.userInfo1Score){
+      this.data.continueWin1 += 1;
+      app.saveContinueWinToStorage(this.data.continueWin1);
+    }else{
+      this.data.continueWin2 += 1;
     }
-    if (this.data.continueRight < this.data.continue0) {
-      this.data.continueRight = this.data.continue0;
+
+    if (this.data.continueRight1 < this.data.continue2) {
+      this.data.continueRight1 = this.data.continue2;
+    }
+    if (this.data.continueRight < this.data.continue1) {
+      this.data.continueRight = this.data.continue1;
     }
     setTimeout(function () {
       that.setData({
@@ -386,6 +391,8 @@ Page({
         continueRight: that.data.continueRight,
         continueRight1: that.data.continueRight1,
         pkResultImage: pkImage,
+        continueWin1: that.data.continueWin1,
+        continueWin2: that.data.continueWin2,
       })
     }, 1000);
     tunnelClass.closeTunnel();

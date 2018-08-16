@@ -15,6 +15,7 @@ App({
     this.getCategory(); 
     this.getDataFromStorage();
     this.getShareTargeOpenGId();
+    this.getContinueWinFromStorage();
   },
 
   doLogin() { //登录
@@ -66,6 +67,7 @@ App({
       invitationWinRate: 0,
     },
     abortExit: false,
+    continueWinCount:0,
   },
   setUserInfo: function(res) {
     console.log('setUserInfo:')
@@ -564,5 +566,28 @@ App({
         console.log(res);
       }
     })
+  },
+
+  saveContinueWinToStorage: function (total) {
+    console.log('save achievementDetail:'+total);
+    this.globalData.continueWinCount = total;
+    wx.setStorage({
+      key: 'continueWinCount',
+      data: total,
+    });
+  },
+  getContinueWinFromStorage: function () {
+    var that = this;
+    wx.getStorage({
+      key: 'continueWinCount',
+      success: function (res) {
+        console.log("获取 continueWin 数据成功:");
+        console.log(res.data);
+        that.globalData.continueWinCount = res.data;
+      },
+      fail: function (res) {
+        console.log("获取 continueWin 数据失败");
+      }
+    });
   },
 })
