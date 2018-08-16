@@ -212,17 +212,35 @@ App({
     });
   },
   getNextLevelScoreGap: function(score, level) {
+    // if (this.globalData.rule != null && this.globalData.rule.length > 0) {
+    //   for (var i = 0; i < this.globalData.rule.length; i++) {
+    //     var levels = this.globalData.rule[i];
+    //     for (var j = 0; j < levels.levels.length; j++) {
+    //       var data = levels.levels[j];
+    //       if (level == data.level) {
+    //         return data.score - score;
+    //       }
+    //     }
+    //   }
+    // }
+    // return 1;
+    console.log('getNextLevelScoreGap score:' + score + ' level:' + level);
+    return this.getLevelMaxScore(level) + this.getLevelMaxScore(level + 1) - score;
+  },
+  getLevelMaxScore:function(level) {
     if (this.globalData.rule != null && this.globalData.rule.length > 0) {
       for (var i = 0; i < this.globalData.rule.length; i++) {
         var levels = this.globalData.rule[i];
         for (var j = 0; j < levels.levels.length; j++) {
           var data = levels.levels[j];
           if (level == data.level) {
-            return data.score - score;
+            console.log('getLevelMaxScore level:'+level+' score:'+data.score);
+            return data.score;
           }
         }
       }
     }
+    
     return 1;
   },
   scoreConvertLevel: function(score) {

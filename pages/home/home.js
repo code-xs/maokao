@@ -106,9 +106,14 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
 
   updateScoreInfo:function(data){
     var level = app.scoreConvertLevel(app.globalData.totalScore);
-    var pscoreGap = app.getNextLevelScoreGap(app.globalData.totalScore, level+1);
-    var pprogress = (app.globalData.totalScore / ((app.globalData.totalScore + pscoreGap) * 1.0) * 100);
-    console.log('------------------>  updateScoreInfo :' + data + ' pscoreGap:' + pscoreGap + ' pprogress:' + pprogress);
+    var pscoreGap = app.getNextLevelScoreGap(app.globalData.totalScore, level);
+    var pprogress = 100 * (app.globalData.totalScore - app.getLevelMaxScore(level)) /
+      (app.getLevelMaxScore(level + 1));
+
+    var fenzi = app.globalData.totalScore - app.getLevelMaxScore(level);
+    var fenmu = app.getLevelMaxScore(level + 1);
+    pprogress = 100 * fenzi / fenmu;
+    console.log('--->  updateScoreInfo totalScore:' + app.globalData.totalScore + 'fenzi:'+ fenzi + ' fenmu:'+fenmu+ ' pprogress:' + pprogress);
 
     this.setData({
       empirical: 0, 
@@ -118,7 +123,7 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
       scoreGap: pscoreGap,
       userRanking: app.globalData.userRanking,
       empiricalV: app.globalData.totalScore,
-      progress: (app.globalData.totalScore / ((app.globalData.totalScore + pscoreGap) * 1.0) * 100),
+      progress: pprogress,
     });    
   },
 
@@ -126,8 +131,9 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
     console.log('initData:')
     console.log(app.globalData)
     var level = app.scoreConvertLevel(app.globalData.totalScore);
-    var pprogress = (app.globalData.totalScore / ((app.globalData.totalScore + this.data.scoreGap) * 1.0) * 100);
-    console.log('------------------>  initData scoreGap:' + this.data.scoreGap + ' pprogress:' + pprogress);
+    var pprogress = 100 * (app.globalData.totalScore - app.getLevelMaxScore(level)) / 
+    app.getLevelMaxScore(level + 1);
+    console.log('------------->  initData totalScore:' + app.globalData.totalScore + ' pprogress:' + pprogress);
 
     this.setData({
       empirical: 0,
@@ -136,7 +142,7 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
       levelV: level,
       userRanking: app.globalData.userRanking,
       empiricalV: app.globalData.totalScore,
-      progress: (app.globalData.totalScore / ((app.globalData.totalScore + this.data.scoreGap) * 1.0) * 100),
+      progress: pprogress,
     });
     wx.setNavigationBarColor({
       frontColor: '#ffffff',

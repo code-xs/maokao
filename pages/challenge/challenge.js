@@ -271,7 +271,8 @@ Page({
     console.log(' get select id:'+this.data.ID)
     console.log(' get app.globalData.userInfo:' + app.globalData.userInfo)
     this.setData({
-      score: app.globalData.totalScore,
+      // score: app.globalData.totalScore,
+      score: 0,
       oldLevel:app.scoreConvertLevel(app.globalData.totalScore),
       userInfo: app.globalData.userInfo,
     })
@@ -624,9 +625,9 @@ Page({
       this.data.score1 = 0;   
     }
 
-    if (this.data.continueRight > 0){
+    if (this.data.continueRight > 0) {
       app.updateWinningStreak(this.data.continueRight);
-      if (this.data.continueRight > this.data.continueMaxRight){
+      if (this.data.continueRight > this.data.continueMaxRight) {
         this.setData({
           continueMaxRight: this.data.continueRight,
         })

@@ -59,8 +59,9 @@ Page({
     oldLevel: 0,
   },
   onLoad: function(option) {
-    console.log('onLoad  frompageid:' + option.frompageid)
-    this.data.oldLevel = app.scoreConvertLevel(app.globalData.totalScore)
+    this.data.oldLevel = app.scoreConvertLevel(app.globalData.totalScore);
+    console.log('onLoad  frompageid:' + option.frompageid + ' oldLevel:' + this.data.oldLevel);
+
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
       backgroundColor: '#a753d6',
@@ -84,20 +85,18 @@ Page({
   },
 
   initData: function(len, fpid) {
+    console.log('initData len:'+len+' fpid:'+fpid);
+    
+    this.setData({
+      frompageid: fpid,
+      oldLevel: this.data.oldLevel,
+    });
+
     if (fpid == 4) {
-      this.setData({
-        frompageid: fpid,
-      });
       this.loadFavoriteStudyCategory();
     } else if (fpid == 2) {
-      this.setData({
-        frompageid: fpid,
-      });
       this.loadFavoritePKCategory();
     } else {
-      this.setData({
-        frompageid: fpid, 
-      });
       this.loadFavoriteCategory();
     }
   }, 

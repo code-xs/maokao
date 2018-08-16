@@ -269,3 +269,89 @@ width: 0;
 height: 0;
 color: transparent;
 }
+
+
+.upgrade-dialog {
+  margin-left: 15%;
+  width: 70%;
+  overflow: hidden;
+  position: fixed;
+  top: 20%;
+  z-index: 9003;
+  background: #f9f9f9;
+  border-radius: 30rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.art_bg {
+   position:absolute;
+   z-index: 8000;
+}
+
+.upgrade-1-bg {
+  width: 248rpx;
+  height: 248rpx;
+  margin-top: 60rpx;
+  align-self: center;
+}
+
+.modal-title {
+  padding-top: 50rpx;
+  padding-bottom: 30rpx;
+  font-size: 1.4rem;
+  color: #8b44c9;
+  text-align: center;
+  font-weight: bold;
+}
+
+.levelItem {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.modal-subtitle {
+  padding-top: 0rpx;
+  padding-bottom: 10rpx;
+  font-size: 0.9rem;
+  color: #333;
+  text-align: center;
+}
+
+.modal-subtitle2 {
+  padding-top: 0rpx;
+  padding-bottom: 10rpx;
+  font-size: 0.9rem;
+  color: #333;
+  text-align: center;
+}
+
+.modal-subtitle3 {
+  width: 350rpx;
+  height: 88rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: 100% 100%;
+  margin-top: 40rpx;
+  margin-bottom: 40rpx;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background-repeat: no-repeat;
+  background-image: url('https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/challenge/bt_challenge_back.png');
+  background-color: transparent;
+}
+
+
+.levelNum {
+  padding-bottom: 10rpx;
+  font-size: 1.3rem;
+  color: #8a4ac6;
+  text-align: center;
+  font-weight: bold;
+}
+

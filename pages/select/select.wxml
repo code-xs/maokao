@@ -34,13 +34,27 @@
   <!-- abort dialog -->
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showUpgradeModal}}">
   </view>
-  <view class="modal-dialog" wx:if="{{showUpgradeModal}}">
+  <!--view class="modal-dialog" wx:if="{{showUpgradeModal}}">
     <view class="image-fail">
       <image class="modal-closeimage" bindtap="onClickOK" mode="widthFix" src="/images/ic_dialog_close.png"></image>
     </view>
     <view class="drop-title">恭喜升级!!</view>
     <button class="modal-subtitle3" bindtap="onClickOK">确定</button>
   </view>
-  <image class="modal-image" mode="widthFix" src="/images/upgrade.png" wx:if="{{showUpgradeModal}}"></image>  
+  <image class="modal-image" mode="widthFix" src="/images/upgrade.png" wx:if="{{showUpgradeModal}}"></image-->  
   <!-- abort dialog -->
+
+<!-- dialog upgrade -->
+  <view class="upgrade-dialog" wx:if="{{showUpgradeModal}}">
+    <image class="art_bg" src="/images/ic_bg_art.png"></image>
+    <image class="upgrade-1-bg" mode="widthFix" src='/images/upgrade-1-bg.png'></image>
+    <view class="modal-title">恭喜升级</view>
+    <view class="levelItem">
+      <view class="modal-subtitle">你的等级已升到</view>
+      <text class="levelNum">LV.{{oldLevel + 1}}</text>
+    </view>
+    <button class="modal-subtitle3" bindtap="onClickOK">确定</button>
+  </view>
+  <!-- dialog upgrade end-->
+
 </view>
