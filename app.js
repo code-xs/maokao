@@ -522,6 +522,7 @@ App({
             fail: function (res) {//这个方法就是分享到的是好友，给一个提示
               console.log('fail shareTickets:');
               console.log(res);
+              /*
               wx.showModal({
                 title: '提示',
                 content: '分享好友无效，请分享群',
@@ -532,7 +533,7 @@ App({
                     console.log('用户点击取消')
                   }
                 }
-              })
+              })*/
             }
           })
         }
