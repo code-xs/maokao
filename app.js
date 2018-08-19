@@ -15,7 +15,7 @@ App({
     this.getCategory(); 
     this.getDataFromStorage();
     this.getShareTargeOpenGId();
-    this.getContinueWinFromStorage();
+    //this.getContinueWinFromStorage();
   },
 
   doLogin() { //登录
@@ -570,7 +570,7 @@ App({
       }
     })
   },
-
+  /*
   saveContinueWinToStorage: function (total) {
     console.log('save achievementDetail:'+total);
     this.globalData.continueWinCount = total;
@@ -592,5 +592,5 @@ App({
         console.log("获取 continueWin 数据失败");
       }
     });
-  },
+  },*/
 })

@@ -63,7 +63,6 @@ Page({
     userInfo2Score:0,
     userInfo1Answer: 0,
     runawayNotice:false,
-    continueWin:0,
     pkResultImage:"/images/pk_success.png",
     type1: [{
       'id': 11,
@@ -377,12 +376,12 @@ Page({
     if (that.data.userInfo1Score > that.data.userInfo2Score){
       this.data.continueWin1 += 1;
       app.globalData.scoreInfo.victorynum += 1;
-      app.saveContinueWinToStorage(this.data.continueWin1);
+      //app.saveContinueWinToStorage(this.data.continueWin1);
     }else{
       this.data.continueWin2 += 1;
       app.globalData.scoreInfo.victorynum = 0;
       this.data.continueWin1 = 0;
-      app.saveContinueWinToStorage(0);
+      //app.saveContinueWinToStorage(0);
     }
 
     if (this.data.continueRight2 < this.data.continue2) {
