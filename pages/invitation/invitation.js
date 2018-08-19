@@ -53,6 +53,7 @@ Page({
       showTicker: !this.data.showTicker,
       invitationTitle: this.data.showTicker == false ? '比赛即将开始...' : '等待对方加入'
     });
+    tunnelClass.closeTunnel();
     var tunnel = tunnelClass.createTunnel();
     this.data.tunnel = tunnel;
     tunnelClass.listenMatchSuccess(this.onHandleMatchSuccess);

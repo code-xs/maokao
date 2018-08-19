@@ -104,7 +104,8 @@ Page({
     })
     //this.requestQuestionList(this.data.PAGE, this.data.ID);
     this.data.tree = app.globalData.question;
-    this.data.continueWin1 = app.globalData.continueWinCount;
+    this.data.continueWin1 = app.globalData.scoreInfo.victorynum;
+    this.data.continueWin2 = app.globalData.scoreInfo1.victorynum;
     this.data.categoryID = option.id;
     this.data.frompageID = option.frompageid;
     console.log('tree:');
@@ -375,9 +376,11 @@ Page({
     var pkImage = that.data.userInfo1Score > that.data.userInfo2Score ? '/images/pk_success.png' : '/images/pk_failed.png';
     if (that.data.userInfo1Score > that.data.userInfo2Score){
       this.data.continueWin1 += 1;
+      app.globalData.scoreInfo.victorynum += 1;
       app.saveContinueWinToStorage(this.data.continueWin1);
     }else{
       this.data.continueWin2 += 1;
+      app.globalData.scoreInfo.victorynum = 0;
       this.data.continueWin1 = 0;
       app.saveContinueWinToStorage(0);
     }

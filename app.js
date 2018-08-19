@@ -56,7 +56,8 @@ App({
       totalScore: 0,
       experience: 0,
       worldRanking: 0,
-      total: 0
+      total: 0,
+      victorynum:0,
     },
     achievementDetail: {
       totalChallenge: 0,
@@ -352,6 +353,7 @@ App({
         category_id: id,
         current_score: score,
         user_experience: 10,
+        victorynum: that.globalData.userInfo.victorynum,
       },
       success: (response) => {
         console.log('上传 uploadScoreInfo 成功 statusCode:' + response.statusCode);
