@@ -169,6 +169,7 @@ Page({
 
   onHandleMatchSuccess:function(res){
     var that = this;
+    tunnelClass.listenMatchSuccess(null);
     if (res.player2.openId == app.globalData.openId){
       app.globalData.userInfo1 = res.player1;
     }else{
