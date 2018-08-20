@@ -63,6 +63,7 @@ Page({
     userInfo2Score:0,
     userInfo1Answer: 0,
     runawayNotice:false,
+    gameOver:false,
     pkResultImage:"/images/pk_success.png",
     type1: [{
       'id': 11,
@@ -271,7 +272,10 @@ Page({
   onHandleQuestion: function (res) {
     console.log('enter onHandleQuestion!')
     console.log(res)
-    
+    if (this.data.gameOver){
+      console.log('gameOver!!!')
+      return;
+    }
     var choicePlayer2 = res.choicePlayer1[0] == app.globalData.openId ? res.choicePlayer2 : res.choicePlayer1;
     var ret = this.updateAnswerBgOnly(choicePlayer2[1], false);
     if (ret) {
@@ -310,6 +314,7 @@ Page({
     }
   },
   stopPK:function(){
+    this.data.gameOver = true;
     this.cancelTimer();
     var that = this
     console.log(' userInfo:' + that.data.userInfo1Score)
@@ -332,6 +337,7 @@ Page({
     if (this.data.continueRight < this.data.continue1) {
       this.data.continueRight = this.data.continue1;
     }
+    var win = that.data.userInfo1Score > that.data.userInfo2Score ? true:false;
     setTimeout(function () {
       that.setData({
         showFailed: true,
@@ -339,8 +345,8 @@ Page({
         continueRight: that.data.continueRight,
         continueRight2: that.data.continueRight2,
         pkResultImage: pkImage,
-        continueWin1: that.data.continueWin1,
-        continueWin2: that.data.continueWin2,
+        continueWin1: win ? that.data.continueWin1:0,
+        continueWin2: win == false?that.data.continueWin2:0,
       })
     }, 1000);
     tunnelClass.closeTunnel();
@@ -356,6 +362,10 @@ Page({
   onHandleRunawayNotice:function(res){
     console.log('enter onHandleRunawayNotice!')
     console.log(res)
+    if (this.data.gameOver) {
+      console.log('gameOver!!!')
+      return;
+    }  
     this.data.runawayNotice = true;
     this.stopPK();
     this.showRunaway('对方已逃跑')
@@ -407,6 +417,10 @@ Page({
     if(this.data.runawayNotice){
       return;
     }
+    if (this.data.gameOver) {
+      console.log('gameOver!!!')
+      return;
+    }    
     if (status == 2 || status == 3 || status == 5){
       //this.data.runawayNotice = true;
       //this.stopPK();
