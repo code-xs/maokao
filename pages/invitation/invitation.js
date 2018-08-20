@@ -56,7 +56,8 @@ Page({
     tunnelClass.closeTunnel();
     var tunnel = tunnelClass.createTunnel();
     this.data.tunnel = tunnel;
-    tunnelClass.listenMatchSuccess(this.onHandleMatchSuccess);
+    tunnelClass.setMatchSuccessCb(this.onHandleMatchSuccess);
+    tunnelClass.listenMatchSuccess(null);
     tunnelClass.setListenQuestion(this.onHandleQuestion)
     tunnelClass.listenQuestion(null);
     tunnel.open();
@@ -169,7 +170,7 @@ Page({
 
   onHandleMatchSuccess:function(res){
     var that = this;
-    tunnelClass.listenMatchSuccess(null);
+    //tunnelClass.setMatchSuccessCb(null);
     if (res.player2.openId == app.globalData.openId){
       app.globalData.userInfo1 = res.player1;
     }else{
