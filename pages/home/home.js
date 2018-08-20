@@ -6,7 +6,7 @@ var qcloud = require('../../vendor/wafer2-client-sdk/index');
 
 // 引入配置
 var config = require('../../config');
-var isGoShipping = true;
+var isGoShipping = false;
 
 Page({
   data: {

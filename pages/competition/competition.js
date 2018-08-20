@@ -101,7 +101,6 @@ Page({
     wx.setNavigationBarTitle({
       title: "好友对战"
     })
-    //this.requestQuestionList(this.data.PAGE, this.data.ID);
     this.data.tree = app.globalData.question;
     this.data.continueWin1 = app.globalData.scoreInfo.victorynum;
     this.data.continueWin2 = app.globalData.userInfo1.victorynum;
@@ -125,64 +124,6 @@ Page({
     }
   },
 
-  initData:function(){    
-    this.setData({
-      empirical: 999,
-      ranking: 0,
-      empiricalV: "第" + this.data.empirical +"题",
-      levelV:this.data.level+"级",
-      scoreStr: this.data.score+'分',
-      answer: this.data.answer,
-    });
-    wx.setNavigationBarColor({
-      frontColor: '#ffffff',
-      backgroundColor: '#735cd9',
-    });
-    wx.setNavigationBarTitle({
-      title: "对战"
-    })
-    //this.requestQuestionList(this.data.PAGE, this.data.ID);
-    this.initQuestionAndAnswer(this.data.showFragment);
-  },
-  requestQuestionList: function (page, id) {
-    var that = this;
-    qcloud.request({
-      url: config.service.requestQuestionList,
-      header: {
-        'Content-Type': 'application/json'
-      },
-      data: {//这里写你要请求的参数
-        category_id: id,
-        page_index: page
-      },
-      success: (response) => {
-        console.log('请求成功 statusCode:' + response.statusCode);
-        console.log(response.data.data);
-        that.data.tree = response.data.data;
-
-        if (that.data.tree == null || that.data.tree.length == 0) {
-          this.setData({
-            gameOver: true,
-            showFragment: 0,
-          });
-          this.cancelTimer();
-          //this.saveCacheData();
-          //this.showUpgradeDialog();
-        } else {
-          if (that.data.PAGE == 0) {
-            that.initData();
-          } else {
-            that.initQuestionAndAnswer(that.data.curIndex);
-          }
-        }
-        console.log(that.data.tree);
-      },
-      fail: function (err) {
-        console.log('请求失败', err);
-      }
-    });
-  },
-
   initQuestionAndAnswer(index) {
     this.data.answer = [];
     this.data.question = [];
@@ -198,7 +139,7 @@ Page({
     this.data.character.push('../../images/ic_b.png');
     this.data.character.push('../../images/ic_c.png');
     this.data.character.push('../../images/ic_d.png');
-    console.log(' section ' + index + ' data.type:' + section.type);
+    console.log(' section ' + this.data.questionIndex + ' question data:' + section);
     this.setData({
       answer: this.data.answer,
       question: section,
@@ -393,7 +334,7 @@ Page({
     }
     setTimeout(function () {
       that.setData({
-        showFailed: !that.data.showFailed,
+        showFailed: true,
         showFragment: -1,
         continueRight: that.data.continueRight,
         continueRight2: that.data.continueRight2,
@@ -467,9 +408,9 @@ Page({
       return;
     }
     if (status == 2 || status == 3 || status == 5){
-      this.data.runawayNotice = true;
-      this.stopPK();
-      this.showRunaway('对方已逃跑')      
+      //this.data.runawayNotice = true;
+      //this.stopPK();
+      //this.showRunaway('对方已逃跑')      
     }
   }
 })
