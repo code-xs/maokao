@@ -54,7 +54,9 @@ var tunnel = {
     this.tunnelServer.tunnelObj.on('matchNotice', (res) => {//PING-PONG机制:监听服务器PING
       console.log("receive matchSucess")
       console.log(res)
-      cb(res);
+      if(cb != null){
+        cb(res);
+      }
     })
   },
 
