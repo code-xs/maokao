@@ -258,7 +258,9 @@ Page({
   startCountDown:function(duration){
     var that = this;
     if (that.data.progress > 0){
+      this.cancelTimer();
       this.data.timer = setTimeout(function () {
+        that.data.timer = null;
         that.setData({
           progress : that.data.progress - 1
         })
@@ -422,9 +424,9 @@ Page({
       return;
     }    
     if (status == 2 || status == 3 || status == 5){
-      //this.data.runawayNotice = true;
-      //this.stopPK();
-      //this.showRunaway('对方已逃跑')      
+      this.data.runawayNotice = true;
+      this.stopPK();
+      this.showRunaway('对方已逃跑')      
     }
   }
 })
