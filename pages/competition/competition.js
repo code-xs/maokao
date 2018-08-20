@@ -104,7 +104,7 @@ Page({
     //this.requestQuestionList(this.data.PAGE, this.data.ID);
     this.data.tree = app.globalData.question;
     this.data.continueWin1 = app.globalData.scoreInfo.victorynum;
-    this.data.continueWin2 = app.globalData.scoreInfo1.victorynum;
+    this.data.continueWin2 = app.globalData.userInfo1.victorynum;
     this.data.categoryID = option.id;
     this.data.frompageID = option.frompageid;
     console.log('tree:');
@@ -113,6 +113,7 @@ Page({
     //tunnelClass.listenQuestion(null);
     tunnelClass.listenGetAnswer(this.onHandleGetAnswer);
     tunnelClass.listenRunawayNotice(this.onHandleRunawayNotice)
+    tunnelClass.setListentunnelStatusCb(this.listentunnelStatusCb)
     this.initQuestionAndAnswer(this.data.curIndex);
   },
 
@@ -460,4 +461,15 @@ Page({
       }
     }
   },
+  listentunnelStatusCb:function(status){
+    console.log('listentunnelStatus:'+status)
+    if(this.data.runawayNotice){
+      return;
+    }
+    if (status == 2 || status == 3 || status == 5){
+      this.data.runawayNotice = true;
+      this.stopPK();
+      this.showRunaway('对方已逃跑')      
+    }
+  }
 })

@@ -353,7 +353,7 @@ App({
         category_id: id,
         current_score: score,
         user_experience: 10,
-        victorynum: that.globalData.userInfo.victorynum,
+        victorynum: that.globalData.scoreInfo.victorynum,
       },
       success: (response) => {
         console.log('上传 uploadScoreInfo 成功 statusCode:' + response.statusCode);

@@ -11,7 +11,8 @@ var tunnel = {
    connectCb:null,
    matchSuccessCb:null,
    receiveQuestionCb:null,
-
+   tunnelStatusCb:null,
+   status:-1,
   },
 
   createTunnel:function(){
@@ -26,6 +27,7 @@ var tunnel = {
       tunnel.on('reconnect', () => that.tunnelReconnect());
       tunnel.on('error', error => that.tunnelError());
       this.tunnelServer.tunnelObj = tunnel;
+      this.tunnelServer.status = 0;
     }
     console.log(this.tunnelServer.tunnelObj);
     return this.tunnelServer.tunnelObj;
@@ -59,7 +61,9 @@ var tunnel = {
   setListenQuestion:function(cb){
     this.tunnelServer.receiveQuestionCb = cb
   },
-
+  setListentunnelStatusCb:function(cb){
+    this.tunnelServer.tunnelStatusCb =cb;
+  },
   listenQuestion: function (cb) {
     console.log('enter listenQuestion!')
     this.tunnelServer.tunnelObj.on('sendQuestion', (res) => {
@@ -97,6 +101,9 @@ var tunnel = {
     if (this.tunnelServer.tunnelObj != null){
       this.tunnelServer.tunnelObj.close();
       this.tunnelServer.tunnelObj = null;
+      this.tunnelServer.receiveQuestionCb = null;
+      this.tunnelServer.tunnelStatusCb = null;
+      this.tunnelServer.status = -1;
     }
   },
 
@@ -125,19 +132,35 @@ var tunnel = {
   tunnelConnect:function(){
     this.keepConnect();
     console.log('WebSocket 信道已连接')
+    this.tunnelServer.status = 1;
+    if (this.tunnelServer.tunnelStatusCb != null)
+      this.tunnelServer.tunnelStatusCb(this.tunnelServer.status);    
   },
 
   tunnelDisconnect: function () {
     console.log('WebSocket 信道已断开')
+    this.tunnelServer.status = 2;
+    if (this.tunnelServer.tunnelStatusCb != null)
+      this.tunnelServer.tunnelStatusCb(this.tunnelServer.status);
   },
   tunnelReconnecting: function () {
     console.log('WebSocket 信道正在重连...')
+    this.tunnelServer.status = 3;
+    if (this.tunnelServer.tunnelStatusCb != null)
+      this.tunnelServer.tunnelStatusCb(this.tunnelServer.status);
+
   },
   tunnelReconnect:function(){
     console.log('WebSocket 信道重连成功')
+    this.tunnelServer.status = 4;
+    if (this.tunnelServer.tunnelStatusCb != null)
+      this.tunnelServer.tunnelStatusCb(this.tunnelServer.status);
   },
   tunnelError: function () {
     console.error('信道发生错误')
+    this.tunnelServer.status = 5;
+    if (this.tunnelServer.tunnelStatusCb != null)
+      this.tunnelServer.tunnelStatusCb(this.tunnelServer.status);
   },
 };
 
