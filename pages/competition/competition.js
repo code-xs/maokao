@@ -149,7 +149,7 @@ Page({
       empiricalV: "第" + section.index + "题",
       characterBgColor: this.data.characterBgColor,
       character: this.data.character,
-      questionIndex: this.data.questionIndex,
+      questionIndex: section.id,
     })
     this.data.questionIndex++;
     this.data.pendEvent = false;
