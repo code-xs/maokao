@@ -111,6 +111,7 @@ var tunnel = {
     if (this.tunnelServer.tunnelObj != null){
       this.tunnelServer.status = -1;
       this.tunnelServer.tunnelObj.close();
+      this.tunnelServer.tunnelObj = null;
       this.tunnelServer.receiveQuestionCb = null;
       this.tunnelServer.tunnelStatusCb = null;
     }
@@ -149,6 +150,7 @@ var tunnel = {
   tunnelConnect:function(){
     this.keepConnect();
     console.log('WebSocket 信道已连接')
+    this.showTunnelStatus('信道已连接');
     this.tunnelServer.status = 1;
     if (this.tunnelServer.tunnelStatusCb != null)
       this.tunnelServer.tunnelStatusCb(this.tunnelServer.status);    
@@ -164,6 +166,7 @@ var tunnel = {
   tunnelReconnecting: function () {
     console.log('WebSocket 信道正在重连...')
     this.tunnelServer.status = 3;
+    this.showTunnelStatus('信道正在重连');
     if (this.tunnelServer.tunnelStatusCb != null && this.tunnelServer.tunnelObj != null)
       this.tunnelServer.tunnelStatusCb(this.tunnelServer.status);
   },
