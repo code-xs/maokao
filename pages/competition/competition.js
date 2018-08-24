@@ -61,6 +61,8 @@ Page({
     showLoading: false,
     userInfo1Score:0,
     userInfo2Score:0,
+    user1Answer: -1,
+    user2Answer: -1,
     userInfo1Answer: 0,
     runawayNotice:false,
     gameOver:false,
@@ -131,6 +133,8 @@ Page({
     this.data.answerid = [];
     this.data.characterBgColor = [];
     this.data.character = [];
+    this.data.user1Answer = -1;
+    this.data.user2Answer = -1;
     var section = this.data.tree;
     console.log(' section ' + index + ' data::');
     console.log(this.data.tree);
@@ -185,8 +189,12 @@ Page({
       console.log(' pendingEvent !!!');
       return;
     }
+    this.data.user1Answer = e.target.id;
     this.data.pendEvent = true;  
-    this.cancelTimer();
+    console.log('this.data.user2Answer:' + this.data.user2Answer);
+    if (this.data.user1Answer >= 0 && this.data.user2Answer >= 0){
+      this.cancelTimer();
+    }
     if (this.data.runawayNotice) {
       console.log(' call runawayNotice !');
       return ;
@@ -267,6 +275,10 @@ Page({
         that.startCountDown(duration);
       }, duration);
     }else{
+      console.log('this.data.user1Answer:' + this.data.user1Answer)
+      if (this.data.user1Answer >= 0) {
+        return;
+      }
       this.showAnswer(-1);
     }
   },
@@ -278,6 +290,7 @@ Page({
       console.log('gameOver!!!')
       return;
     }
+    this.cancelTimer();
     var choicePlayer2 = res.choicePlayer1[0] == app.globalData.openId ? res.choicePlayer2 : res.choicePlayer1;
     var ret = this.updateAnswerBgOnly(choicePlayer2[1], false);
     if (ret) {
