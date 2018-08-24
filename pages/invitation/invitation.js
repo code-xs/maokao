@@ -170,7 +170,7 @@ Page({
 
   onHandleMatchSuccess:function(res){
     var that = this;
-    //tunnelClass.setMatchSuccessCb(null);
+    tunnelClass.setMatchSuccessCb(null);
     if (res.player2.openId == app.globalData.openId){
       app.globalData.userInfo1 = res.player1;
     }else{
