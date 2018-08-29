@@ -33,13 +33,20 @@ var tunnel = {
     return this.tunnelServer.tunnelObj;
   },
 
-  beginMatch: function (id) {
-    console.log('beginMatch, openId:' + app.globalData.openId+',id:'+id);
-    this.tunnelServer.tunnelObj.emit('beginMatch', {//发起匹配
-      openId: app.globalData.openId,
-      sortId: id,
-      //friendsFightingRoom: null//匹配者含friendsFightingRoom则说明是好友之间的匹配
-    })
+  beginMatch: function (id, roomId) {
+    console.log('beginMatch, openId:' + app.globalData.openId+',id:'+id+',roomId:'+roomId);
+    if(roomId != null && roomId != undefined){
+      this.tunnelServer.tunnelObj.emit('beginMatch', {//发起匹配
+        openId: app.globalData.openId,
+        sortId: id,
+        friendsFightingRoom: roomId//匹配者含friendsFightingRoom则说明是好友之间的匹配
+      })
+    }else{
+      this.tunnelServer.tunnelObj.emit('beginMatch', {//发起匹配
+        openId: app.globalData.openId,
+        sortId: id,
+      })
+    }
   },
 
   fightingResult:function(finish){

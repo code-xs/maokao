@@ -44,7 +44,7 @@ Page({
     gameOver: false,
     timer: null,
     categoryID: -1,
-    frompageID: -1,
+    roomID: -1,
     pendindDuration: 1000,
     allowShareMax: 2,
     curShareTick: 0,
@@ -108,7 +108,7 @@ Page({
     this.data.continueWin1 = app.globalData.scoreInfo.victorynum;
     this.data.continueWin2 = app.globalData.userInfo1.victorynum;
     this.data.categoryID = option.id;
-    this.data.frompageID = option.frompageid;
+    this.data.roomID = option.roomID;
     console.log('tree:');
     console.log(this.data.tree);
     tunnelClass.setListenQuestion(this.onHandleQuestion)
@@ -390,7 +390,7 @@ Page({
     console.log(' onClickAgain !!! ID:' + this.data.categoryID);
 
     wx.redirectTo({
-      url: '../invitation/invitation?id=' + this.data.categoryID + '&frompageid=' + this.data.frompageID,
+      url: '../invitation/invitation?id=' + this.data.categoryID + '&roomID=' + 0,
     })
   },
   onUnload:function(){

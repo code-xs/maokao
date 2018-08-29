@@ -25,11 +25,11 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
     Height:150,
     empiricalV:0,
     levelV:1,
-    windowW:0,
-    windowH:0,
     challenge:-1,
     userRanking:100,
     scoreGap:900,
+    remoteID:-1,
+    remoteRoomID:-1,
   },
   //事件处理函数
   bindViewTap: function() {
@@ -37,7 +37,9 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
+  onLoad: function (option) {
+    app.setUpdateRankingCallBack(this.updateScoreInfo);
+    app.setListenUserAuthorizeStatusCallBack(this.listenUserAuthorizeStatus);
     wx.showShareMenu({
       // 要求小程序返回分享目标信息
       withShareTicket: true
@@ -57,6 +59,10 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
         })
       }
       console.log(' hasUserInfo:' + this.data.hasUserInfo);  
+      console.log(' userInfo1:' + this.data.userInfo1);
+      console.log(this.data.userInfo1);
+      console.log(' userInfo:' + this.data.userInfo);
+      console.log(this.data.userInfo);
       this.setData({
         userInfo: this.data.userInfo1,
       })
@@ -71,40 +77,52 @@ avatarUrl:"https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/avat
           })
         }
       })
-      console.log(' userInfo:' + this.data.userInfo1);
+      console.log(' userInfo1:' + this.data.userInfo1);
+      console.log(' userInfo:' + this.data.userInfo);
       if (!this.data.hasUserInfo){
         this.setData({
           userInfo: this.data.userInfo1,
         })
       }
     }
-    
-
-    var that = this;
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res);
-        that.setData({
-          windowW: res.windowWidth,
-          windowH: res.windowHeight,
-          screenWidth: res.windowWidth,
-        })
-      }
-    });
-    app.setUpdateRankingCallBack(this.updateScoreInfo);
+    //option.id = 24
+    //option.roomID = 123244234234
+    this.data.remoteID = option.id
+    this.data.remoteRoomID = option.roomID
+    console.log('userAuthorizeStatus:' + app.globalData.userAuthorizeStatus);
+    console.log('user openId:' + app.globalData.openId);
+    console.log('onLoad option.id' + option.id + ' roomID:' + option.roomID)
     this.initData();
+    this.gotoInvitation();
   },
-
-  getUserInfo: function(e) {
-    console.log(' getUserInfo')
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  }, 
-
+  gotoInvitation:function(){
+    console.log('onLoad this id' + this.data.remoteID + ' roomID:' + this.data.remoteRoomID)
+    if (app.globalData.userAuthorizeStatus == 1
+      && this.data.remoteID != undefined && this.data.remoteRoomID != undefined) {
+      console.log(' come from Friend PK!!!')
+      wx.navigateTo({
+        url: '../invitation/invitation?id=' + this.data.remoteID + '&roomID=' + this.data.remoteRoomID,
+      })
+    }
+  },
+  listenUserAuthorizeStatus:function(status){
+    console.log('UserAuthorizeStatus:'+status)
+    if (status == 0
+      && this.data.remoteID != undefined
+      && this.data.remoteRoomID != undefined) {
+        console.log('come from Friend PK!!!')
+        wx.showToast({
+          title: '用户未授权，请先授权！',
+        })
+    } else if (status == 1
+      && this.data.remoteID != undefined
+      && this.data.remoteRoomID != undefined){
+      this.gotoInvitation();
+    }
+  },
   updateScoreInfo:function(data){
+    console.log('app.globalData.userInfo:')
+    console.log(app.globalData.userInfo)
     var level = app.scoreConvertLevel(app.globalData.totalScore);
     var pscoreGap = app.getNextLevelScoreGap(app.globalData.totalScore, level);
     var pprogress = 100 * (app.globalData.totalScore - app.getLevelMaxScore(level)) /

@@ -15,9 +15,10 @@ Page({
     timeTick:0,
     timeTickStr:'00',
     timer:null,
-    timeOut:20,
+    timer1:null,
+    timeOut:60,
     categoryID:-1,
-    frompageID:-1,
+    roomID:-1,
     showMatch:false,
     enterPKPage:false,
     countDownImages: ["/images/3.png", "/images/2.png", "/images/1.png", "/images/go.png"],
@@ -31,10 +32,10 @@ Page({
     })
   },
   onLoad: function (option) {
-    console.log('onLoad option.id' + option.id+' frompageid:' + option.frompageid)
+    console.log('onLoad option.id' + option.id+' roomID:' + option.roomID)
     console.log(this.data.countDownImages)
     this.data.categoryID = option.id;
-    this.data.frompageID = option.frompageid;
+    this.data.roomID = option.roomID;
     this.setData({
       userInfo: app.globalData.userInfo,
     })
@@ -43,7 +44,11 @@ Page({
       backgroundColor: '#bb6cd5',
     });
     this.initData();  
-    this.onClickRandom();
+    if (option.roomID != undefined && option.roomID > 0){
+      this.beginMatch()
+    } else if (option.roomID == 0){
+      this.bindRandomMatch();
+    }
   },
 
   initData:function(){
@@ -61,8 +66,6 @@ Page({
     tunnelClass.setListenQuestion(this.onHandleQuestion)
     tunnelClass.listenQuestion(null);
     tunnel.open();
-    tunnelClass.beginMatch(this.data.categoryID);
-    this.startTimeTick(1000)
   },
 
   onClickSelf:function(){
@@ -76,12 +79,9 @@ Page({
       invitationTitle: this.data.showTicker==false? '即将开始...' : '等待对方加入'
     });
   },
-  onClickRandom: function () {
-
-    /*
-    wx.navigateTo({
-      url: '../competition/competition'
-    })*/
+  bindRandomMatch: function () {
+    tunnelClass.beginMatch(this.data.categoryID, null);
+    this.startTimeTick(1000)
   },
   startTimeTick: function (duration){
     var that = this;
@@ -117,6 +117,11 @@ Page({
       clearTimeout(this.data.timer);
       this.data.timer = null;
     }
+    if (this.data.timer1 != null) {
+      console.log(' clearTimeout1 at first !!!');
+      clearTimeout(this.data.timer1);
+      this.data.timer1 = null;
+    }
   },
   showRetry: function () {
     var that = this;
@@ -137,11 +142,27 @@ Page({
     })
   },
 
+  beginMatch:function(){
+    console.log('roomID:' + this.data.roomID + ',ID:' + this.data.categoryID)
+    console.log('app.globalData.openId:' + app.globalData.openId)
+    if (app.globalData.openId != undefined && app.globalData.openId != null){
+      tunnelClass.beginMatch(this.data.categoryID, this.data.roomID);
+    }else{
+      var that = this
+      this.data.timer1 = setTimeout(function () {
+        that.data.timer1 = null
+        that.beginMatch();
+      },200);  
+    }
+  },
+
   onShareAppMessage: function (ops) {
     if (ops.from == 'button') {
+      this.data.roomID = new Date().getTime().toString() + parseInt(Math.random() * 10000000)
+      this.beginMatch();
       return {
-        title: '[有人@我]就问你多久没赢过我',
-        path: 'pages/home/home',
+        title: '[有人@我]赶快和我PK一次吧',
+        path: 'pages/home/home?roomID=' + this.data.roomID+'&id='+this.data.categoryID,
         imageUrl: 'https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/share/share_invite_logo.png',
         success: function (res) {
           console.log("转发成功:" + JSON.stringify(res));
@@ -208,7 +229,7 @@ Page({
       });
       this.data.timer = setTimeout(function () {
         wx.redirectTo({
-          url: '../competition/competition?id=' + that.data.categoryID + '&frompageid=' + that.data.frompageID,
+          url: '../competition/competition?id=' + that.data.categoryID + '&roomID=' + that.data.roomID,
         })
         that.data.enterPKPage = true;
       }, 10);

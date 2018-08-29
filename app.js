@@ -52,6 +52,8 @@ App({
     rule: null,
     openGids:[],
     updateScoreInfoCallBack: null,
+    listenUserAuthorizeStatus:null,
+    userAuthorizeStatus:-1,
     scoreInfo: {
       totalScore: 0,
       experience: 0,
@@ -78,11 +80,16 @@ App({
   },
   getUserInfo: function() {
     // 获取用户信息
-    console.log('getUserInfo!')
+    console.log('try getUserInfo!')
     wx.getSetting({ 
       success: res => {
         if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          console.log('you can getUserInfo!')
+          this.globalData.userAuthorizeStatus = 1;
+          if (this.globalData.listenUserAuthorizeStatus != null) {
+            this.globalData.listenUserAuthorizeStatus(this.globalData.userAuthorizeStatus);
+          }
           wx.getUserInfo({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
@@ -96,7 +103,16 @@ App({
               }
             }
           })
+        }else{
+          console.log('new user do not allow getUserInfo!')
+          this.globalData.userAuthorizeStatus = 0;
+          if (this.globalData.listenUserAuthorizeStatus != null) {
+            this.globalData.listenUserAuthorizeStatus(this.globalData.userAuthorizeStatus);
+          }
         }
+      },
+      fail: res => {
+        console.log('you can not getUserInfo!')
       }
     })
   },
@@ -340,9 +356,18 @@ App({
       console.log(' setUpdateRankingCallBack param is unvalid!')
     }
   },
+
+  setListenUserAuthorizeStatusCallBack: function (cb) {
+    if (typeof cb == "function") {
+      this.globalData.listenUserAuthorizeStatus = cb;
+    } else {
+      console.log(' listenUserAuthorizeStatus param is unvalid!')
+    }
+  },
+  
   uploadScoreInfo: function(id, score) {
     var that = this;
-    console.log('uploadScoreInfo id:' + id + ', score:' + score);
+    console.log('uploadScoreInfo id:' + id + ', score:' + score +'victorynum:'+ that.globalData.scoreInfo.victorynum);
     qcloud.request({
       url: config.service.updateScoreInfo,
       header: {

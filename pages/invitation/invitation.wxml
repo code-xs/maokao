@@ -17,6 +17,12 @@
       <view class="nametitle">{{player2Name}}</view>
     </view>
   </view>
+    <button class="invite_friends" open-type="share" >
+      <image class="invite_friends_iv"  src='https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/home_invite.png'></image>
+    </button>
+    <button class="invite_friends" bindtap="bindRandomMatch" >
+      <image class="invite_friends_iv"  src='https://lg-6enwjric-1256925828.cos.ap-shanghai.myqcloud.com/home/home_invite.png'></image>
+    </button>
   <view class="modal-mask" catchtouchmove="preventTouchMove" wx:if="{{showMatch}}"></view>
   <image class="modal-image" mode="widthFix" src="{{countDownImages[countDownIndex]}}" wx:if="{{showMatch}}"></image>
 </view>
